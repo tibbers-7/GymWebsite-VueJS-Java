@@ -4,8 +4,17 @@ import java.util.Date;
 
 import utils.Gender;
 
-class User {
+public class User {
 	
+	public User(String username, String password, String name, String last_name, Gender gender, Date birthDate) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.last_name = last_name;
+		this.gender = gender;
+		this.birthDate = birthDate;
+	}
 	private String username;
 	private String password;
 	private String name;

@@ -10,12 +10,7 @@ public class Customer extends User{
 	private Membership membership;
 	private List<Integer> visitedLocations;
 	public Customer(String username,String password,String name,String last_name, Gender gender,Date birthDate,Membership membership, List<Integer> visitedLocations, int points, CustomerType type) {
-		super();
-		this.setUsername(username);
-		this.setPassword(password);
-		this.setLast_name(last_name);
-		this.setGender(gender);
-		this.setBirthDate(birthDate);
+		super(username, password, name, last_name, gender, birthDate);
 		this.membership = membership;
 		this.visitedLocations = visitedLocations;
 		this.points = points;
