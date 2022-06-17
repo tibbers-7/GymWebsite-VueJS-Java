@@ -1,8 +1,8 @@
-package model;
+package beans;
 
 import java.util.List;
 
-import enums.ObjectType;
+import utils.ObjectType;
 
 public class SportsObject {
 	private String name;
