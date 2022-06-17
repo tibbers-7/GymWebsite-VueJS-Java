@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Web shop</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script src="jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+	<div id ="products">
+		<h1>{{title}}</h1>
+
+
+		<table border="1" id="tabela">
+			<thead>
+				<tr bgcolor="lightgrey">
+					<th>Sifra leta</th>
+					<th>Polaziste</th>
+					<th>Odrediste</th>
+					<th>Broj mesta</th>
+					<th>Trajanje leta</th>
+					<th>Presedanje</th>
+					<th>Cena karte</th>
+					<th>Izmena</th>
+					<th>Brisanje</th>
+					<th>Popust</th>
+					<th>Kupovina karte</th>
+				</tr>
+			</thead>
+
+			<tr v-for="p in products">
+				<td>{{p.name }}</td>
+				<td>{{p.type }}</td>
+				<td>{{p.isOpen }}</td>
+				<td>{{p.location }}</td>
+				<td>{{p.avgScore }}</td>
+				<td>{{p.logoPath }}</td>
+				<td>{{p.openHours }}</td>
+				<td><button  v-on:click="editProduct(p)">Izmeni</button></td>
+				<td><button  v-on:click="deleteProduct(p)">Obrisi</button></td>
+				<td><button  v-on:click="popustProduct(p)">Popust</button></td>
+				<td><button  v-on:click="kupovinaProduct(p)">Kupovina</button></td>
+			</tr>
+		</table>
+
+		<p><button  v-on:click="showForm()">Dodaj</button></p>
+
+		<form id="forma" v-bind:hidden="mode=='BROWSE'" @submit='createOrEditProduct'>
+			<table>
+				<tr>
+					<td>Sifra leta</td>
+					<td><input v-bind:disabled="mode!='CREATE'" type="text" name="name" v-model="selectedProduct.sifra"></td>
+				</tr>
+				<tr>
+					<td>Polaziste</td>
+					<td><input type="text" name="name" v-model="selectedProduct.polaziste"></td>
+				</tr>
+				<tr>
+					<td>Odrediste</td>
+					<td><input type="text" name="name" v-model="selectedProduct.odrediste"></td>
+				</tr>
+				<tr>
+					<td>Broj mesta</td>
+					<td><input type="number" name="name" v-model="selectedProduct.mesta"></td>
+				</tr>
+				<tr>
+					<td>Trajanje leta</td>
+					<td><input type="number" name="name" v-model="selectedProduct.trajanje"></td>
+				</tr>
+				<tr>
+					<td>Presedanje</td>
+					<td><input type="text" name="name" v-model="selectedProduct.presedanje"></td>
+				</tr>
+				<tr>
+					<td>Cena karte</td>
+					<td><input type="number" name="name" v-model="selectedProduct.cena"></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Pošalji"></td>
+				</tr>
+			</table>
+			<p id="error" >{{error}}</p>
+		</form>
+	</div>
+	<script src="js/vue.js"></script>
+	<script src="js/axios.js"></script>
+	<script src="app/app.js"></script>
+</body>
+
+</html>
