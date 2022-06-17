@@ -1,8 +1,8 @@
-package model;
+package beans;
 
 import java.util.Date;
 
-import enums.Gender;
+import utils.Gender;
 
 class User {
 	
@@ -10,7 +10,7 @@ class User {
 	private String password;
 	private String name;
 	private String last_name;
-	private Gender gender;
+	private utils.Gender gender;
 	private Date birthDate;
 	
 	public String getUsername() {
@@ -37,10 +37,10 @@ class User {
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
-	public Gender getGender() {
+	public utils.Gender getGender() {
 		return gender;
 	}
-	public void setGender(Gender gender) {
+	public void setGender(utils.Gender gender) {
 		this.gender = gender;
 	}
 	public Date getBirthDate() {

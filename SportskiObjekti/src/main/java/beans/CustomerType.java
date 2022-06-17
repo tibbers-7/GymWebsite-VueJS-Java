@@ -1,6 +1,6 @@
-package model;
+package beans;
 
-public class CustomerType{
+public class CustomerType {
 	private String name;
 	private float discountPercentage;
 	public CustomerType(String name, float discountPercentage, int requiredPoints) {

@@ -1,10 +1,10 @@
-package model;
+package beans;
 
 import java.util.Date;
 import java.util.List;
-
-import enums.Gender;
-import enums.MembershipType;
+import utils.Gender;
+import utils.MembershipType;
+import beans.CustomerType;
 
 public class Customer extends User{
 	private Membership membership;
