@@ -3,6 +3,8 @@ package beans;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import utils.ObjectType;
+
 public class Membership {
 
 	public String ID;
