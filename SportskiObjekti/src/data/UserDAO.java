@@ -1,4 +1,5 @@
 package data;
+import beans.SportsObject;
 import beans.User;
 import utils.Gender;
 import utils.DateTools;
@@ -7,7 +8,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.HashMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class UserDAO {
 
@@ -16,15 +22,16 @@ public class UserDAO {
 
 	public UserDAO(String filePath) {
 
+		users=new HashMap<>();
 		this.setUsers(new HashMap<String, User>());
 		this.setFilepath(filePath);
 		
 		User u1=new User("tibbers","123","Anja","Dmitrovic",Gender.FEMALE,DateTools.parseDate("14.04.2001"));
-		User u2=new User("tibbers","123","Anja","Dmitrovic",Gender.FEMALE,DateTools.parseDate("14.04.2001"));
-		User u3=new User("tibbers","123","Anja","Dmitrovic",Gender.FEMALE,DateTools.parseDate("14.04.2001"));
-		users.put("1", u1);
-		users.put("2", u2);
-		users.put("3", u3);
+		users.put(u1.getUsername(), u1);
+	}
+	
+	public Collection<User> getUserCollection() {
+		return users.values();
 	}
 	
 	public void setUsers(HashMap<String, User> users) {
@@ -36,6 +43,22 @@ public class UserDAO {
 	}
 	public void addKorisnik(User u) {
 		users.put(u.getUsername(), u);
+	}
+	
+	public void addUser(User u) {
+		users.put(u.getUsername(), u);
+		//saveKorisnici();
+	}
+	
+	public User searchUser(String username) {
+		if (getUserCollection() != null) {
+			for (User u : getUserCollection()) {
+				if (u.getUsername().equals(username)) {
+					return u;
+				}
+			}
+		}
+		return null;
 	}
 	
 //	private void loadKorisnici(String contextPath) {
