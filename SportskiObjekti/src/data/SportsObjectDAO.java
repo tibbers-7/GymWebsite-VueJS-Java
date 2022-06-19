@@ -69,7 +69,7 @@ public class SportsObjectDAO {
 				File file = new File(sportsObjectsPath + "/sportsObjects.txt");
 				System.out.println(file.getCanonicalPath());
 				in = new BufferedReader(new FileReader(file));
-				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="";
+				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="",imgName="";
 				StringTokenizer st;
 				while ((line = in.readLine()) != null) {
 					line = line.trim();
@@ -84,6 +84,7 @@ public class SportsObjectDAO {
 						location = st.nextToken().trim();
 						avgScore = st.nextToken().trim();
 						openHours = st.nextToken().trim();
+						imgName = st.nextToken().trim();
 					}
 					Boolean isOpen_=false;
 					if(isOpen.equals("true")) isOpen_=true;
@@ -93,7 +94,8 @@ public class SportsObjectDAO {
 					for(String s : servicesStrings) {
 						servicesList.add(s);
 					}
-					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),"",openHours);
+					String imgFilepath=sportsObjectsPath+"/images/"+imgName;
+					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
 			} catch (Exception e) {
