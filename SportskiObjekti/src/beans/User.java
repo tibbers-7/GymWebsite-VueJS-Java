@@ -8,7 +8,7 @@ import utils.Gender;
 
 public class User {
 	
-	public User(String username, String password, String name, String last_name, Gender gender, Date birthDate) {
+	public User(String username, String password, String name, String last_name, Gender gender, String birthDate) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -22,7 +22,7 @@ public class User {
 	private String name;
 	private String last_name;
 	private utils.Gender gender;
-	private Date birthDate;
+	private String birthDate;
 	
 	public String getUsername() {
 		return username;
@@ -54,19 +54,19 @@ public class User {
 	public void setGender(utils.Gender gender) {
 		this.gender = gender;
 	}
-	public Date getBirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 	
 	public String getUserString() {
 		char genderChar;
 		if(this.gender==Gender.MALE) genderChar='M'; else genderChar='F';
-		DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");  
-		String strDate = dateFormat.format(this.birthDate); 
-		String s=this.username+";"+this.password+";"+this.name+";"+this.last_name+";"+genderChar+";"+strDate;
+//		DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");  
+//		String strDate = dateFormat.format(this.birthDate); 
+		String s=this.username+";"+this.password+";"+this.name+";"+this.last_name+";"+genderChar+";"+birthDate;
 		return s;
 	}
 	
