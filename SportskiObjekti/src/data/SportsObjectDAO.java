@@ -1,6 +1,7 @@
 package data;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -19,7 +20,7 @@ public class SportsObjectDAO {
 			this.setSportsObjects(new HashMap<Integer, SportsObject>());
 			this.setSportsObjectsPath(contextPath);
 			loadSportsObjects();
-
+			serialize();
 		}
 		
 		public HashMap<Integer, SportsObject> getSportsObjects() {
@@ -64,6 +65,28 @@ public class SportsObjectDAO {
 			}
 		}
 
+		private void serialize() {
+			
+			try {
+				
+				File f = new File("c:\\data\\sportsObjects.txt");
+				if (f.createNewFile()) {
+					BufferedWriter br = new BufferedWriter(new FileWriter(f));
+					
+					for(SportsObject s:sportsObjects.values()) {
+						br.write(s.getSportsObjectString());
+					}		br.close();	
+					
+				} else {
+				   // If there was, no harm, no foul
+				}
+				
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	private void loadSportsObjects() {
 		BufferedReader in = null;

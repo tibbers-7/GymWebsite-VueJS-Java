@@ -33,9 +33,10 @@ public class SportsObjectService {
 	public void init() {
 		// Ovaj objekat se instancira vi�e puta u toku rada aplikacije
 		// Inicijalizacija treba da se obavi samo jednom
-		if (ctx.getAttribute("sportsObjectDAO") == null) {
+		if (ctx.getAttribute("sportsObjects") == null) {
 	    	String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("sportsObjectDAO", new SportsObjectDAO(contextPath));
+			ctx.setAttribute("sportsObjects", new SportsObjectDAO(contextPath));
+			
 		}
 	}
 	
@@ -43,7 +44,7 @@ public class SportsObjectService {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<SportsObject> getProducts() {
-		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
+		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjects");
 		return dao.getSportsObjectsCollection();
 	}
 	
