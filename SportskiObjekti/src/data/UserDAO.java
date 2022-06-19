@@ -9,7 +9,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
@@ -25,9 +27,8 @@ public class UserDAO {
 		users=new HashMap<>();
 		this.setUsers(new HashMap<String, User>());
 		this.setFilepath(filePath);
+		loadUsers();
 		
-		User u1=new User("tibbers","123","Anja","Dmitrovic",Gender.FEMALE,DateTools.parseDate("14.04.2001"));
-		users.put(u1.getUsername(), u1);
 	}
 	
 	public Collection<User> getUserCollection() {
@@ -61,53 +62,43 @@ public class UserDAO {
 		return null;
 	}
 	
-//	private void loadKorisnici(String contextPath) {
-//		FileWriter fileWriter = null;
-//		BufferedReader in = null;
-//		File file = null;
-//		try {
-//			file = new File(contextPath + "/data/korisnici.txt");
-//			in = new BufferedReader(new FileReader(file));
-//
-//			ObjectMapper objectMapper = new ObjectMapper();
-//			objectMapper.setVisibilityChecker(
-//					VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
-//			TypeFactory factory = TypeFactory.defaultInstance();
-//			MapType type = factory.constructMapType(HashMap.class, String.class, Korisnik.class);
-//			objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
-//			korisnici = ((HashMap<String, Korisnik>) objectMapper.readValue(file, type));
-//		} catch (FileNotFoundException fnfe) {
-//			try {
-//				file.createNewFile();
-//				fileWriter = new FileWriter(file);
-//				ObjectMapper objectMapper = new ObjectMapper();
-//				objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-//				objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
-//				String stringUsers = objectMapper.writeValueAsString(korisnici);
-//				fileWriter.write(stringUsers);
-//
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			} finally {
-//				if (fileWriter != null) {
-//					try {
-//						fileWriter.close();
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		} finally {
-//			if (in != null) {
-//				try {
-//					in.close();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//	}
+	private void loadUsers() {
+		BufferedReader in = null;
+		try {
+			File file = new File(userFilepath + "/users.txt");
+			System.out.println(file.getCanonicalPath());
+			in = new BufferedReader(new FileReader(file));
+			String line, username = "", password = "", name = "", last_name="", gender="", birth_date="";
+			StringTokenizer st;
+			while ((line = in.readLine()) != null) {
+				line = line.trim();
+				if (line.equals("") || line.indexOf('#') == 0)
+					continue;
+				st = new StringTokenizer(line, ";");
+				while (st.hasMoreTokens()) {
+					username = st.nextToken().trim();
+					password = st.nextToken().trim();
+					name = st.nextToken().trim();
+					last_name = st.nextToken().trim();
+					gender = st.nextToken().trim();
+					birth_date = st.nextToken().trim();
+				}
+				Gender genderEnum;
+				if(gender.equals("M")) genderEnum=Gender.MALE; else genderEnum=Gender.FEMALE;
+				SimpleDateFormat parser = new SimpleDateFormat("dd.MM.yyyy.");
+		        Date date = parser.parse(birth_date);
+				User user=new User(username,password,name,last_name,genderEnum,date);
+				users.put(user.getUsername(), user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if ( in != null ) {
+				try {
+					in.close();
+				}
+				catch (Exception e) { }
+			}
+		}
+	}
 }
