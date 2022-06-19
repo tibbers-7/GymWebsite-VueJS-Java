@@ -1,5 +1,7 @@
 package beans;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import utils.Gender;
@@ -57,6 +59,15 @@ public class User {
 	}
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+	
+	public String getUserString() {
+		char genderChar;
+		if(this.gender==Gender.MALE) genderChar='M'; else genderChar='F';
+		DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");  
+		String strDate = dateFormat.format(this.birthDate); 
+		String s=this.username+";"+this.password+";"+this.name+";"+this.last_name+";"+genderChar+";"+strDate;
+		return s;
 	}
 	
 }

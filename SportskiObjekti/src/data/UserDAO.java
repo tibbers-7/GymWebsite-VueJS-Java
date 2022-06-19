@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -48,7 +49,24 @@ public class UserDAO {
 	
 	public void addUser(User u) {
 		users.put(u.getUsername(), u);
-		//saveKorisnici();
+		saveUser(u);
+	}
+	
+	private void saveUser(User u) {
+		File f = new File(userFilepath + "/data/korisnici.txt");
+		FileWriter writer=null;
+		try {
+			writer = new FileWriter(f);
+			writer.write(u.getUserString()); 
+		    writer.flush();
+		    writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+
 	}
 	
 	public User searchUser(String username) {
