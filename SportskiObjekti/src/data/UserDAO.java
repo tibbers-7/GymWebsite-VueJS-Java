@@ -47,7 +47,7 @@ public class UserDAO {
 	}
 	
 	private void saveUser(User u) {
-		File f = new File(userFilepath + "users.csv");
+		File f = new File(userFilepath + "/data/users.csv");
 		FileWriter writer=null;
 		try {
 			writer = new FileWriter(f);
