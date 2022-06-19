@@ -31,6 +31,7 @@ public class SportsObjectDAO {
 
 		public SportsObjectDAO() {
 			// TODO Auto-generated constructor stub
+			test();
 		}
 
 		/*public SportsObjectsDAO(String contextPath) {
@@ -51,11 +52,10 @@ public class SportsObjectDAO {
 private void test() {
 
 			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
-
 			addSportsObject(s1);
 			addSportsObject(s1);
 
 			addSportsObject(s1);
-
+			System.out.println(sportsObjects.size());
 		}
 }

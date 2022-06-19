@@ -8,7 +8,7 @@ var app = new Vue({
 		error: '',
 	},
 	mounted() {
-		axios.get('rest/products')
+		axios.get('rest/sportsobjects/')
 			.then(response => (this.products = response.data))
 	},
 	methods: {
