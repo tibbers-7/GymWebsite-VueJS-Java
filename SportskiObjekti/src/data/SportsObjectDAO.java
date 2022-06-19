@@ -1,13 +1,13 @@
 package data;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import beans.SportsObject;
@@ -16,17 +16,6 @@ import utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
-		private String sportsObjectsPath = "";
-
-		public SportsObjectDAO(String contextPath) {
-			this.setSportsObjects(new HashMap<Integer, SportsObject>());
-			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "15.66 59.55 ", (float) 4.8, "07:00 - 19:00");
-			addSportsObject(s1);
-			this.setSportsObjectsPath(contextPath);
-			loadSportsObjects();
-			serialize();
-		}
-		
 		public HashMap<Integer, SportsObject> getSportsObjects() {
 			return sportsObjects;
 		}
@@ -45,87 +34,74 @@ public class SportsObjectDAO {
 		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) {
 			this.sportsObjects = sportsObjects;
 		}
-		
+
+		public SportsObjectDAO(String sportsObjectsPath) {
+			super();
+			this.sportsObjectsPath = sportsObjectsPath;
+			loadSportsObjects();
+		}
+
+		private String sportsObjectsPath = "";
+
+		public SportsObjectDAO() {
+			// TODO Auto-generated constructor stub
+			test();
+		}
+
+		/*public SportsObjectsDAO(String contextPath) {
+			this.setSportsObjects(new HashMap<Integer, SportsObject>());
+			this.setSportsObjectsPath(contextPath);
+
+		}*/
 	
 		public void addSportsObject(SportsObject s) {
 			int maxId = 0;
 			maxId=getSportsObjectsCollection().size();
 			maxId++;
 			sportsObjects.put(maxId, s);
-			saveSportsObject(s);
 		}
 
-		private void saveSportsObject(SportsObject object) {
-			File f = new File(sportsObjectsPath + "/sportsObjects.txt");
-			FileWriter writer=null;
+		private void loadSportsObjects() {
+			BufferedReader in = null;
 			try {
-				writer = new FileWriter(f);
-				writer.write(object.getSportsObjectString()); 
-			    writer.flush();
-			    writer.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				File file = new File(sportsObjectsPath + "/sportsObjects.txt");
+				System.out.println(file.getCanonicalPath());
+				in = new BufferedReader(new FileReader(file));
+				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="";
+				StringTokenizer st;
+				while ((line = in.readLine()) != null) {
+					line = line.trim();
+					if (line.equals(""))
+						continue;
+					st = new StringTokenizer(line, ";");
+					while (st.hasMoreTokens()) {
+						name = st.nextToken().trim();
+						type = st.nextToken().trim();
+						services = st.nextToken().trim();
+						isOpen = st.nextToken().trim();
+						location = st.nextToken().trim();
+						avgScore = st.nextToken().trim();
+						openHours = st.nextToken().trim();
+					}
+					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),null,Boolean.getBoolean(isOpen),location,Float.parseFloat(avgScore),"",openHours);
+					addSportsObject(sportsObject);
+				}
+			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				if ( in != null ) {
+					try {
+						in.close();
+					}
+					catch (Exception e) { }
+				}}
 			}
-		}
 
-		private void serialize() {
-			
-			try {
-				
-				File f = new File("c:\\data\\sportsObjects.txt");
-				if (f.createNewFile()) {
-					BufferedWriter br = new BufferedWriter(new FileWriter(f));
-					
-					for(SportsObject s:sportsObjects.values()) {
-						br.write(s.getSportsObjectString());
-					}		br.close();	
-					
-				} else {
-				   // If there was, no harm, no foul
-				}
-				
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+private void test() {
 
-	private void loadSportsObjects() {
-		BufferedReader in = null;
-		try {
-			File file = new File(sportsObjectsPath + "/sportsObjects.txt");
-			System.out.println(file.getCanonicalPath());
-			in = new BufferedReader(new FileReader(file));
-			String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="";
-			StringTokenizer st;
-			while ((line = in.readLine()) != null) {
-				line = line.trim();
-				if (line.equals(""))
-					continue;
-				st = new StringTokenizer(line, ";");
-				while (st.hasMoreTokens()) {
-					name = st.nextToken().trim();
-					type = st.nextToken().trim();
-					services = st.nextToken().trim();
-					isOpen = st.nextToken().trim();
-					location = st.nextToken().trim();
-					avgScore = st.nextToken().trim();
-					openHours = st.nextToken().trim();
-				}
-				SportsObject sportsObject=new SportsObject(name,type,services,isOpen,location,avgScore,openHours);
-				addSportsObject(sportsObject);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if ( in != null ) {
-				try {
-					in.close();
-				}
-				catch (Exception e) { }
-			}
+			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
+			addSportsObject(s1);
+			addSportsObject(s1);
+			addSportsObject(s1);
 		}
-	}
 }

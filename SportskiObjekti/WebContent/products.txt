@@ -1,3 +1,0 @@
-BK4S;Madrid;Rim;150;140;Nema;120
-AAAA;Beograd;Lisabon;130;120;Ima;230
-MR4Z;London;Pariz;156;120;;Ima;250

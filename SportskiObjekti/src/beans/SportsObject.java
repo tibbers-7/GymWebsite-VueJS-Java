@@ -1,6 +1,5 @@
 package beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import utils.ObjectType;
@@ -57,7 +56,7 @@ public class SportsObject {
 	}
 	private ObjectType type;
 	public SportsObject(String name, ObjectType type, List<String> services, Boolean isOpen, String location,
-			float avgScore,  String openHours) {
+			float avgScore, String logoPath, String openHours) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -65,41 +64,13 @@ public class SportsObject {
 		this.isOpen = isOpen;
 		this.location = location;
 		this.avgScore = avgScore;
-		//this.logoPath = logoPath;
-		this.openHours = openHours;
-	}
-	
-	public SportsObject(String name, String type, String servicesString, String isOpen, String location,
-			String avgScore,  String openHours) {
-		super();
-		this.name = name;
-		this.type = ObjectType.valueOf(type);
-		
-		this.services=new ArrayList<>();
-		String[] servicesList=servicesString.split(",");
-		for(String s: servicesList){
-			this.services.add(s);
-		}
-		if(isOpen.equals("Y")) this.isOpen = true; else this.isOpen=false;
-		this.location = location;
-		this.avgScore = Float.parseFloat(avgScore);
-		//this.logoPath = logoPath;
+		this.logoPath = logoPath;
 		this.openHours = openHours;
 	}
 	private List<String> services;
 	private Boolean isOpen;
 	private String location;
 	private float avgScore;
-	private String logoPath="";
+	private String logoPath;
 	private String openHours;
-	public String getSportsObjectString() {
-		String servicesString="";
-		for(String s:services) {
-			servicesString=servicesString+s+";";
-		}
-		char isOpen_;
-		if(isOpen) isOpen_='Y'; else isOpen_='N';
-		String s=name+";"+type.toString()+";"+servicesString+isOpen_+";"+location+";"+Float.toString(avgScore)+";"+openHours;
-		return s;
-	}
 }

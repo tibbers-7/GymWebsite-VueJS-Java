@@ -17,6 +17,14 @@ public class User {
 		this.gender = gender;
 		this.birthDate = birthDate;
 	}
+	public User(String username2, String password2, String name2, String last_name2, Gender genderEnum, Date date) {
+		this.username = username2;
+		this.password = password2;
+		this.name = name2;
+		this.last_name = last_name2;
+		this.gender = genderEnum;
+		this.birthDate = date.toGMTString();
+	}
 	private String username;
 	private String password;
 	private String name;
