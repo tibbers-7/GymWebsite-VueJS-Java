@@ -2,11 +2,44 @@ var app = new Vue({
 	el: '#products',
 	data: {
 		products: null,
-		title: "Vue.js tehnologija za letove",
+		title: "Sportski objekti",
 		mode: "BROWSE",
 		selectedProduct: {},
 		error: '',
 	},
+	 template: ` 
+    	<div>
+    		<h3>Prikaz proizvoda</h3>
+    		<table border="1">
+	    		<tr bgcolor="lightgrey">
+	    			<th>Naziv</th>
+	    			<th>Tip</th>
+	    			<th>Ponuda</th>
+	    			<th>Otvoreno</th>
+	    			<th>Adresa</th>
+	    			<th>Ocena</th>
+	    			<th>Logo</th>
+	    			<th>Otvoreno</th>
+	    		</tr>
+	    			
+	    		<tr v-for="(p, index) in products">
+	    			<td>{{p.name}}</td>
+	    		 	<td>{{p.type}}</td>
+	    		 	<td>{{p.services}}</td>
+	    		 	<td>{{p.isOpen}}</td>
+	    		 	<td>{{p.location}}</td>
+	    		 	<td>{{p.avgScore}}</td>
+	    		 	<td>{{p.logoPath}}</td>
+	    		 	<td>{{p.openHours}}</td>
+	    			<td>
+	    				<button v-on:click="editProduct(p.id)">Izmeni</button>
+	    				<button v-on:click="deleteProduct(p.id, index)">Obriši</button>
+	    			</td>
+	    		</tr>
+	    	</table>
+    		<button v-on:click = "addProduct">Dodaj nov proizvod</button>
+    	</div>		  
+    	`,
 	mounted() {
 		axios.get('rest/sportsobjects/')
 			.then(response => (this.products = response.data))
