@@ -20,12 +20,11 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class UserDAO {
 
-	private HashMap<String, User> users;
+	private HashMap<String, User> users=new HashMap<>();
 	private String userFilepath="";
 
 	public UserDAO(String filePath) {
 
-		users=new HashMap<>();
 		this.setUsers(new HashMap<String, User>());
 		this.setFilepath(filePath);
 		loadUsers();

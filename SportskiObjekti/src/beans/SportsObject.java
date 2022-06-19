@@ -83,7 +83,7 @@ public class SportsObject {
 		}
 		if(isOpen.equals("Y")) this.isOpen = true; else this.isOpen=false;
 		this.location = location;
-		this.avgScore = Float.parseFloat(openHours);
+		this.avgScore = Float.parseFloat(avgScore);
 		//this.logoPath = logoPath;
 		this.openHours = openHours;
 	}
@@ -91,7 +91,7 @@ public class SportsObject {
 	private Boolean isOpen;
 	private String location;
 	private float avgScore;
-	private String logoPath;
+	private String logoPath="";
 	private String openHours;
 	public String getSportsObjectString() {
 		String servicesString="";

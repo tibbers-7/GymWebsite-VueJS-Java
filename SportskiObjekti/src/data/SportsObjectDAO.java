@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 import beans.SportsObject;
 import beans.User;
+import utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
@@ -18,6 +19,8 @@ public class SportsObjectDAO {
 
 		public SportsObjectDAO(String contextPath) {
 			this.setSportsObjects(new HashMap<Integer, SportsObject>());
+			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "15.66 59.55 ", (float) 4.8, "07:00 - 19:00");
+			addSportsObject(s1);
 			this.setSportsObjectsPath(contextPath);
 			loadSportsObjects();
 
