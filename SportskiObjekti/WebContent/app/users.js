@@ -4,7 +4,7 @@ var app = new Vue({
 		products: null,
 		title: "Korisnici",
 		mode: "BROWSE",
-		product: {},
+		product : { username: null, password: null, name: null, last_name: null, gender: null, birthDate: null },
 		error: '',
 	},
 	 template: ` 
@@ -70,7 +70,6 @@ var app = new Vue({
 	methods: {
 		register : function() {
 			this.mode = 'CREATE'
-			this.product = { username: null, password: null, name: null, last_name: null, gender: null, birthDate: null }
     	},
 		editProduct: function (product) {
 			this.product = product
