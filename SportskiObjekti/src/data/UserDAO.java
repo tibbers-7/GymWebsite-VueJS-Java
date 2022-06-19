@@ -52,7 +52,7 @@ public class UserDAO {
 		File f = new File(userFilepath + "/users.txt");
 		FileWriter writer=null;
 		try {
-			writer = new FileWriter(f);
+			writer = new FileWriter(f,true);
 			writer.write(u.getUserString()); 
 		    writer.flush();
 		    writer.close();

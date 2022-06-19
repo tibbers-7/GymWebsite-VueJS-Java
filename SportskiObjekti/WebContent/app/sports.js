@@ -9,7 +9,7 @@ var app = new Vue({
 	},
 	 template: ` 
     	<div>
-    		<h3>Prikaz proizvoda</h3>
+    		<h3>Prikaz objekata</h3>
     		<table border="1">
 	    		<tr bgcolor="lightgrey">
 	    			<th>Naziv</th>
