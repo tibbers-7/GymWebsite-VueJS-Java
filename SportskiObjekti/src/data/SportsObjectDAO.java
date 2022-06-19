@@ -3,11 +3,14 @@ package data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import beans.SportsObject;
+import beans.User;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
@@ -45,9 +48,22 @@ public class SportsObjectDAO {
 			maxId=getSportsObjectsCollection().size();
 			maxId++;
 			sportsObjects.put(maxId, s);
+			saveSportsObject(s);
 		}
 
-		
+		private void saveSportsObject(SportsObject object) {
+			File f = new File(sportsObjectsPath + "/data/users.txt");
+			FileWriter writer=null;
+			try {
+				writer = new FileWriter(f);
+				writer.write(object.getSportsObjectString()); 
+			    writer.flush();
+			    writer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 
 	private void loadSportsObjects() {

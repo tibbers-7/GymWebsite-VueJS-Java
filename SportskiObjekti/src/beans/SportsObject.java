@@ -93,4 +93,14 @@ public class SportsObject {
 	private float avgScore;
 	private String logoPath;
 	private String openHours;
+	public String getSportsObjectString() {
+		String servicesString="";
+		for(String s:services) {
+			servicesString=servicesString+s+";";
+		}
+		char isOpen_;
+		if(isOpen) isOpen_='Y'; else isOpen_='N';
+		String s=name+";"+type.toString()+";"+servicesString+isOpen_+";"+location+";"+Float.toString(avgScore)+";"+openHours;
+		return s;
+	}
 }
