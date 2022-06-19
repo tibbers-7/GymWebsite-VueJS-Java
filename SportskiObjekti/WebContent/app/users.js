@@ -29,8 +29,10 @@ var app = new Vue({
 	    		 	<td>{{p.birthDate}}</td>
 	    		</tr>
 	    	</table>
-	    	<button v-on:click = "register">Registrujte se</button>
-	    	<button v-on:click = "login">Ulogujte se</button>
+	    	
+	    	<button v-on:click = "register" v-bind:hidden="mode=='LOGGED'">Registrujte se</button>
+	    	<button v-on:click = "login" v-bind:hidden="mode=='LOGGED'">Ulogujte se</button>
+
     		<form id="forma" v-bind:hidden="mode!='CREATE'" @submit='createUser'>
 			<table>
 				<tr>
@@ -62,7 +64,7 @@ var app = new Vue({
 				</tr>
 			</table>
 			</form>
-			<form id="formlogin" v-bind:hidden="mode!='LOGIN'" @submit='loginUser'>
+			<form id="formlogin" v-bind:hidden="mode!='LOGIN'">
 			<table>
 				<tr>
 					<td>Username</td>
@@ -71,6 +73,12 @@ var app = new Vue({
 				<tr>
 					<td>Pass</td>
 					<td><input type="text" name="password" v-model = "product.password"></td>
+				</tr>
+				<tr>
+					<td><button v-on:click = "loginUser">
+					<a class="active" href="sportsObjects.html">Log In</a>
+					</button>
+					</td>
 				</tr>
 			</table>
 			</form>
@@ -100,9 +108,8 @@ var app = new Vue({
 				axios.post('rest/user/login', this.product)
 					.then((response) => {
 						alert('Uspešno logovanje!')
-						this.mode = 'BROWSE'
 						if(response.code!=400)
-						this.mode = 'BROWSE'
+						this.mode='LOGGED'
 					})
 		}
 	}
