@@ -66,7 +66,6 @@ public class SportsObjectDAO {
 
 
 	private void loadSportsObjects() {
-		System.out.print("\n start \n");
 		BufferedReader in = null;
 		try {
 			File file = new File(sportsObjectsPath + "/sportsObjects.txt");
@@ -76,7 +75,7 @@ public class SportsObjectDAO {
 			StringTokenizer st;
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
-				if (line.equals("") || line.indexOf('#') == 0)
+				if (line.equals(""))
 					continue;
 				st = new StringTokenizer(line, ";");
 				while (st.hasMoreTokens()) {
