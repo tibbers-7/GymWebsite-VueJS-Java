@@ -66,6 +66,10 @@ public class SportsObject {
 		this.avgScore = avgScore;
 		this.logoPath = logoPath;
 		this.openHours = openHours;
+		this.servicesString="";
+		for(String s: services) {
+			servicesString=servicesString+s+",";
+		}
 	}
 	private List<String> services;
 	private Boolean isOpen;
@@ -73,4 +77,5 @@ public class SportsObject {
 	private float avgScore;
 	private String logoPath;
 	private String openHours;
+	private String servicesString;
 }
