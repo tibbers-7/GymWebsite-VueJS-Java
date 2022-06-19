@@ -14,7 +14,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class UserDAO {
 
@@ -47,7 +49,7 @@ public class UserDAO {
 	}
 	
 	private void saveUser(User u) {
-		File f = new File(userFilepath + "/data/users.csv");
+		File f = new File(userFilepath + "/data/users.txt");
 		FileWriter writer=null;
 		try {
 			writer = new FileWriter(f);
@@ -74,7 +76,7 @@ public class UserDAO {
 	private void loadUsers() {
 		BufferedReader in = null;
 		try {
-			File file = new File(userFilepath + "/users.csv");
+			File file = new File(userFilepath + "/users.txt");
 			System.out.println(file.getCanonicalPath());
 			in = new BufferedReader(new FileReader(file));
 			String line, username = "", password = "", name = "", last_name="", gender="", birth_date="";
