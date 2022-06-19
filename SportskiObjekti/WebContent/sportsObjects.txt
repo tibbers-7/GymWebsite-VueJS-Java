@@ -1,0 +1,3 @@
+Teretana;GYM;idk,idk2,idk3;Y;5.0;24;
+Bazen;POOL;idk,idk2,idk3;Y;3.5;12;
+Plesni studio;DANCESTUDIO;idk;Y;4.32;11;

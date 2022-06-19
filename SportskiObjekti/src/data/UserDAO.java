@@ -43,9 +43,6 @@ public class UserDAO {
 	public void setFilepath(String userFilePath) {
 		this.userFilepath = userFilePath;
 	}
-	public void addKorisnik(User u) {
-		users.put(u.getUsername(), u);
-	}
 	
 	public void addUser(User u) {
 		users.put(u.getUsername(), u);

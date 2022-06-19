@@ -35,7 +35,7 @@ public class SportsObjectService {
 		// Inicijalizacija treba da se obavi samo jednom
 		if (ctx.getAttribute("sportsObjectDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("sportsObjectDAO", new SportsObjectDAO());
+			ctx.setAttribute("sportsObjectDAO", new SportsObjectDAO(contextPath));
 		}
 	}
 	
