@@ -53,7 +53,7 @@ public class UserDAO {
 	}
 	
 	private void saveUser(User u) {
-		File f = new File(userFilepath + "/data/korisnici.txt");
+		File f = new File(userFilepath + "/data/users.txt");
 		FileWriter writer=null;
 		try {
 			writer = new FileWriter(f);
