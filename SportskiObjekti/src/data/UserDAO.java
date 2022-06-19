@@ -25,7 +25,6 @@ public class UserDAO {
 
 	public UserDAO(String filePath) {
 
-		users=new HashMap<>();
 		this.setUsers(new HashMap<String, User>());
 		this.setFilepath(filePath);
 		loadUsers();
@@ -61,9 +60,6 @@ public class UserDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-
 	}
 	
 	public User searchUser(String username) {

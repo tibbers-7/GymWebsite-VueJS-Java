@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import beans.SportsObject;
-import beans.User;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
@@ -52,7 +51,7 @@ public class SportsObjectDAO {
 		}
 
 		private void saveSportsObject(SportsObject object) {
-			File f = new File(sportsObjectsPath + "/data/users.txt");
+			File f = new File(sportsObjectsPath + "/sportsObjects.txt");
 			FileWriter writer=null;
 			try {
 				writer = new FileWriter(f);
@@ -67,6 +66,7 @@ public class SportsObjectDAO {
 
 
 	private void loadSportsObjects() {
+		System.out.print("\n start \n");
 		BufferedReader in = null;
 		try {
 			File file = new File(sportsObjectsPath + "/sportsObjects.txt");
