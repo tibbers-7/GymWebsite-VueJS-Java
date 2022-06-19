@@ -30,7 +30,8 @@ var app = new Vue({
 	    		</tr>
 	    	</table>
 	    	<button v-on:click = "register">Registrujte se</button>
-    		<form id="forma" v-bind:hidden="mode=='BROWSE'" @submit='createUser'>
+	    	<button v-on:click = "login">Ulogujte se</button>
+    		<form id="forma" v-bind:hidden="mode!='CREATE'" @submit='createUser'>
 			<table>
 				<tr>
 					<td>Username</td>
@@ -61,6 +62,18 @@ var app = new Vue({
 				</tr>
 			</table>
 			</form>
+			<form id="formlogin" v-bind:hidden="mode!='LOGIN'" @submit='loginUser'>
+			<table>
+				<tr>
+					<td>Username</td>
+					<td><input v-bind:disabled="mode!='LOGIN'" type="text" v-model = "product.username" name="username" ></td>
+				</tr>
+				<tr>
+					<td>Pass</td>
+					<td><input type="text" name="password" v-model = "product.password"></td>
+				</tr>
+			</table>
+			</form>
 		</div>		  
     	`,
 	mounted() {
@@ -71,30 +84,9 @@ var app = new Vue({
 		register : function() {
 			this.mode = 'CREATE'
     	},
-		editProduct: function (product) {
-			this.product = product
-			this.mode = 'EDIT'
-			/*axios.put('rest/products/' + this.product.id, this.product)
-					.then((response) => {
-						alert('Proizvod je uspešno izmenjen ')
-						this.mode = 'BROWSE'
-						this.products = this.products.filter((p) => p.id !== this.product.id)
-						this.products.push(response.data)
-					})*/
-		},
-		popustProduct: function (product) {
-			this.product = product
-			axios.put('rest/products/popust/' + this.product.sifra, this.product)
-					.then((response) => {
-						alert('Proizvod je uspešno izmenjen sa popustom')
-						this.mode = 'BROWSE'
-						this.products = this.products.filter((p) => p.sifra !== this.product.sifra)
-						this.products.push(response.data)
-					})
-		},
-		showForm: function () {
-			this.mode = 'CREATE'
-		},
+		login : function() {
+			this.mode = 'LOGIN'
+    	},
 		createUser: function (event) {
 				axios.post('rest/user/register', this.product)
 					.then((response) => {
@@ -104,28 +96,13 @@ var app = new Vue({
 							.then(response => (this.products = response.data))
 					})
 		},
-		deleteProduct: function (product) {
-			this.mode = 'BROWSE'
-			axios.delete('rest/products/' + product.sifra)
-				.then(() => {
-					alert('Proizvod je uspesno obrisan')
-					this.products = this.products.filter((p) => p.sifra !== product.sifra)
-				})
-		},
-		kupovinaProduct: function(product){
-			this.mode = 'BROWSE'
-			this.product = product
-			if (this.product.mesta < 1) {
-				this.error = "Nema vise karata";
-				alert("Nema vise karata");
-				return;
-			}
-			axios.put('rest/products/kupovina/' + this.product.sifra, this.product)
+		loginUser: function (event) {
+				axios.post('rest/user/login', this.product)
 					.then((response) => {
-						alert('Proizvod je kupljen ')
+						alert('Uspešno logovanje!')
 						this.mode = 'BROWSE'
-						this.products = this.products.filter((p) => p.sifra !== this.product.sifra)
-						this.products.push(response.data)
+						if(response.code!=400)
+						this.mode = 'BROWSE'
 					})
 		}
 	}
