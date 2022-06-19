@@ -2,14 +2,14 @@ var app = new Vue({
 	el: '#users',
 	data: {
 		products: null,
-		title: "Sportski objekti",
+		title: "Korisnici",
 		mode: "BROWSE",
-		selectedProduct: {},
+		product: {},
 		error: '',
 	},
 	 template: ` 
     	<div>
-    		<h3>Prikaz proizvoda</h3>
+    		<h3>Prikaz korisnika</h3>
     		<table border="1">
 	    		<tr bgcolor="lightgrey">
 	    			<th>Username</th>
@@ -30,42 +30,38 @@ var app = new Vue({
 	    		</tr>
 	    	</table>
 	    	<button v-on:click = "register">Registrujte se</button>
-    	</div>
-    	<form id="forma" v-bind:hidden="mode=='BROWSE'" @submit='createUser'>
+    		<form id="forma" v-bind:hidden="mode=='BROWSE'" @submit='createUser'>
 			<table>
 				<tr>
-					<td>Sifra leta</td>
-					<td><input v-bind:disabled="mode!='CREATE'" type="text" name="name" ></td>
+					<td>Username</td>
+					<td><input v-bind:disabled="mode!='CREATE'" type="text" v-model = "product.username" name="username" ></td>
 				</tr>
 				<tr>
-					<td>Polaziste</td>
-					<td><input type="text" name="name" ></td>
+					<td>Pass</td>
+					<td><input type="text" name="password" v-model = "product.password"></td>
 				</tr>
 				<tr>
-					<td>Odrediste</td>
-					<td><input type="text" name="name" ></td>
+					<td>Ime</td>
+					<td><input type="text" name="name" v-model = "product.name"></td>
 				</tr>
 				<tr>
-					<td>Broj mesta</td>
-					<td><input type="number" name="name" ></td>
+					<td>Prezime</td>
+					<td><input type="text" name="last_name" v-model = "product.last_name"></td>
 				</tr>
 				<tr>
-					<td>Trajanje leta</td>
-					<td><input type="number" name="name" ></td>
+					<td>Pol</td>
+					<td><input type="text" name="gender" v-model = "product.gender"></td>
 				</tr>
 				<tr>
-					<td>Presedanje</td>
-					<td><input type="text" name="name"></td>
-				</tr>
-				<tr>
-					<td>Cena karte</td>
-					<td><input type="number" name="name" ></td>
+					<td>Datum rodjenja</td>
+					<td><input type="text" name="birthDate" v-model = "product.birthDate"></td>
 				</tr>
 				<tr>
 					<td><input type="submit" value="Pošalji"></td>
 				</tr>
 			</table>
-		</form>		  
+			</form>
+		</div>		  
     	`,
 	mounted() {
 		axios.get('rest/user/users')
@@ -74,39 +70,39 @@ var app = new Vue({
 	methods: {
 		register : function() {
 			this.mode = 'CREATE'
-			
+			this.product = { username: null, password: null, name: null, last_name: null, gender: null, birthDate: null }
     	},
 		editProduct: function (product) {
-			this.selectedProduct = product
+			this.product = product
 			this.mode = 'EDIT'
-			/*axios.put('rest/products/' + this.selectedProduct.id, this.selectedProduct)
+			/*axios.put('rest/products/' + this.product.id, this.product)
 					.then((response) => {
 						alert('Proizvod je uspešno izmenjen ')
 						this.mode = 'BROWSE'
-						this.products = this.products.filter((p) => p.id !== this.selectedProduct.id)
+						this.products = this.products.filter((p) => p.id !== this.product.id)
 						this.products.push(response.data)
 					})*/
 		},
 		popustProduct: function (product) {
-			this.selectedProduct = product
-			axios.put('rest/products/popust/' + this.selectedProduct.sifra, this.selectedProduct)
+			this.product = product
+			axios.put('rest/products/popust/' + this.product.sifra, this.product)
 					.then((response) => {
 						alert('Proizvod je uspešno izmenjen sa popustom')
 						this.mode = 'BROWSE'
-						this.products = this.products.filter((p) => p.sifra !== this.selectedProduct.sifra)
+						this.products = this.products.filter((p) => p.sifra !== this.product.sifra)
 						this.products.push(response.data)
 					})
 		},
 		showForm: function () {
 			this.mode = 'CREATE'
-			this.selectedProduct = { sifra: null, polaziste: null, odrediste: null, mesta: null, trajanje: null, presedanje: null, cena: null }
 		},
 		createUser: function (event) {
-				axios.post('rest/user/register', this.selectedProduct)
+				axios.post('rest/user/register', this.product)
 					.then((response) => {
 						alert('Novi nalog uspešno kreiran')
 						this.mode = 'BROWSE'
-						this.products.push(response.data)
+						axios.get('rest/user/users')
+							.then(response => (this.products = response.data))
 					})
 		},
 		deleteProduct: function (product) {
@@ -119,17 +115,17 @@ var app = new Vue({
 		},
 		kupovinaProduct: function(product){
 			this.mode = 'BROWSE'
-			this.selectedProduct = product
-			if (this.selectedProduct.mesta < 1) {
+			this.product = product
+			if (this.product.mesta < 1) {
 				this.error = "Nema vise karata";
 				alert("Nema vise karata");
 				return;
 			}
-			axios.put('rest/products/kupovina/' + this.selectedProduct.sifra, this.selectedProduct)
+			axios.put('rest/products/kupovina/' + this.product.sifra, this.product)
 					.then((response) => {
 						alert('Proizvod je kupljen ')
 						this.mode = 'BROWSE'
-						this.products = this.products.filter((p) => p.sifra !== this.selectedProduct.sifra)
+						this.products = this.products.filter((p) => p.sifra !== this.product.sifra)
 						this.products.push(response.data)
 					})
 		}
