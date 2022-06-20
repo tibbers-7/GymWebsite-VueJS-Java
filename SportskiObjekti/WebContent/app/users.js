@@ -82,12 +82,13 @@ var app = new Vue({
 				</tr>
 			</table>
 			</form>
+			
 		</div>		  
     	`,
 	mounted() {
 		axios.get('rest/user/users')
-			.then(response => (this.products = response.data))
-	},
+			.then(response => (this.products = response.data)) 
+				},
 	methods: {
 		register : function() {
 			this.mode = 'CREATE'

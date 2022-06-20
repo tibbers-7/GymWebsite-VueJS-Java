@@ -1,10 +1,11 @@
+//import * as toast from 'toast.js';
 var app = new Vue({
 	el: '#sports',
 	data: {
 		products: null,
 		title: "Sportski objekti",
 		mode: "BROWSE",
-		selectedProduct: {},
+		text: "",
 		error: '',
 	},
 	 template: ` 
@@ -29,33 +30,46 @@ var app = new Vue({
 	    		 	<td>{{p.isOpen}}</td>
 	    		 	<td>{{p.location}}</td>
 	    		 	<td>{{p.avgScore}}</td>
-	    		 	<td>{{p.logoPath}}</td>
+	    		 	<td><img src={{p.logoPath}}></td>
 	    		 	<td>{{p.openHours}}</td>
 	    		</tr>
 	    	</table>
+	    	<input type="text" name="name" v-model = "text">
+	    	<button v-on:click = "filterName">Filter po imenu</button>
+	    	<button v-on:click = "filterType">Filter po tipu</button>
+	    	<button v-on:click = "filterAddress">Filter po adresi</button>
+	    	<button v-on:click = "filterScore">Filter po oceni</button>
     	</div>		  
     	`,
 	mounted() {
 		axios.get('rest/sportsobjects/')
 			.then(response => (this.products = response.data))
 	},
+	
+	
 	methods: {
+		filterName: function() {
+    return this.products.filter((product) => {
+      product.name.contains(text);
+    })
+  },
+  filterType: function() {
+    return this.products.filter((product) => {
+      product.type.contains(text);
+    })
+  },
+  filterAddress: function() {
+    return this.products.filter((product) => {
+      product.location.contains(text);
+    })
+  },
+  filterScore: function() {
+    return this.products.filter((product) => {
+      product.avgScore.contains(text);
+    })
+  }
+  
 		
-		kupovinaProduct: function(product){
-			this.mode = 'BROWSE'
-			this.selectedProduct = product
-			if (this.selectedProduct.mesta < 1) {
-				this.error = "Nema vise karata";
-				alert("Nema vise karata");
-				return;
-			}
-			axios.put('rest/products/kupovina/' + this.selectedProduct.sifra, this.selectedProduct)
-					.then((response) => {
-						alert('Proizvod je kupljen ')
-						this.mode = 'BROWSE'
-						this.products = this.products.filter((p) => p.sifra !== this.selectedProduct.sifra)
-						this.products.push(response.data)
-					})
-		}
+		
 	}
 });
