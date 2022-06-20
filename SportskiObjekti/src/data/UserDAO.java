@@ -14,9 +14,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class UserDAO {
 

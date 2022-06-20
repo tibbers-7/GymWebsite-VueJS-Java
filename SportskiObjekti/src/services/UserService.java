@@ -122,12 +122,12 @@ public class UserService {
 		
 		UserDAO UserDAO = (UserDAO) context.getAttribute("users");
 
-		if (UserDAO.searchUser(userToRegister.getUsername()) != null) {
-			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
-		} else {
-			UserDAO.addUser(userToRegister);
+//		if (UserDAO.searchUser(userToRegister.getUsername()) != null) {
+//			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
+//		} else {
+//			UserDAO.addUser(userToRegister);
 			return Response.status(200).build();
-		}
+		//}
 	}
 
 	@PostConstruct
