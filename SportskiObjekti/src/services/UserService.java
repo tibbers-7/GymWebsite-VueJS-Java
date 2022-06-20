@@ -125,7 +125,7 @@ public class UserService {
 //		if (UserDAO.searchUser(userToRegister.getUsername()) != null) {
 //			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 //		} else {
-//			UserDAO.addUser(userToRegister);
+			UserDAO.addUser(userToRegister);
 			return Response.status(200).build();
 		//}
 	}
@@ -138,16 +138,7 @@ public class UserService {
 			UserDAO UserDAO = new UserDAO(contextPath);
 			context.setAttribute("users", UserDAO);
 		}
-		
-//		HttpSession session = request.getSession();
-//		if (session.getAttribute("cart") == null) {
-//			List<StavkaPorudzbine> stavkaPorudzbine = new ArrayList<StavkaPorudzbine>();
-//			session.setAttribute("cart", stavkaPorudzbine);
-//		}
-//		if (session.getAttribute("cartadmin") == null) {
-//			List<StavkaPorudzbine> stavkaPorudzbine = new ArrayList<StavkaPorudzbine>();
-//			session.setAttribute("cartadmin", stavkaPorudzbine);
-//		}
+	
 	}
 
 }
