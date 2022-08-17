@@ -49,22 +49,22 @@ var app = new Vue({
 	
 	methods: {
 		filterName: function() {
-    return this.products.filter((product) => {
+    this.products.filter((product) => {
       product.name.contains(text);
     })
   },
   filterType: function() {
-    return this.products.filter((product) => {
+    this.products.filter((product) => {
       product.type.contains(text);
     })
   },
   filterAddress: function() {
-    return this.products.filter((product) => {
+    this.products.filter((product) => {
       product.location.contains(text);
     })
   },
   filterScore: function() {
-    return this.products.filter((product) => {
+    this.products.filter((product) => {
       product.avgScore.contains(text);
     })
   }

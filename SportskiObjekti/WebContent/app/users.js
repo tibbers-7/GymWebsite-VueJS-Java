@@ -6,6 +6,16 @@ var app = new Vue({
 		mode: "BROWSE",
 		product : { username: null, password: null, name: null, last_name: null, gender: null, birthDate: null },
 		error: '',
+		username: "",
+		      password: "",
+		      name: "",
+		      surname: "",
+		      picked: null,
+		      pickedF: null,
+		      date: null,
+		      last_name: null, 
+		      gender: null,
+		       birthDate: null
 	},
 	 template: ` 
     	<div>
@@ -37,27 +47,27 @@ var app = new Vue({
 			<table>
 				<tr>
 					<td>Username</td>
-					<td><input v-bind:disabled="mode!='CREATE'" type="text" v-model = "product.username" name="username" ></td>
+					<td><input v-bind:disabled="mode!='CREATE'" type="text" v-model = "username" name="username" ></td>
 				</tr>
 				<tr>
 					<td>Pass</td>
-					<td><input type="text" name="password" v-model = "product.password"></td>
+					<td><input type="text" name="password" v-model = "password"></td>
 				</tr>
 				<tr>
 					<td>Ime</td>
-					<td><input type="text" name="name" v-model = "product.name"></td>
+					<td><input type="text" name="name" v-model = "name"></td>
 				</tr>
 				<tr>
 					<td>Prezime</td>
-					<td><input type="text" name="last_name" v-model = "product.last_name"></td>
+					<td><input type="text" name="last_name" v-model = "last_name"></td>
 				</tr>
 				<tr>
 					<td>Pol</td>
-					<td><input type="text" name="gender" v-model = "product.gender"></td>
+					<td><input type="text" name="gender" v-model = "gender"></td>
 				</tr>
 				<tr>
 					<td>Datum rodjenja</td>
-					<td><input type="text" name="birthDate" v-model = "product.birthDate"></td>
+					<td><input type="text" name="birthDate" v-model = "birthDate"></td>
 				</tr>
 				<tr>
 					<td><input type="submit" value="Pošalji"></td>
@@ -96,19 +106,24 @@ var app = new Vue({
 		login : function() {
 			this.mode = 'LOGIN'
     	},
-		createUser: function (event) {
-				axios.post('rest/user/register', this.product)
-					.then((response) => {
-						alert('Novi nalog uspešno kreiran')
+		createUser: function () {
+				axios.post('rest/user/register', {
+				 username: this.username,
+			 	 password: this.password,
+			 	 name: this.name,
+			 	 lastName: this.surname,
+			 	 gender: "FEMALE",
+			 	 dateOfBirth: this.date})
+					.then(response => {
+						toast('Novi nalog uspešno kreiran')
 						this.mode = 'BROWSE'
-						axios.get('rest/user/users')
-							.then(response => (this.products = response.data))
+						
 					})
 		},
-		loginUser: function (event) {
+		loginUser: function () {
 				axios.post('rest/user/login', this.product)
-					.then((response) => {
-						alert('Uspešno logovanje!')
+					.then(response => {
+						toast('Uspešno logovanje!')
 						if(response.code!=400)
 						this.mode='LOGGED'
 					})

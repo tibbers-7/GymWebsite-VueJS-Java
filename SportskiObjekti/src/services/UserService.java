@@ -125,10 +125,12 @@ public class UserService {
 //		if (UserDAO.searchUser(userToRegister.getUsername()) != null) {
 //			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 //		} else {
-			UserDAO.addUser(userToRegister);
-			return Response.status(200).build();
+			User user=new User(userToRegister.getUsername(),userToRegister.getPassword(),userToRegister.getName(),userToRegister.getLast_name(),userToRegister.getGender(),userToRegister.getBirthDate());
+			UserDAO.addUser(user);
+			return Response.status(400).build();
 		//}
 	}
+	
 
 	@PostConstruct
 	public void init() {
