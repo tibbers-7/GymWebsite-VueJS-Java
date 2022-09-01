@@ -14,6 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+
 import beans.User;
 import data.UserDAO;
 
@@ -122,13 +123,15 @@ public class UserService {
 		
 		UserDAO UserDAO = (UserDAO) context.getAttribute("users");
 
-		if (UserDAO.searchUser(userToRegister.getUsername()) != null) {
-			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
-		} else {
-			UserDAO.addUser(userToRegister);
+//		if (UserDAO.searchUser(userToRegister.getUsername()) != null) {
+//			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
+//		} else {
+			User user=new User(userToRegister.getUsername(),userToRegister.getPassword(),userToRegister.getName(),userToRegister.getLast_name(),userToRegister.getGender(),userToRegister.getBirthDate());
+			UserDAO.addUser(user);
 			return Response.status(200).build();
-		}
+		//}
 	}
+	
 
 	@PostConstruct
 	public void init() {
@@ -138,16 +141,7 @@ public class UserService {
 			UserDAO UserDAO = new UserDAO(contextPath);
 			context.setAttribute("users", UserDAO);
 		}
-		
-//		HttpSession session = request.getSession();
-//		if (session.getAttribute("cart") == null) {
-//			List<StavkaPorudzbine> stavkaPorudzbine = new ArrayList<StavkaPorudzbine>();
-//			session.setAttribute("cart", stavkaPorudzbine);
-//		}
-//		if (session.getAttribute("cartadmin") == null) {
-//			List<StavkaPorudzbine> stavkaPorudzbine = new ArrayList<StavkaPorudzbine>();
-//			session.setAttribute("cartadmin", stavkaPorudzbine);
-//		}
+	
 	}
 
 }

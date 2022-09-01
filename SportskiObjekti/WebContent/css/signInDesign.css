@@ -1,0 +1,31 @@
+
+.login_container {
+    margin: 5% auto;
+    border-radius: 15px;
+    border-style: none;
+    width:30%;
+    height: 50%;
+    background-color: #000;
+  }
+  .credential_labels { 
+    padding-top: 3px;
+    color: white;  
+    font-size: 20px;
+ }
+
+
+ .credential_inputs {
+    font-size: 20px;
+    height: 30px;
+    width: 250px;
+    margin-top: -25px;
+ }
+
+ .register_container {
+  margin: 2% auto;
+  border-radius: 15px;
+  border-style: none;
+  width:30%;
+  height: 70%;
+  background-color: #000;
+}

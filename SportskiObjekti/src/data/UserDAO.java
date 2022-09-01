@@ -4,7 +4,9 @@ import beans.User;
 import utils.Gender;
 import utils.DateTools;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,9 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class UserDAO {
 
@@ -49,18 +48,20 @@ public class UserDAO {
 	}
 	
 	private void saveUser(User u) {
-		File f = new File(userFilepath + "/data/users.txt");
-		FileWriter writer=null;
+		FileOutputStream outputStream;
 		try {
-			writer = new FileWriter(f);
-			writer.write(u.getUserString()); 
-		    writer.flush();
+			String str = u.getUserString();
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(userFilepath + "/users.csv", true));
+		    writer.append("\n");
+		    writer.append(str);
 		    writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public User searchUser(String username) {
 		if (getUserCollection() != null) {
@@ -76,7 +77,7 @@ public class UserDAO {
 	private void loadUsers() {
 		BufferedReader in = null;
 		try {
-			File file = new File(userFilepath + "/users.txt");
+			File file = new File(userFilepath + "/users.csv");
 			System.out.println(file.getCanonicalPath());
 			in = new BufferedReader(new FileReader(file));
 			String line, username = "", password = "", name = "", last_name="", gender="", birth_date="";
