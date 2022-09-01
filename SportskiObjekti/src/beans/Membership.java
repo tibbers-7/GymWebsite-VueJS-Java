@@ -3,6 +3,7 @@ package beans;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import utils.Gender;
 import utils.ObjectType;
 
 public class Membership {
@@ -59,4 +60,9 @@ public class Membership {
 	public int cena;
 	public String customerID;
 	public String trainerID;
+	public String getMemberString() {
+		String s= ID+","+payDate+","+validUntil+","+cena+","+customerID+","+trainerID;
+		return s;
+	}
+	
 }
