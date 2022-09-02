@@ -42,6 +42,17 @@ public class SportsObjectDAO {
 			this.sportsObjectsPath = sportsObjectsPath;
 			loadSportsObjects();
 		}
+		public SportsObject getSportsObject(String sportsObjectID) {
+			if (getSportsObjectsCollection() != null) {
+				for (SportsObject s : getSportsObjectsCollection()) {
+					if (s.getName().equals(sportsObjectID)) {
+						return s;
+					}
+				}
+			}
+			return null;
+		}
+		
 
 		private String sportsObjectsPath = "";
 

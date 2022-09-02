@@ -1,7 +1,8 @@
 Vue.component("header", {
-	data: {
-		title: "Header",
+	title: "Header",
 		error: '',
+	data: function(){
+		
 	},
 	 template: ` 
     	<div>

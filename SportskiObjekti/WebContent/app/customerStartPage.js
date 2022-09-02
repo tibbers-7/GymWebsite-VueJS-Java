@@ -1,8 +1,7 @@
 Vue.component("start-page", {
-	
-	data: {
-		title: "StartPage",
-		error: '',
+	title: "StartPage",
+	error: '',
+	data: function(){
 	},
 	 template: ` 
     	<div>

@@ -81,7 +81,7 @@ public class MembershipDAO {
 			File file = new File(memberFilepath + "/members.csv");
 			System.out.println(file.getCanonicalPath());
 			in = new BufferedReader(new FileReader(file));
-			String ID="", payDate = "", validUntil = "", cena = "", customerID="", trainerID="", line="";
+			String ID="", payDate = "", validUntil = "", cena = "", customerID="", trainerID="", line="",status="",allowedUntil="";
 			StringTokenizer st;
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
@@ -94,10 +94,11 @@ public class MembershipDAO {
 					validUntil = st.nextToken().trim();
 					cena = st.nextToken().trim();
 					customerID = st.nextToken().trim();
-					trainerID = st.nextToken().trim();
+					status = st.nextToken().trim();
+					allowedUntil=st.nextToken().trim();
 				}
 				SimpleDateFormat parser = new SimpleDateFormat("dd.MM.yyyy.");
-				Membership member=new Membership(ID,parser.parse(payDate),LocalDateTime.parse(validUntil),Integer.parseInt(cena),customerID,trainerID);
+				Membership member=new Membership(ID,parser.parse(payDate),LocalDateTime.parse(validUntil),Integer.parseInt(cena),customerID,status,allowedUntil);
 				members.put(member.getMemberString(), member);
 			}
 		} catch (Exception e) {

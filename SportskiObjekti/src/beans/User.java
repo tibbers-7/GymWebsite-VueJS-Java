@@ -2,13 +2,19 @@ package beans;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
+import utils.CustomerType;
 import utils.Gender;
+import utils.UserType;
 
 public class User {
 	
-	public User(String username, String password, String name, String last_name, Gender gender, String birthDate) {
+	
+	public User(String username, String password, String name, String last_name, Gender gender, String birthDate,
+			UserType userType, String membershipID, String sportsObjectID, String visitedObjects,
+			int points, CustomerType customerType) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -16,22 +22,13 @@ public class User {
 		this.last_name = last_name;
 		this.gender = gender;
 		this.birthDate = birthDate;
+		this.userType = userType;
+		this.membershipID = membershipID;
+		this.sportsObjectID = sportsObjectID;
+		this.visitedObjectsID = visitedObjects;
+		this.points = points;
+		this.customerType = customerType;
 	}
-	public User(String username2, String password2, String name2, String last_name2, Gender genderEnum, Date date) {
-		this.username = username2;
-		this.password = password2;
-		this.name = name2;
-		this.last_name = last_name2;
-		this.gender = genderEnum;
-		this.birthDate = date.toGMTString();
-	}
-	private String username;
-	private String password;
-	private String name;
-	private String last_name;
-	private utils.Gender gender;
-	private String birthDate;
-	
 	public String getUsername() {
 		return username;
 	}
@@ -65,20 +62,65 @@ public class User {
 	public String getBirthDate() {
 		return birthDate;
 	}
-	public User() {
-		super();
-	}
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
-	
-	public String getUserString() {
-		char genderChar;
-		if(this.gender==Gender.MALE) genderChar='M'; else genderChar='F';
-//		DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");  
-//		String strDate = dateFormat.format(this.birthDate); 
-		String s=this.username+";"+this.password+";"+this.name+";"+this.last_name+";"+genderChar+";"+birthDate;
-		return s;
+	public UserType getUserType() {
+		return userType;
 	}
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
+	public String getMembershipID() {
+		return membershipID;
+	}
+	public void setMembershipID(String membershipID) {
+		this.membershipID = membershipID;
+	}
+	public String getSportsObjectID() {
+		return sportsObjectID;
+	}
+	public void setSportsObjectID(String sportsObjectID) {
+		this.sportsObjectID = sportsObjectID;
+	}
+	public String getVisitedObjects() {
+		return visitedObjectsID;
+	}
+	public void setVisitedObjects(String visitedObjects) {
+		this.visitedObjectsID = visitedObjects;
+	}
+	public int getPoints() {
+		return points;
+	}
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	public CustomerType getCustomerType() {
+		return customerType;
+	}
+	public void setCustomerType(CustomerType customerType) {
+		this.customerType = customerType;
+	}
+	@Override
+	public String toString() {
+		return username + "," + password + "," + name + "," + last_name
+				+"," + gender + "," + birthDate + "," + userType +","
+				+ membershipID + "," + sportsObjectID + "," + visitedObjectsID
+				+ "," + points + "," + customerType;
+	}
+	private String username;
+	private String password;
+	private String name;
+	private String last_name;
+	private utils.Gender gender;
+	private String birthDate;
+	
+	UserType userType;
+	String membershipID;
+	String sportsObjectID;
+	String visitedObjectsID;
+	int points;
+	CustomerType customerType;
+	
 	
 }

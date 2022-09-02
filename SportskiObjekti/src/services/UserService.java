@@ -17,9 +17,11 @@ import javax.ws.rs.core.Response;
 
 import beans.User;
 import data.UserDAO;
+import utils.CustomerType;
+import utils.UserType;
 
 
-@Path("/user")
+@Path("user")
 public class UserService {
 
 	@Context
@@ -33,7 +35,7 @@ public class UserService {
 	}
 	
 	@GET
-	@Path("/users")
+	@Path("users")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<User> getUsers() {
 		UserDAO UserDAO = (UserDAO) context.getAttribute("users");
@@ -43,7 +45,7 @@ public class UserService {
 	
 		
 	@GET
-	@Path("/logout")
+	@Path("logout")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response logout() {
 		
@@ -60,7 +62,7 @@ public class UserService {
 	}
 
 	@GET
-	@Path("/loginstat")
+	@Path("loginstat")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User loginStat() {
 
@@ -75,7 +77,7 @@ public class UserService {
 	}
 
 	@POST
-	@Path("/login")
+	@Path("login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(User userToLogIn) {
@@ -110,7 +112,7 @@ public class UserService {
 	}
 
 	@POST
-	@Path("/register")
+	@Path("register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(User userToRegister) {
@@ -126,8 +128,7 @@ public class UserService {
 //		if (UserDAO.searchUser(userToRegister.getUsername()) != null) {
 //			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 //		} else {
-			User user=new User(userToRegister.getUsername(),userToRegister.getPassword(),userToRegister.getName(),userToRegister.getLast_name(),userToRegister.getGender(),userToRegister.getBirthDate());
-			UserDAO.addUser(user);
+			UserDAO.addUser(userToRegister);
 			return Response.status(200).build();
 		//}
 	}

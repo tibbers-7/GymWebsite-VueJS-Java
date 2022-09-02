@@ -9,12 +9,12 @@ const CustomerStartPage = { template: '<customer-SP></customer-SP>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
-	    { path: '/', component: StartPage },
-	    { path: '/h', component: Header},
-	    { path: '/rp', component: RegisterPage },
-	    { path: '/lp', component: LoginPage },
-	    { path: '/csp', component: CustomerStartPage },
-	    { path: '/so', component: SportsObjects }
+	    { path: '/',name:'start', component: StartPage },
+	    { path: '/h',name:'header', component: Header},
+	    { path: '/rp',name:'register', component: RegisterPage },
+	    { path: '/lp',name:'login', component: LoginPage },
+	    { path: '/csp',name:'customerstart', component: CustomerStartPage },
+	    { path: '/so',name:'sports', component: SportsObjects }
 	    
 	  ]
 });
@@ -22,6 +22,6 @@ const router = new VueRouter({
 
 var app = new Vue({
 	router,
-	el: '#sports'
+	el: '#startPage'
 });
 

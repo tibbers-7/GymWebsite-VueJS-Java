@@ -1,6 +1,5 @@
 Vue.component("register-page", {
-	data: {
-		title: "Registrovanje",
+	title: "Registrovanje",
 		mode: "REGISTER",
 		user : { username: null, password: null, name: null, last_name: null, gender: null, birthDate: null },
 		error: '',
@@ -9,7 +8,9 @@ Vue.component("register-page", {
 		name: "",
 		last_name: "", 
 		genderMale: false,
-		birthDate: null
+		birthDate: null,
+	data: function(){
+		
 	},
 	 template: ` 
     <div>

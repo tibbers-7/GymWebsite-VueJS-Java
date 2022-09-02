@@ -1,14 +1,12 @@
 Vue.component("start-page", {
-	data: {
-		  
+	data: function (){
+		
 	},
+	name: 'start',
 	template: ` 
 <div>
-	{{title}}
-	<form>
 		<label>Ime</label>
 				<label>Cena</label>
-	</form>
 </div>		  
 `
 	, 

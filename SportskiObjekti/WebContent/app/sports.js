@@ -1,12 +1,12 @@
 //import * as toast from 'toast.js';
 Vue.component("sports-objects", {
-	el: '#sports',
-	data: {
-		sportsObjects: null,
+	sportsObjects: null,
 		title: "Sportski objekti",
 		mode: "BROWSE",
 		text: "",
 		error: '',
+	data: function (){
+		
 	},
 	 template: ` 
     	<div>
