@@ -3,13 +3,15 @@ Vue.component("manager-object", {
 	data: {
 		title: "managerObjectView",
 		object:null,
-		selected:false,
 		manager:null,
 		error: '',
+		addContent:false,
+		content:null
 	},
 	 template: ` 
-    	<div>
-    	<div class="header_container">
+    	<div class="bodyStyle">
+    	
+    <div class="header_container">
         <div class="Img">
             <img src="logo.png"style="height: 115px; width: 115px;"/>
         </div>
@@ -41,6 +43,7 @@ Vue.component("manager-object", {
                             <li>Tip:</li>
                             <li>Status:</li>
                             <li>Ocena:</li>
+                            <li>Radno Vreme:</li>
                         </ul>
                     </div>
                     <div class="values">
@@ -48,10 +51,39 @@ Vue.component("manager-object", {
                             <li>{{o.type}}</li>
                             <li>{{o.status}}</li>
                             <li>{{o.grade}}</li>
+                            <li>{{o.workHours}}</li>
                         </ul>
                     </div>
                 </div>
             </div>    
+    </div>
+
+
+    <div class="objUpdate_grid">
+        <a href="#/uo"><button class="button2" style="margin-left:5%;">Ažuriraj objekat</button></a>
+    </div>
+
+    <div class="newContentForm_grid" v-bind:hidden="addContent==false">
+        <div class="objectView_container" style="width:40%;">
+            <div class="grid_name"><input  type="text" class="name_input"  placeholder="Naziv"/></div>
+            <div class="headers">
+                <ul style="list-style:none">
+                    <li>Tip:</li>
+                    <li>Slika:</li>
+                    <li>Opis:</li>
+                    <li>Trajanje:</li>
+                </ul>
+            </div>
+            <div class="values">
+                <ul style="list-style:none">
+                    <li><input type="text" v-model="content.name" required/></li>
+                    <li><input type="image" v-model="content.logoPath" required></li>
+                    <li><input type="text" v-model="content.description"/></li>
+                    <li><input type="number" v-model="content.length" /></li>
+                </ul>
+            </div>
+        </div>
+        <button class="button2" v-on:click="addContent()" v-bind:hidden="addContent==true" style="margin-top:2%; margin-left:50%; width:20%;">Dodaj</button>
     </div>
 
     <div class="objContentM_grid">
@@ -66,6 +98,8 @@ Vue.component("manager-object", {
             </div>  
         </table>
     </div>
+
+   
     <div class="addNewContent_grid">
         <a href="#/nc"><button class="button2">Dodaj novi sadržaj</button></a>
     </div>
@@ -96,5 +130,16 @@ Vue.component("manager-object", {
 			
 				},
 	methods: {
+		showAddContent: function(){
+			addContent=true;
+			content=new Content();
+		},
+		
+		addContent: function() {
+			axios
+			.post('rest/sportsObjects/addContent', { id: this.object.id, content: this.content });
+			//.then(response => this.object = response.data); 
+		
+		}
 	}
 });
