@@ -10,6 +10,9 @@ const TrainingsTrainer = {template: '<trainings-trainer></trainings-trainer>'}
 const ManagerStartPage = {template: '<manager-SP></manager-SP>'}
 const ObjectViewManager = {template:'<manager-object></manager-object>'}
 const UpdateObject = {template:'<object-update></object-update>' }
+const AdminStartPage = {template:'<admin-SP></admin-SPobject-update>' }
+const UsersAdmin = {template:'<users-admin</users-admin>' }
+const AddUser = {template:'' }
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -24,7 +27,10 @@ const router = new VueRouter({
 	    { path: '/tt', component: TrainingsTrainer },
 	    { path: '/msp', component: ManagerStartPage },
 	    { path: '/ov', component: ObjectViewManager },
-	    { path: '/uo', component: UpdateObject }
+	    { path: '/uo', component: UpdateObject },
+	    { path: '/asp', component: AdminStartPage },
+	    { path: '/au', component: UsersAdmin },
+	    { path: '/ua', component: AddUser }
 	    
 	  ]
 });

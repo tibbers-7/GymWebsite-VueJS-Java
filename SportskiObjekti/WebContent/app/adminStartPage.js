@@ -1,12 +1,12 @@
-Vue.component("manager-SP", {
+Vue.component("admin-SP", {
 	data: function() {
 		return{
-		title: "managerStartPage",
+		title: "adminStartPage",
 		MODE: "LOGGED",
 		sportsObjects: null,
 		object:null,
 		selected:false,
-		manager:null,
+		admin:null,
 		error: '',
 		}
 	},
@@ -28,8 +28,8 @@ Vue.component("manager-SP", {
     <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/msp">Naši Objekti</a></button></th>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/ov">Moj Sportski Objekat</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/asp">Naši Objekti</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/au">Korisnici</a></button></th>
 	        </tr>
 	    </table>
     </div>
@@ -171,8 +171,8 @@ Vue.component("manager-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeManager')
-		         .then(response => this.manager = response.data);
+		         .get('rest/users/activeAdmin')
+		         .then(response => this.customer = response.data);
 		axios.get('rest/sportsobjects/')
 			.then(response => (this.sportsObjects = response.data))
 			
