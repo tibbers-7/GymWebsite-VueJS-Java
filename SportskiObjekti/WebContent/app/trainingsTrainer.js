@@ -88,7 +88,7 @@ Vue.component("trainings-customer", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeCustomer')
+         .get('rest/users/activeTrainer')
          .then(response => { 
 			this.customer = response.data;
 			axios
