@@ -1,20 +1,30 @@
-
-const Header = { template: '<header></header>'}
-const SportsObjects = { template: '<sports-objects></sports-objects>'}
+import VueRouter from 'vue-router'
 const StartPage = { template: '<start-page></start-page>' }
 const RegisterPage = { template: '<register-page></register-page>' }
 const LoginPage = { template: '<login-page></login-page>' }
 const CustomerStartPage = { template: '<customer-SP></customer-SP>'}
+const TrainingsCustomer = {template: '<trainings-customer'}
+const MembershipsCustomer = {template: '<memberships-customer'}
+const TrainerStartPage = { template: '<trainer-SP></trainer-SP>'}
+const TrainingsTrainer = {template: '<trainings-trainer></trainings-trainer>'}
+const ManagerStartPage = {template: '<manager-SP></manager-SP>'}
+const ObjectViewManager = {template:'<manager-object></manager-object>'}
+const UpdateObject = {template:'<object-update></object-update>' }
 
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
-	    { path: '/',name:'start', component: StartPage },
-	    { path: '/h',name:'header', component: Header},
-	    { path: '/rp',name:'register', component: RegisterPage },
-	    { path: '/lp',name:'login', component: LoginPage },
-	    { path: '/csp',name:'customerstart', component: CustomerStartPage },
-	    { path: '/so',name:'sports', component: SportsObjects }
+	    { path: '/', component: StartPage },
+	    { path: '/rp', component: RegisterPage },
+	    { path: '/lp', component: LoginPage },
+	    { path: '/csp', component: CustomerStartPage },
+	    { path: '/ct', component: TrainingsCustomer },
+	    { path: '/cm', component: MembershipsCustomer },
+	    { path: '/tsp', component: TrainerStartPage },
+	    { path: '/tt', component: TrainingsTrainer },
+	    { path: '/msp', component: ManagerStartPage },
+	    { path: '/ov', component: ObjectViewManager },
+	    { path: '/uo', component: UpdateObject }
 	    
 	  ]
 });

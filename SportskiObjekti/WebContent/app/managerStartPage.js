@@ -1,12 +1,12 @@
-Vue.component("customer-SP", {
-	el: '#customerStartPage',
+Vue.component("manager-SP", {
+	el: '#managerStartPage',
 	data: {
-		title: "customerStartPage",
+		title: "managerStartPage",
 		MODE: "LOGGED",
 		sportsObjects: null,
 		object:null,
 		selected:false,
-		customer:null,
+		manager:null,
 		error: '',
 	},
 	 template: ` 
@@ -27,9 +27,8 @@ Vue.component("customer-SP", {
     <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/csp">Naši Objekti</a></button></th>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/ct">Moji Treninzi</a></button></th>
-	            <th align="left" class="header_item"><button class="barButton"><a class="inactive" href="#/cm">Moje članarine</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/msp">Naši Objekti</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/ov">Moj Sportski Objekat</a></button></th>
 	        </tr>
 	    </table>
     </div>
@@ -171,7 +170,7 @@ Vue.component("customer-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeCustomer')
+		         .get('rest/users/activeManager')
 		         .then(response => this.customer = response.data);
 		axios.get('rest/sportsobjects/')
 			.then(response => (this.sportsObjects = response.data))

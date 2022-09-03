@@ -1,5 +1,7 @@
 Vue.component("register-page", {
-	title: "Registrovanje",
+	el: '#registerPage',
+	data: {
+		title: "Registrovanje",
 		mode: "REGISTER",
 		user : { username: null, password: null, name: null, last_name: null, gender: null, birthDate: null },
 		error: '',
@@ -7,10 +9,9 @@ Vue.component("register-page", {
 		password: "",
 		name: "",
 		last_name: "", 
-		genderMale: false,
-		birthDate: null,
-	data: function(){
-		
+		genderMale:false,  
+		genderFemale:false,
+		birthDate: null
 	},
 	 template: ` 
     <div>
@@ -46,7 +47,7 @@ Vue.component("register-page", {
             </tr>
             <tr>
                 <td align="center" class="credential_inputs">
-                    <input type="radio" name="gender" id="m" value="female" >
+                    <input type="radio" name="gender" id="m" value="female" v-model = "genderMale" >
                     <label for="f" style="color:white">Ženski</label>
                     <input type="radio" name="gender" id="f" value="male" v-model = "genderMale">
                     <label for="m" style="color: white;">Muški</label>
@@ -70,6 +71,12 @@ Vue.component("register-page", {
 	methods: {
 		
 		createUser: function () {
+			if (genderMale) gender='M';
+			if(genderFemale) gender='F';
+			
+			if(username==null | password==null | name==null | lastName==null | gender==null | dateOfBirth==null){
+				toast("Niste uneli sve potrebne podatke!")
+			} else{
 				axios.post('rest/user/register', {
 				 username: this.username,
 			 	 password: this.password,
@@ -79,9 +86,11 @@ Vue.component("register-page", {
 			 	 dateOfBirth: this.birthDate})
 			 	 
 					.then(response => {
-						this.mode = 'LOGIN'
+						toast("Uspešno napravljen korisnički nalog!")
+						router.push("/#lp");
 						
 					})
+				}
 		}
 	}
 });

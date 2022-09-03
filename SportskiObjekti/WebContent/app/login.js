@@ -1,16 +1,22 @@
 Vue.component("login-page", {
-		title: "Login",
-		mode: "LOGIN",
+	el: '#loginPage',
+	data: {
+		title: "login",
 		user : { username: null, password: null },
 		error: '',
 		username: "",
 		password: "",
-	data: function() {
-		
 	},
 	 template: ` 
     	<div>
-			
+			<div class="header_container">
+			        <div class="Img">
+			            <img src="logo.png"style="height: 115px; width: 115px;"/>
+			        </div>
+			        <div class="Name"><h1> Fitness </h1></div>
+			        <div class="Register"><button class="Button"  href="#/rp" >Registrujte se</button></div>
+
+			</div>
 			        <form id="formlogin" v-bind:hidden="mode!='LOGIN'">
 						<table class="login_container">
 			                <tr><td class="credential_labels" align="center">Korisničko ime</td></tr>

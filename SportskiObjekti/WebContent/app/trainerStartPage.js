@@ -1,12 +1,12 @@
-Vue.component("customer-SP", {
-	el: '#customerStartPage',
+Vue.component("trainer-SP", {
+	el: '#trainerStartPage',
 	data: {
-		title: "customerStartPage",
+		title: "trainerStartPage",
 		MODE: "LOGGED",
 		sportsObjects: null,
 		object:null,
 		selected:false,
-		customer:null,
+		trainer:null,
 		error: '',
 	},
 	 template: ` 
@@ -27,9 +27,8 @@ Vue.component("customer-SP", {
     <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/csp">Naši Objekti</a></button></th>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/ct">Moji Treninzi</a></button></th>
-	            <th align="left" class="header_item"><button class="barButton"><a class="inactive" href="#/cm">Moje članarine</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/tsp">Naši Objekti</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/tt">Moji Treninzi</a></button></th>
 	        </tr>
 	    </table>
     </div>
@@ -160,7 +159,7 @@ Vue.component("customer-SP", {
 	        </div>
 	    </div>
 	    <div class="back_Btn2_grid">
-	        <a href="#/csp"><img src="back.png" class="back_img"></img></a>
+	        <a href="#/tsp"><img src="back.png" class="back_img"></img></a>
 	    </div>
 	    <div class="es1"></div>
 	    <div class="es3"></div>
@@ -171,8 +170,8 @@ Vue.component("customer-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeCustomer')
-		         .then(response => this.customer = response.data);
+		         .get('rest/users/activeTrainer')
+		         .then(response => this.trainer = response.data);
 		axios.get('rest/sportsobjects/')
 			.then(response => (this.sportsObjects = response.data))
 			

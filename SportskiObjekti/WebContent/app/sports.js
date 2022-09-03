@@ -1,74 +1,128 @@
-//import * as toast from 'toast.js';
-Vue.component("sports-objects", {
-	sportsObjects: null,
+var app = new Vue({
+	el: '#sports',
+	data: {
+		products: null,
 		title: "Sportski objekti",
 		mode: "BROWSE",
-		text: "",
+		selectedProduct: {},
 		error: '',
-	data: function (){
-		
 	},
 	 template: ` 
     	<div>
-    <div class="mainPage" style="margin-top: 60 ;">
-        <h3 class="header">Naši Objekti</h3>
-        <table class="table">
-            <tr class="table-header" >
-                <th class="header__item">Naziv</th>
-                <th class="header__item">Tip</th>
-                <th class="header__item">Ponuda</th>
-                <th class="header__item">Otvoreno</th>
-                <th class="header__item">Adresa</th>
-                <th class="header__item">Ocena</th>
-                <th class="header__item">Logo</th>
-                <th class="header__item">Radno vreme</th>
-            </tr>
-            <div class="table-content">  
-            <tr class="table-row"  v-for="(o, index) in sportsObjects">
-                <td class="table-data">{{o.name}}</td>
-                 <td class="table-data">{{o.type}}</td>
-                 <td class="table-data">{{o.services}}</td>
-                 <td class="table-data">{{o.isOpen}}</td>
-                 <td class="table-data">{{o.location}}</td>
-                 <td class="table-data">{{o.avgScore}}</td>
-                 <td class="table-data"><img src={{o.logoPath}}></td>
-                 <td class="table-data">{{o.openHours}}</td>
-            </tr>
-            </div>  
-        </table>
-    </div>
-
-    </div>
+    		<h3>Prikaz proizvoda</h3>
+    		<table border="1">
+	    		<tr bgcolor="lightgrey">
+	    			<th>Naziv</th>
+	    			<th>Tip</th>
+	    			<th>Ponuda</th>
+	    			<th>Otvoreno</th>
+	    			<th>Adresa</th>
+	    			<th>Ocena</th>
+	    			<th>Logo</th>
+	    			<th>Radno vreme</th>
+	    		</tr>
+	    			
+	    		<tr v-for="(p, index) in products">
+	    			<td>{{p.name}}</td>
+	    		 	<td>{{p.type}}</td>
+	    		 	<td>{{p.services}}</td>
+	    		 	<td>{{p.isOpen}}</td>
+	    		 	<td>{{p.location}}</td>
+	    		 	<td>{{p.avgScore}}</td>
+	    		 	<td>{{p.logoPath}}</td>
+	    		 	<td>{{p.openHours}}</td>
+	    		</tr>
+	    	</table>
+    	</div>		  
     	`,
 	mounted() {
 		axios.get('rest/sportsobjects/')
-			.then(response => (this.sportsObjects = response.data))
+			.then(response => (this.products = response.data))
 	},
-	
-	
 	methods: {
-		filterName: function() {
-    this.sportsObjects.filter((object) => {
-      object.name.contains(text);
-    })
-  },
-  filterType: function() {
-    this.sportsObjects.filter((object) => {
-      object.type.contains(text);
-    })
-  },
-  filterAddress: function() {
-    this.sportsObjects.filter((object) => {
-      object.location.contains(text);
-    })
-  },
-  filterScore: function() {
-    this.sportsObjects.filter((object) => {
-      object.avgScore.contains(text);
-    })
-  }
-  
-		
-		
+		editProduct: function (product) {
+			this.selectedProduct = product
+			this.mode = 'EDIT'
+			/*axios.put('rest/products/' + this.selectedProduct.id, this.selectedProduct)
+					.then((response) => {
+						alert('Proizvod je uspešno izmenjen ')
+						this.mode = 'BROWSE'
+						this.products = this.products.filter((p) => p.id !== this.selectedProduct.id)
+						this.products.push(response.data)
+					})*/
+		},
+		popustProduct: function (product) {
+			this.selectedProduct = product
+			axios.put('rest/products/popust/' + this.selectedProduct.sifra, this.selectedProduct)
+					.then((response) => {
+						alert('Proizvod je uspešno izmenjen sa popustom')
+						this.mode = 'BROWSE'
+						this.products = this.products.filter((p) => p.sifra !== this.selectedProduct.sifra)
+						this.products.push(response.data)
+					})
+		},
+		showForm: function () {
+			this.mode = 'CREATE'
+			this.selectedProduct = { sifra: null, polaziste: null, odrediste: null, mesta: null, trajanje: null, presedanje: null, cena: null }
+		},
+		createOrEditProduct: function (event) {
+			this.error = ""
+			if (this.selectedProduct.polaziste.toLowerCase() === this.selectedProduct.odrediste.toLowerCase()) {
+				this.error = "Polaziste i odrediste ne mogu biti isti";
+				event.preventDefault();
+				return;
+			}
+			
+			if (this.mode == 'CREATE') {
+				for(p of this.products){
+					if(this.selectedProduct.sifra.toLowerCase() === p.sifra.toLowerCase()){
+						this.error = "Sifra vec postoji";
+						event.preventDefault();
+						return;
+					}
+				}
+				axios.post('rest/products', this.selectedProduct)
+					.then((response) => {
+						alert('Novi proizvod uspešno kreiran')
+						this.mode = 'BROWSE'
+						this.products.push(response.data)
+					})
+
+			} else {
+				axios.put('rest/products/' + this.selectedProduct.sifra, this.selectedProduct)
+					.then((response) => {
+						alert('Proizvod je uspešno izmenjen ')
+						this.mode = 'BROWSE'
+						this.products = this.products.filter((p) => p.sifra !== this.selectedProduct.sifra)
+						this.products.push(response.data)
+					})
+			}
+
+			event.preventDefault();
+		},
+		deleteProduct: function (product) {
+			this.mode = 'BROWSE'
+			axios.delete('rest/products/' + product.sifra)
+				.then(() => {
+					alert('Proizvod je uspesno obrisan')
+					this.products = this.products.filter((p) => p.sifra !== product.sifra)
+				})
+		},
+		kupovinaProduct: function(product){
+			this.mode = 'BROWSE'
+			this.selectedProduct = product
+			if (this.selectedProduct.mesta < 1) {
+				this.error = "Nema vise karata";
+				alert("Nema vise karata");
+				return;
+			}
+			axios.put('rest/products/kupovina/' + this.selectedProduct.sifra, this.selectedProduct)
+					.then((response) => {
+						alert('Proizvod je kupljen ')
+						this.mode = 'BROWSE'
+						this.products = this.products.filter((p) => p.sifra !== this.selectedProduct.sifra)
+						this.products.push(response.data)
+					})
+		}
 	}
 });

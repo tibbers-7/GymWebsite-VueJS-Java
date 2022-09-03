@@ -1,14 +1,349 @@
-tr.selected {
-	background: lightblue;
-}
-tr {
-	cursor: pointer;
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;600&display=swap');
+
+.active {
+    text-decoration: underline;
 }
 
-#error {
-	color: red;
+.inactive {
+    text-decoration: none;
+}
+/* HEADER DESIGN */
+.bodyStyle {
+    background-color: #d74a49;
+    width: 100%; 
+    font-family: 'Red Hat Display', sans-serif;
+    padding: 0%;
+    margin: 0%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
-#success {
-	color: green;	
+.title {
+height: 20%;
+margin-right: auto;
+margin-left: auto;
+}
+.header_container {
+
+  padding: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
+  background-image: url("header.jpg");
+  color: #E0FBFC;
+  height: 25%;
+  display: grid; 
+  grid-template-columns: 0.4fr 1.1fr 1fr; 
+  grid-template-rows: 1.1fr 0.9fr; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+  "Img Name Slot1"
+  "Img Name Slot2"; 
+}
+.Img 
+{   grid-area: Img; 
+margin-left: 60%;
+margin-top: 20px;}
+.Name 
+{   grid-area: Name;
+font-size: 30px;
+margin-left: 0;
+}
+.Login 
+{   grid-area: Slot1;
+margin-left: 30%;
+margin-top: 30px;
+}
+.Register { 
+grid-area: Slot2;
+margin-left: 30%;
+}
+.Home {
+    grid-area: Slot1;
+    margin-left: 30%;
+    margin-top: 30px;
+}
+
+.Button {
+    background-color: #d74a49;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 150px;
+}
+
+.button-1:hover, .button-1:focus 
+{
+    background-color: #ee7b7b;
+}
+
+.barBase 
+{
+    padding: 0px;
+    margin-left: 0px;
+    background: hsla(359, 68%, 22%, 1);
+    background: linear-gradient(90deg, hsla(359, 68%, 22%, 1) 0%, hsla(0, 50%, 2%, 1) 100%);    
+    background: -moz-linear-gradient(90deg, hsla(359, 68%, 22%, 1) 0%, hsla(0, 50%, 2%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsla(359, 68%, 22%, 1) 0%, hsla(0, 50%, 2%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#5D1213", endColorstr="#090303", GradientType=1 );
+    color: #E0FBFC;
+    height: 10%;
+  }
+
+.barButton {
+    background: transparent;
+    width: 200px;
+    border:none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: larger;
+    height: 100%;
+    line-height: 20px;
+    list-style: none;
+    margin-top: 20px;
+    margin-left: 70px;
+    outline: none;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.barItem 
+{
+    margin-top: 50%;
+    margin-left: 20%;
+}
+
+/* SIGN IN */
+
+.login_container {
+    margin: 5% auto;
+    border-radius: 15px;
+    border-style: none;
+    width:30%;
+    height: 50%;
+    background-color: #000;
+  }
+  .credential_labels { 
+    padding-top: 3px;
+    color: white;  
+    font-size: 20px;
+ }
+
+
+ .credential_inputs {
+    font-size: 20px;
+    height: 30px;
+    width: 250px;
+    margin-top: -25px;
+ }
+
+ .register_container {
+  margin: 2% auto;
+  border-radius: 15px;
+  border-style: none;
+  width:30%;
+  height: 70%;
+  background-color: #000;
+}
+
+/* START PAGE */
+
+
+.table {
+    background-color: white;
+    margin-left: 50px;
+    width:90%;
+    border:1px solid;
+    font-size: 20px;
+}
+
+.table-header {
+    display:flex;
+    width:100%;
+    background:#1a0606;
+}
+
+.table-row {
+    display:flex;
+    width:100%;
+}
+
+.table-data, .header__item {
+    flex: 1 1 20%;
+    text-align:center;
+    color:white;
+}
+
+.table-data {
+    color: black;
+}
+
+.header__item {
+    text-transform:uppercase;
+}
+
+.filter__link {
+    color:white;
+    text-decoration: none;
+    position:relative;
+    display:inline-block;
+}
+
+.header 
+{
+    font-size: 30px;
+    margin-left: 45%;
+    color: white;
+}
+
+
+/* MEMBERSHIP */
+
+.membership_grid {
+    display: grid; 
+  grid-template-columns: 1.1fr [x] 0.7fr; 
+  grid-template-rows: 1fr 1.3fr 1.1fr; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "points_grid points_grid"
+    "active_memberships_grid b1_grid"
+    "active_memberships_grid b2_grid"; 
+}
+  .membership_buttons { grid-area: membership_buttons; }
+
+.active_membership
+{
+    font-size: 25px;
+    font-family: 'Red Hat Display', sans-serif;
+    height: 70%;
+    grid-area: active_memberships_grid; 
+    
+}
+.points {
+    grid-area: points_grid; 
+}
+
+.points_container {
+    border-radius: 8px;
+    margin-left: 41%;
+    margin-top: 2%;
+    border: 3px solid #4b1313;
+    background-color: #dcdcdc;
+    width: 20%;
+    height: 40%;
+
+}
+
+.points_text { 
+    grid-area: grid_name;
+    color: #641616;
+    text-align: center;
+    line-height: 45px;
+    font-weight: bold;
+    font-size: 16px;
+    
+ }
+
+
+.b1_mem {
+    grid-area: b1_grid;
+    margin-top: 8%;
+}
+
+.b2_mem {
+    grid-area: b2_grid;
+}
+
+.am_container {
+    border-radius: 8px;
+    margin-left: 40%;
+    width:50%;
+    border: 2px solid #1a0606;
+    display: grid; 
+    background-color: #dcdcdc;
+    grid-template-columns: 0.9fr [x] 0.9fr; 
+    grid-template-rows: 0.5fr 1.5fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "grid_name grid_name"
+      "headers values"; 
+  }
+  .grid_name { 
+    font-weight: bold;
+    grid-area: grid_name;
+    background: hsla(359, 68%, 22%, 1);
+    background: linear-gradient(90deg, hsla(359, 68%, 22%, 1) 0%, hsla(0, 50%, 2%, 1) 100%);    
+    background: -moz-linear-gradient(90deg, hsla(359, 68%, 22%, 1) 0%, hsla(0, 50%, 2%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsla(359, 68%, 22%, 1) 0%, hsla(0, 50%, 2%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#5D1213", endColorstr="#090303", GradientType=1 );
+    color: white;
+    text-transform:uppercase;
+    text-align: center;
+    line-height: 90px;
+    
+ }
+  .headers { 
+    grid-area: headers;
+    font-size: 20px;
+ }
+  .values { 
+    grid-area: values;
+    font-size: 20px;
+ }
+
+
+  .mem_button {
+    background-color: #1a0606;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    height: 70px;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 300px;
 }
