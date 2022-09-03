@@ -1,7 +1,7 @@
-Vue.component("customer-SP", {
+Vue.component("trainer-SP", {
 	
 	data: {
-		title: "customerStartPage",
+		title: "trainerStartPage",
 		MODE: "LOGGED",
 		sportsObjects: null,
 		object:null,

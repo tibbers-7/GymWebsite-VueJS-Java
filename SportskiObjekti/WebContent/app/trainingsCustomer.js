@@ -57,7 +57,7 @@ Vue.component("trainings-customer", {
          .then(response => { 
 			this.customer = response.data;
 			axios
-			.post('rest/users/getTrainings', { id: this.customer.id })
+			.post('rest/trainings/getTrainings', { id: this.customer.id })
 			.then(response => this.trainings = response.data); 
 			});
 	}
