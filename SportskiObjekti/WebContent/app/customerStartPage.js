@@ -1,6 +1,6 @@
 Vue.component("customer-SP", {
-	el: '#customerStartPage',
-	data: {
+	data: function() {
+		return{
 		title: "customerStartPage",
 		MODE: "LOGGED",
 		sportsObjects: null,
@@ -8,6 +8,7 @@ Vue.component("customer-SP", {
 		selected:false,
 		customer:null,
 		error: '',
+		}
 	},
 	 template: ` 
     	<div>

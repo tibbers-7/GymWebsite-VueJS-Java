@@ -1,12 +1,13 @@
 //import * as toast from 'toast.js';
 Vue.component("trainings-customer", {
-	el: '#trainingsCustomer',
-	data: {
+	data: function() {
+		return{
 		trainings: null,
 		customer: null,
 		title: "Treninzi",
 		text: "",
 		error: '',
+		}
 	},
 	 template: ` 
     	<div>

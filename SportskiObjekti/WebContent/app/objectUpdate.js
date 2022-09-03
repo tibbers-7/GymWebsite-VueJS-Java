@@ -1,11 +1,12 @@
 Vue.component("object-update", {
-	el: '#objectUpdate',
-	data: {
+	data: function(){
+		return{
 		title: "objectUpdate",
 		object:null,
 		manager:null,
 		error: '',
 		updatedObj:null
+		}
 	},
 	 template: ` 
     	<div class="bodyStyle">

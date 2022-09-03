@@ -1,6 +1,6 @@
 Vue.component("manager-SP", {
-	el: '#managerStartPage',
-	data: {
+	data: function() {
+		return{
 		title: "managerStartPage",
 		MODE: "LOGGED",
 		sportsObjects: null,
@@ -8,6 +8,7 @@ Vue.component("manager-SP", {
 		selected:false,
 		manager:null,
 		error: '',
+		}
 	},
 	 template: ` 
     	<div>

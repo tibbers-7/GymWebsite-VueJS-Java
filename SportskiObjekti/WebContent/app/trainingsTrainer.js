@@ -1,7 +1,7 @@
 //import * as toast from 'toast.js';
 Vue.component("trainings-trainer", {
-	el: '#trainingsTrainer',
-	data: {
+	data: function() {
+		return{
 		personalTrainings: null,
 		groupTrainings:null,
 		selected:false,
@@ -10,6 +10,7 @@ Vue.component("trainings-trainer", {
 		title: "Treninzi",
 		text: "",
 		error: '',
+		}
 	},
 	 template: ` 
     	<div class="bodyStyle">
