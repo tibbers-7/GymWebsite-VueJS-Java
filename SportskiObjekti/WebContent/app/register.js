@@ -1,4 +1,5 @@
 Vue.component("register-page", {
+	el: '#registerPage',
 	data: {
 		title: "Registrovanje",
 		mode: "REGISTER",

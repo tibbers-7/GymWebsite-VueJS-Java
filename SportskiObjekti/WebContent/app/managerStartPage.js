@@ -1,5 +1,5 @@
 Vue.component("manager-SP", {
-	
+	el: '#managerStartPage',
 	data: {
 		title: "managerStartPage",
 		MODE: "LOGGED",
@@ -27,8 +27,8 @@ Vue.component("manager-SP", {
     <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/csp">Naši Objekti</a></button></th>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/ct">Moj Sportski Objekat</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/msp">Naši Objekti</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/ov">Moj Sportski Objekat</a></button></th>
 	        </tr>
 	    </table>
     </div>

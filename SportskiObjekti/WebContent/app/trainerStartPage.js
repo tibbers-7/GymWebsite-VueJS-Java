@@ -1,5 +1,5 @@
 Vue.component("trainer-SP", {
-	
+	el: '#trainerStartPage',
 	data: {
 		title: "trainerStartPage",
 		MODE: "LOGGED",

@@ -1,5 +1,5 @@
 Vue.component("start-page", {
-	
+	el: '#startPage',
 	data: {
 		sportsObjects: null,
 		title: "Sportski objekti",

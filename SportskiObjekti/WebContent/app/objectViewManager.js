@@ -1,5 +1,5 @@
 Vue.component("manager-object", {
-	
+	el: '#managerObject',
 	data: {
 		title: "managerObjectView",
 		object:null,

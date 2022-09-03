@@ -1,6 +1,7 @@
 Vue.component("login-page", {
+	el: '#loginPage',
 	data: {
-		title: "Login",
+		title: "login",
 		user : { username: null, password: null },
 		error: '',
 		username: "",

@@ -9,6 +9,7 @@ const TrainerStartPage = { template: '<trainer-SP></trainer-SP>'}
 const TrainingsTrainer = {template: '<trainings-trainer></trainings-trainer>'}
 const ManagerStartPage = {template: '<manager-SP></manager-SP>'}
 const ObjectViewManager = {template:'<manager-object></manager-object>'}
+const UpdateObject = {template:'<object-update></object-update>' }
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -22,7 +23,8 @@ const router = new VueRouter({
 	    { path: '/tsp', component: TrainerStartPage },
 	    { path: '/tt', component: TrainingsTrainer },
 	    { path: '/msp', component: ManagerStartPage },
-	    { path: '/ov', component: ObjectViewManager }
+	    { path: '/ov', component: ObjectViewManager },
+	    { path: '/uo', component: UpdateObject }
 	    
 	  ]
 });

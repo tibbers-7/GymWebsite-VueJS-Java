@@ -1,5 +1,5 @@
 Vue.component("customer-SP", {
-	
+	el: '#customerStartPage',
 	data: {
 		title: "customerStartPage",
 		MODE: "LOGGED",
