@@ -1,4 +1,3 @@
-import VueRouter from 'vue-router'
 const StartPage = { template: '<start-page></start-page>' }
 const RegisterPage = { template: '<register-page></register-page>' }
 const LoginPage = { template: '<login-page></login-page>' }

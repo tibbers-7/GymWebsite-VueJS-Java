@@ -1,11 +1,12 @@
 Vue.component("manager-object", {
-	el: '#managerObject',
-	data: {
+	data: function() {
+		return{
 		title: "managerObjectView",
 		object:null,
 		selected:false,
 		manager:null,
 		error: '',
+		}
 	},
 	 template: ` 
     	<div>

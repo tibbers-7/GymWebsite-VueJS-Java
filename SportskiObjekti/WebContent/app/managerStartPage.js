@@ -1,5 +1,4 @@
 Vue.component("manager-SP", {
-	el: '#managerStartPage',
 	data: {
 		title: "managerStartPage",
 		MODE: "LOGGED",

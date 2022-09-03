@@ -1,11 +1,12 @@
 var app = new Vue({
-	el: '#sports',
-	data: {
+	data: function() {
+		return{
 		products: null,
 		title: "Sportski objekti",
 		mode: "BROWSE",
 		selectedProduct: {},
 		error: '',
+		}
 	},
 	 template: ` 
     	<div>

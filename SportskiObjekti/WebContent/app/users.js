@@ -1,11 +1,12 @@
 var app = new Vue({
-	el: '#users',
-	data: {
+	data:function() {
+		return{
 		products: null,
 		title: "Korisnici",
 		mode: "BROWSE",
 		product : { username: null, password: null, name: null, last_name: null, gender: null, birthDate: null },
 		error: '',
+		}
 	},
 	 template: ` 
     	<div>

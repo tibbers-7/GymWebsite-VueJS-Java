@@ -1,6 +1,6 @@
 Vue.component("trainer-SP", {
-	el: '#trainerStartPage',
-	data: {
+	data: function() {
+		return{
 		title: "trainerStartPage",
 		MODE: "LOGGED",
 		sportsObjects: null,
@@ -8,6 +8,7 @@ Vue.component("trainer-SP", {
 		selected:false,
 		trainer:null,
 		error: '',
+		}
 	},
 	 template: ` 
     	<div>

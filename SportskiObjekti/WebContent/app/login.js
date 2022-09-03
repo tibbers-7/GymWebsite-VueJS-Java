@@ -1,11 +1,12 @@
 Vue.component("login-page", {
-	el: '#loginPage',
-	data: {
+	data: function() {
+		return{
 		title: "login",
 		user : { username: null, password: null },
 		error: '',
 		username: "",
 		password: "",
+	}
 	},
 	 template: ` 
     	<div>

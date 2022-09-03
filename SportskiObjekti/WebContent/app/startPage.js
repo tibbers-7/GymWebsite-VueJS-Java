@@ -1,6 +1,6 @@
 Vue.component("start-page", {
-	el: '#startPage',
-	data: {
+	data: function() {
+		return{
 		sportsObjects: null,
 		title: "Sportski objekti",
 		selected:false,
@@ -8,6 +8,7 @@ Vue.component("start-page", {
 		mode: "BROWSE",
 		text: "",
 		error: '',
+		}
 	},
 	 template: ` 
     	<div>
