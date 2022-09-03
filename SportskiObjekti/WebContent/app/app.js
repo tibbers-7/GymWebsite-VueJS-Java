@@ -6,7 +6,9 @@ const CustomerStartPage = { template: '<customer-SP></customer-SP>'}
 const TrainingsCustomer = {template: '<trainings-customer'}
 const MembershipsCustomer = {template: '<memberships-customer'}
 const TrainerStartPage = { template: '<trainer-SP></trainer-SP>'}
-const TrainingsTrainer = {template: '<trainings-trainer'}
+const TrainingsTrainer = {template: '<trainings-trainer></trainings-trainer>'}
+const ManagerStartPage = {template: '<manager-SP></manager-SP>'}
+const ObjectViewManager = {template:'<manager-object></manager-object>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -19,6 +21,8 @@ const router = new VueRouter({
 	    { path: '/cm', component: MembershipsCustomer },
 	    { path: '/tsp', component: TrainerStartPage },
 	    { path: '/tt', component: TrainingsTrainer },
+	    { path: '/msp', component: ManagerStartPage },
+	    { path: '/ov', component: ObjectViewManager }
 	    
 	  ]
 });

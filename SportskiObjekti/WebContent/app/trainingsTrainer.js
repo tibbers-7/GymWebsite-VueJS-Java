@@ -1,6 +1,6 @@
 //import * as toast from 'toast.js';
-Vue.component("trainings-customer", {
-	el: '#trainingsCustomer',
+Vue.component("trainings-trainer", {
+	el: '#trainingsTrainer',
 	data: {
 		personalTrainings: null,
 		groupTrainings:null,

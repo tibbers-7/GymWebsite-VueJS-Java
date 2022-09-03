@@ -1,8 +1,7 @@
-Vue.component("manager-SP", {
+Vue.component("manager-object", {
 	
 	data: {
-		title: "managerStartPage",
-		MODE: "LOGGED",
+		title: "managerObjectView",
 		object:null,
 		selected:false,
 		manager:null,
