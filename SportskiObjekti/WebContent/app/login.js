@@ -17,7 +17,8 @@ Vue.component("login-page", {
 			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
-			        <div class="Register"><button class="Button"  href="#/rp" >Registrujte se</button></div>
+			        <div class="Login"><button class="Button"   v-on:click="goHome()" >Početna strana</button></div>
+			        <div class="Register"><button class="Button" v-on:click="register()" >Registrujte se</button></div>
 
 			</div>
 			        <form id="formlogin">
@@ -57,6 +58,13 @@ Vue.component("login-page", {
 						this.mode='LOGGED'
 						router.push("/csp");
 					})
-		}
+		},
+		register : function() {
+    		router.push(`/rp`);
+    	},
+    	
+    	goHome: function () {
+			router.push('/');
+			}
 	}
 });

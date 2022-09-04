@@ -20,16 +20,15 @@ Vue.component("register-page", {
     
     <div class="header_container">
         <div class="Img">
-            <img src="logo.png"style="height: 115px; width: 115px;"/>
+            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
         </div>
         <div class="Name"><h1> Fitness </h1></div>
-        <div class="Home"><button class="Button"   v-on:click = "goHome()" >
-            <a class="active" href="startPage.html">Početna strana</a>
-        </button></div>
-        <div class="Login" style="grid-area: Slot2;"><button class="Button"   v-on:click = "logIn()" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
-    </div>
+        <div class="Login"><button class="Button"   v-on:click="goHome()" >Početna strana</button></div>
+		<div class="Register"><button class="Button" v-on:click="logIn()">Ulogujte se</button></div>
+        
+     </div>
 
-      <form id="forma" v-bind:hidden="mode!='CREATE'" @submit='createUser'>
+      <form id="forma"  @submit='createUser'>
         <table class="register_container">
             <tr>
                 <td class="credential_labels" align="center">Korisničko ime</td>
@@ -76,7 +75,7 @@ Vue.component("register-page", {
                 <td  align="center"><input class="Button" type="submit" value="Pošalji"></td>
             </tr>
         </table>
-        </form>
+       </form>
 
 
 
