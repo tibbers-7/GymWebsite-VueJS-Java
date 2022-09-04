@@ -26,8 +26,8 @@ const router = new VueRouter({
 	    { path: '/tt', component: TrainingsTrainer },
 	    { path: '/msp', component: ManagerStartPage },
 	    { path: '/ov', component: ObjectViewManager },
-	    { path: '/uo', component: UpdateObject }
-	    { path: '/ic', component: InfoChange }
+	    { path: '/uo', component: UpdateObject },
+	    { path: '/ic', component: InfoChange },
 	    { path: '/pc', component: PasswordChange }
 	   
 	  ]
