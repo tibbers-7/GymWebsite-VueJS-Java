@@ -18,9 +18,7 @@ Vue.component("customer-SP", {
 			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
-			        <div class="Login"><button class="Button"   href="#/lp" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
-			        <div class="Register"><button class="Button"  href="#/rp" v-bind:hidden="mode=='LOGGED'" >Registrujte se</button></div>
-			        <div class="Register"><button class="Button"  href="#/" v-bind:hidden="mode!=='LOGGED'" >Odjavite se</button></div>
+			        <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
 
 			</div>
 			
@@ -28,9 +26,9 @@ Vue.component("customer-SP", {
     <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/csp">Naši Objekti</a></button></th>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/ct">Moji Treninzi</a></button></th>
-	            <th align="left" class="header_item"><button class="barButton"><a class="inactive" href="#/cm">Moje članarine</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="inactive">Moji Treninzi</a></button></th>
+	            <th align="left" class="header_item"><button class="barButton" v-on:click="memberships()"><p class="inactive">Moje članarine</a></button></th>
 	        </tr>
 	    </table>
     </div>
@@ -39,9 +37,6 @@ Vue.component("customer-SP", {
 	<!-- TABELA SVIH OBJEKATA -->
 		
 		<div v-if="selected==true">
-        <div class="es001"></div>
-        <div class="es002"></div>
-        <div class="es003"></div>
         
         <div class="objectSpec_grid">
           <div class="objectFilter_grid">
@@ -79,11 +74,11 @@ Vue.component("customer-SP", {
 
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
-            <button class="ascButton" v-on:click="ascName()" style="margin-left:12%"><img src="arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="ascButton" v-on:click="ascName()" style="margin-left:12%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="descButton" v-on:click="descName()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="ascButton" v-on:click="ascLoc()" style="margin-left:42%"><img src="arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="ascButton" v-on:click="ascLoc()" style="margin-left:42%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="descButton" v-on:click="descLoc()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="ascButton" v-on:click="ascGrade()" style="margin-left:8%"><img src="arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="ascButton" v-on:click="ascGrade()" style="margin-left:8%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="descButton" v-on:click="descGrade()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
         </div>
         <table class="table">
@@ -163,9 +158,6 @@ Vue.component("customer-SP", {
 	    <div class="back_Btn2_grid">
 	        <a href="#/csp"><img src="back.png" class="back_img"></img></a>
 	    </div>
-	    <div class="es1"></div>
-	    <div class="es3"></div>
-	    <div class="es2"></div>
 	  </div>
     </div>       
     </div>    
@@ -184,6 +176,16 @@ Vue.component("customer-SP", {
 			this.selected=true;
 		},
 		
+		logOut: function(){
+			router.push(`/`);
+		},
+		
+		trainings: function(){
+			router.push(`/ct`);
+		},
+		memberships: function(){
+			router.push(`/cm`);
+		}
 		
 		
 	}
