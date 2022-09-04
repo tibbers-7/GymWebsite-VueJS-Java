@@ -17,9 +17,9 @@ Vue.component("start-page", {
 			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
-			        <div class="Login"><button class="Button"   href="#/lp" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
-			        <div class="Register"><button class="Button"  href="#/rp" v-bind:hidden="mode=='LOGGED'" >Registrujte se</button></div>
-			        <div class="Register"><button class="Button" href="#/" v-bind:hidden="mode!=='LOGGED'" >Odjavite se</button></div>
+			        <div class="Login"><button class="Button"   v-on:click="logIn()" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
+			        <div class="Register"><button class="Button" v-on:click="register()" v-bind:hidden="mode=='LOGGED'" >Registrujte se</button></div>
+			        <div class="Register"><button class="Button" v-on:click="logOut()" v-bind:hidden="mode!=='LOGGED'" >Odjavite se</button></div>
 
 			</div>
 			
@@ -49,6 +49,7 @@ Vue.component("start-page", {
                     <option value = "Sauna"> Sauna   
                     </option>  
                     <option value = "Spa"> Spa  
+                    </option>
                     </select>  
                 </form> 
             </div>
@@ -179,7 +180,15 @@ Vue.component("start-page", {
 			this.object=sportsObject;
 			this.selected=true;
 		},
-		
+		logIn : function() {
+    		router.push(`/lp`);
+    	},
+    	register : function() {
+    		router.push(`/rp`);
+    	},
+    	logout : function() {
+    		
+    	},
 		ascName: function(){
 			
 		},
