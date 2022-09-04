@@ -11,11 +11,11 @@ Vue.component("customer-SP", {
 		}
 	},
 	 template: ` 
-    	<div>
+    	<div class="bodyStyle">
     	
     	<div class="header_container">
 			        <div class="Img">
-			            <img src="logo.png"style="height: 115px; width: 115px;"/>
+			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
 			        <div class="Login"><button class="Button"   href="#/lp" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
@@ -80,11 +80,11 @@ Vue.component("customer-SP", {
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
             <button class="ascButton" v-on:click="ascName()" style="margin-left:12%"><img src="arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="descButton" v-on:click="descName()"><img src="arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="descButton" v-on:click="descName()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="ascButton" v-on:click="ascLoc()" style="margin-left:42%"><img src="arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="descButton" v-on:click="descLoc()"><img src="arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="descButton" v-on:click="descLoc()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="ascButton" v-on:click="ascGrade()" style="margin-left:8%"><img src="arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="descButton" v-on:click="descGrade()"><img src="arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="descButton" v-on:click="descGrade()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
         </div>
         <table class="table">
             <tr class="table-header" >

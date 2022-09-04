@@ -12,7 +12,7 @@ Vue.component("login-page", {
     	<div>
 			<div class="header_container">
 			        <div class="Img">
-			            <img src="logo.png"style="height: 115px; width: 115px;"/>
+			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
 			        <div class="Register"><button class="Button"  href="#/rp" >Registrujte se</button></div>
