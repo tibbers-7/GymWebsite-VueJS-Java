@@ -11,7 +11,7 @@ Vue.component("login-page", {
 	}
 	},
 	 template: ` 
-    	<div>
+    	<div class="bodyStyle">
 			<div class="header_container">
 			        <div class="Img">
 			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
@@ -20,12 +20,12 @@ Vue.component("login-page", {
 			        <div class="Register"><button class="Button"  href="#/rp" >Registrujte se</button></div>
 
 			</div>
-			        <form id="formlogin" v-bind:hidden="mode!='LOGIN'">
+			        <form id="formlogin">
 						<table class="login_container">
 			                <tr><td class="credential_labels" align="center">Korisničko ime</td></tr>
 							<tr>
 								<td align="center">
-			                        <input class="credential_inputs" v-bind:disabled="mode!='LOGIN'" type="text" v-model = "user.username" name="username" >
+			                        <input class="credential_inputs"  type="text" v-model = "user.username" name="username" >
 			                    </td>
 							</tr>
 			                <tr>
@@ -38,9 +38,7 @@ Vue.component("login-page", {
 							</tr>
 							<tr>
 								<td align="center">
-			                        <button class="Button"  v-on:click = "loginUser">
-								        <a class="active" href="sportsObjects.html">Log In</a>
-								    </button>
+			                        <button class="Button"  v-on:click = "loginUser">Log In</button>
 								</td>
 							</tr>
 						</table>
@@ -49,9 +47,6 @@ Vue.component("login-page", {
 		</div>  
     	`,
 	mounted() {
-
-		axios.get('rest/user/users')
-			.then(response => (this.users = response.data)) 
 				},
 	methods: {
 		loginUser: function () {

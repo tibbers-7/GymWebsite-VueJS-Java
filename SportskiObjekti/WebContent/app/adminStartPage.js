@@ -1,39 +1,44 @@
-Vue.component("start-page", {
-	data: function() {
-		return{
+Vue.component("admin-SP", {
+	data: {
+		title: "adminStartPage",
+		mode: "LOGGED",
 		sportsObjects: null,
-		title: "Sportski objekti",
-		selected:false,
 		object:null,
-		mode: "BROWSE",
-		text: "",
+		selected:false,
+		admin:null,
 		error: '',
-		}
 	},
 	 template: ` 
-    	<div class="bodyStyle">
-    		<div class="header_container">
+    	<div>
+    	
+    	<div class="header_container">
 			        <div class="Img">
 			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
-			        <div class="Login"><button class="Button"   v-on:click="logIn()" v-bind:hidden="mode!=='LOGGED'" >Prijavite se</button></div>
-			        <div class="Register"><button class="Button" v-on:click="register()" v-bind:hidden="mode=='LOGGED'" >Registrujte se</button></div>
-			        <div class="Register"><button class="Button" v-on:click="logOut()" v-bind:hidden="mode!=='LOGGED'" >Odjavite se</button></div>
+			        <div class="Login"><button class="Button"   href="#/lp" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
+			        <div class="Register"><button class="Button"  href="#/rp" v-bind:hidden="mode=='LOGGED'" >Registrujte se</button></div>
+			        <div class="Register"><button class="Button"  href="#/" v-bind:hidden="mode!=='LOGGED'" >Odjavite se</button></div>
 
 			</div>
 			
-		<div class="barBase">
+			
+    <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton">Naši Objekti</button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/asp">Naši Objekti</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/au">Korisnici</a></button></th>
 	        </tr>
 	    </table>
     </div>
-		
-		<!-- TABELA SVIH OBJEKATA -->
+    
+    
+	<!-- TABELA SVIH OBJEKATA -->
 		
 		<div v-if="selected==true">
+        <div class="es001"></div>
+        <div class="es002"></div>
+        <div class="es003"></div>
         
         <div class="objectSpec_grid">
           <div class="objectFilter_grid">
@@ -46,7 +51,6 @@ Vue.component("start-page", {
                     <option value = "Sauna"> Sauna   
                     </option>  
                     <option value = "Spa"> Spa  
-                    </option>
                     </select>  
                 </form> 
             </div>
@@ -92,14 +96,14 @@ Vue.component("start-page", {
             </tr>
             <div class="table-content">  
             <tr class="table-row"  v-for="(o, index) in sportsObjects" v-on:click="selectedObject(o)">
-                <td class="table-data">o.name</td>
-                 <td class="table-data">o.type</td>
-                 <td class="table-data">o.services</td>
-                 <td class="table-data">o.isOpen</td>
-                 <td class="table-data">o.location</td>
-                 <td class="table-data">o.avgScore</td>
-                 <td class="table-data"><img src=o.logoPath></td>
-                 <td class="table-data">o.openHours</td>
+                <td class="table-data">{{o.name}}</td>
+                 <td class="table-data">{{o.type}}</td>
+                 <td class="table-data">{{o.services}}</td>
+                 <td class="table-data">{{o.isOpen}}</td>
+                 <td class="table-data">{{o.location}}</td>
+                 <td class="table-data">{{o.avgScore}}</td>
+                 <td class="table-data"><img src={{o.logoPath}}></td>
+                 <td class="table-data">{{o.openHours}}</td>
             </tr>
             </div>  
         </table>
@@ -154,75 +158,29 @@ Vue.component("start-page", {
 	        </div>
 	    </div>
 	    <div class="back_Btn2_grid">
-	        <a href="#/csp"><img src="images/back.png" class="back_img"></img></a>
+	        <a href="#/csp"><img src="back.png" class="images/back_img"></img></a>
 	    </div>
+	    <div class="es1"></div>
+	    <div class="es3"></div>
+	    <div class="es2"></div>
 	  </div>
-   
-    
     </div>       
-        
-		</div>       
+    </div>    
     	`,
 	mounted() {
+		axios
+		         .get('rest/users/activeManager')
+		         .then(response => this.customer = response.data);
 		axios.get('rest/sportsobjects/')
-			.then(response => (this.sportsObjects = response.data)),
-			mode='BROWSE'
+			.then(response => (this.sportsObjects = response.data))
+			
 				},
 	methods: {
-		
 		selectedObject: function(sportsObject){
 			this.object=sportsObject;
 			this.selected=true;
 		},
-		logIn : function() {
-    		router.push(`/lp`);
-    	},
-    	register : function() {
-    		router.push(`/rp`);
-    	},
-    	logout : function() {
-    		
-    	},
-		ascName: function(){
-			
-		},
-		ascLoc: function(){
-			
-		},
-		ascLoc: function(){
-			
-		},
 		
-		descName: function(){
-			
-		},
-		descLoc: function(){
-			
-		},
-		descLoc: function(){
-			
-		},
-		
-		filterName: function() {
-    		this.sportsObjects.filter((object) => {
-      		object.name.contains(text);
-		    })
-		  },
-		  filterType: function() {
-		    this.sportsObjects.filter((object) => {
-		      object.type.contains(text);
-		    })
-		  },
-		  filterAddress: function() {
-		    this.sportsObjects.filter((object) => {
-		      object.location.contains(text);
-		    })
-		  },
-		  filterScore: function() {
-		    this.sportsObjects.filter((object) => {
-		      object.avgScore.contains(text);
-		    })
-		   }
 		
 		
 	}

@@ -164,7 +164,7 @@ margin-left: 30%;
     border-radius: 15px;
     border-style: none;
     width:30%;
-    height: 50%;
+    height: 200px;
     background-color: #000;
   }
   .credential_labels { 
@@ -277,25 +277,17 @@ margin-left: 30%;
 /* SPORTS OBJECTS */
 .objectGrid {  display: grid;
     display: grid; 
-  grid-template-columns: 0.4fr 2.2fr 0.4fr; 
-  grid-template-rows: 0.3fr 0.6fr 0.3fr 2.8fr; 
+  grid-template-rows: 0.2fr 2fr; 
   gap: 0px 0px; 
   grid-template-areas: 
-    "es001 es003 es002"
-    "es001 objectSpec_grid es002"
-    "es001 objectTable_grid es002"; 
+    "objectSpec_grid"
+    "objectTable_grid"; 
   }
 
   .objectsSort_grid{
     position:relative;
     top:30px;
   }
-  
-  .es001 { grid-area: es001; }
-  
-  .es002 { grid-area: es002; }
-  
-  .es003 { grid-area: es003; }
   
   .objectTable_grid { grid-area: objectTable_grid; }
   
@@ -391,14 +383,14 @@ margin-left: 30%;
     margin-top:5%; }
   
     .objectInfo_grid {  display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       grid-template-rows: 1fr 1fr 1fr;
       gap: 0px 0px;
       grid-auto-flow: row;
       grid-template-areas:
-        "es1 back_Btn2_grid basicInfo_grid basicInfo_grid es2 es3"
-        "es1 content_grid content_grid comments_grid comments_grid es3"
-        "es1 content_grid content_grid comments_grid comments_grid es3";
+        "back_Btn2_grid basicInfo_grid basicInfo_grid . "
+        "content_grid content_grid comments_grid comments_grid "
+        "content_grid content_grid comments_grid comments_grid";
     }
     
     .content_grid { 
@@ -418,46 +410,60 @@ margin-left: 30%;
       margin-top:3%;
   }
     
-    .back_Btn2_grid { grid-area: back_Btn2_grid; }
-    
-    .es1 { grid-area: es1; }
-    
-    .es3 { grid-area: es3; }
-    
-    .es2 { grid-area: es2; }
-  
+    .back_Btn2_grid { grid-area: back_Btn2_grid;
+    margin-top: 5%; }
+
     .updateObj_container {  display: grid;
-      grid-template-columns: 0.5fr 2fr 0.5fr;
-      grid-template-rows: 1fr 1fr 0.5fr;
+      grid-template-columns: 0.2fr 2fr 0.5fr;
+      grid-template-rows: 1fr 0.3fr;
       gap: 0px 0px;
       grid-auto-flow: row;
       grid-template-areas:
         "backBtn2_grid objInfo2_grid ."
-        ". manager_grid ."
         ". updateObjBtn_grid .";
     }
-    
-    .backBtn2_grid { 
+
+    .backBtn2_grid{
+      grid-area: backBtn2_grid;
+    }
+    .objInfo2_grid{
+      grid-area: objInfo2_grid;
+    }
+    .updateObjBtn_grid {
+      grid-area:updateObjBtn_grid;
+    }
+
+    .addObj_container {
+      display: grid; 
+      grid-template-columns: 0.2fr 2.1fr 0.4fr; 
+      grid-template-rows: 1fr 1fr 1fr; 
+      gap: 0px 0px; 
+      grid-template-areas: 
+        "backBtn2_grid objInfo2_grid ."
+        ". manager_grid ."
+        ". addObjBtn_grid ."; 
+    }
+    .backBtn3_grid { 
       grid-area: backBtn2_grid;
    }
-    
-    .objInfo2_grid { 
+    .objInfo3_grid { 
       grid-area: objInfo2_grid;
-      margin-left: -30%;
       margin-top:3%;
+      align-items: center;
     }
-    
-    .updateObjBtn_grid { 
-      grid-area: updateObjBtn_grid;
-    margin-left:33%;
-    margin-top:2%;
-   }
+    .manager_grid { 
+      grid-area: manager_grid;
+      margin-top:1%;
+      align-items: center;
+    }
+    .addObjBtn_grid { grid-area: addObjBtn_grid; }
+  
+    .backBtn2 {
+      width:20px;
+      height: 20px;
+      margin-left: 90%;
+    }
 
-   .backBtn2{
-    position:relative;
-    margin-top:20%;
-    margin-left:90%;
-   }
 
    .name_input {
     font-family: inherit;
@@ -621,12 +627,12 @@ margin-left: 30%;
  }
  .selectedMem_grid {
     display: grid; 
-    grid-template-columns: 1fr 1fr 1fr; 
-    grid-template-rows: 1fr 1fr; 
+    grid-template-columns: 0.7fr 2fr; 
+    grid-template-rows: 2fr 0.3fr; 
     gap: 0px 0px; 
     grid-template-areas: 
-      "back_Btn_grid selectedMem_info es02"
-      "es01 chooseMem_btn es02"; 
+      "back_Btn_grid selectedMem_info"
+      ". chooseMem_btn"; 
   }
   .selectedMem_info { 
     grid-area: selectedMem_info;
@@ -635,26 +641,20 @@ margin-left: 30%;
  }
   .chooseMem_btn { 
     grid-area: chooseMem_btn;
-    margin-top:5%;
-    margin-left:20%;
+    margin-top:2%;
+    margin-left: 15%;
  }
   .back_Btn_grid { grid-area: back_Btn_grid; }
-  .es01 { grid-area: es01; }
-  .es02 { grid-area: es02; }
 
 
   .back_img0 {
     width:10%;
-     height:18%;
-     margin-left:80%;
-     margin-top:3%;
+     
 }
 
 .back_img {
-    width:20%;
-     height:20%;
-     margin-left:60%;
-     margin-top:5%;
+    width:40px;
+     height:40px;
 }
 
 
@@ -665,13 +665,12 @@ margin-left: 30%;
 
   .trainingsTrainer_grid {
     display: grid; 
-    grid-template-columns: 0.2fr 1.9fr 1.7fr 0.2fr; 
-    grid-template-rows: 0.4fr 2.1fr 0.5fr; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 2fr 0.5fr; 
     gap: 0px 0px; 
     grid-template-areas: 
-      "tes1 tes2 tes2 tes3"
-      "tes1 personalTrainings_grid groupTrainings_grid tes3"
-      "tes1 cancelTraining_grid tes4 tes3"; 
+      "personalTrainings_grid groupTrainings_grid "
+      "cancelTraining_grid ."; 
   }
   .personalTrainings_grid { grid-area: personalTrainings_grid; }
   .groupTrainings_grid { grid-area: groupTrainings_grid; }
@@ -679,10 +678,7 @@ margin-left: 30%;
     grid-area: cancelTraining_grid;
     margin-left:30%;
  }
-  .tes1 { grid-area: tes1; }
-  .tes2 { grid-area: tes2; }
-  .tes3 { grid-area: tes3; }
-  .tes4 { grid-area: tes4; }
+ 
 
   .training_header {
     width:50%;
