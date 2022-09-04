@@ -4,8 +4,10 @@ Vue.component("login-page", {
 		title: "login",
 		user : { username: null, password: null },
 		error: '',
+		mode: '',
 		username: "",
 		password: "",
+		
 	}
 	},
 	 template: ` 
@@ -23,7 +25,7 @@ Vue.component("login-page", {
 			                <tr><td class="credential_labels" align="center">Korisničko ime</td></tr>
 							<tr>
 								<td align="center">
-			                        <input class="credential_inputs" v-bind:disabled="mode!='LOGIN'" type="text" v-model = "product.username" name="username" >
+			                        <input class="credential_inputs" v-bind:disabled="mode!='LOGIN'" type="text" v-model = "user.username" name="username" >
 			                    </td>
 							</tr>
 			                <tr>
@@ -31,7 +33,7 @@ Vue.component("login-page", {
 			                </tr>
 							<tr>
 								<td align="center">
-			                        <input class="credential_inputs" type="text" name="password" v-model = "product.password">
+			                        <input class="credential_inputs" type="text" name="password" v-model = "user.password">
 			                    </td>
 							</tr>
 							<tr>
