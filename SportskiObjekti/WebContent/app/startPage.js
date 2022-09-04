@@ -95,14 +95,14 @@ Vue.component("start-page", {
             </tr>
             <div class="table-content">  
             <tr class="table-row"  v-for="(o, index) in sportsObjects" v-on:click="selectedObject(o)">
-                <td class="table-data">{{o.name}}</td>
-                 <td class="table-data">{{o.type}}</td>
-                 <td class="table-data">{{o.services}}</td>
-                 <td class="table-data">{{o.isOpen}}</td>
-                 <td class="table-data">{{o.location}}</td>
-                 <td class="table-data">{{o.avgScore}}</td>
-                 <td class="table-data"><img src={{o.logoPath}}></td>
-                 <td class="table-data">{{o.openHours}}</td>
+                <td class="table-data">o.name</td>
+                 <td class="table-data">o.type</td>
+                 <td class="table-data">o.services</td>
+                 <td class="table-data">o.isOpen</td>
+                 <td class="table-data">o.location</td>
+                 <td class="table-data">o.avgScore</td>
+                 <td class="table-data"><img src=o.logoPath></td>
+                 <td class="table-data">o.openHours</td>
             </tr>
             </div>  
         </table>
@@ -171,8 +171,8 @@ Vue.component("start-page", {
     	`,
 	mounted() {
 		axios.get('rest/sportsobjects/')
-			.then(response => (this.sportsObjects = response.data))
-
+			.then(response => (this.sportsObjects = response.data)),
+			mode='BROWSE'
 				},
 	methods: {
 		
