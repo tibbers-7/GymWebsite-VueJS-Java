@@ -9,6 +9,7 @@ Vue.component("register-page", {
 		password: "",
 		name: "",
 		last_name: "", 
+		gender:"",
 		genderMale:false,  
 		genderFemale:false,
 		birthDate: null
@@ -22,10 +23,10 @@ Vue.component("register-page", {
             <img src="logo.png"style="height: 115px; width: 115px;"/>
         </div>
         <div class="Name"><h1> Fitness </h1></div>
-        <div class="Home"><button class="Button"   v-on:click = "home" >
+        <div class="Home"><button class="Button"   v-on:click = "goHome()" >
             <a class="active" href="startPage.html">Početna strana</a>
         </button></div>
-        <div class="Login" style="grid-area: Slot2;"><button class="Button"   v-on:click = "login" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
+        <div class="Login" style="grid-area: Slot2;"><button class="Button"   v-on:click = "logIn()" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
     </div>
 
       <form id="forma" v-bind:hidden="mode!='CREATE'" @submit='createUser'>
@@ -84,7 +85,12 @@ Vue.component("register-page", {
 	mounted() {
 	},
 	methods: {
-		
+		goHome: function () {
+			router.push('/');
+			},
+		logIn: function () {
+			router.push('/lp');
+			},
 		createUser: function () {
 			if (genderMale) gender='M';
 			if(genderFemale) gender='F';
