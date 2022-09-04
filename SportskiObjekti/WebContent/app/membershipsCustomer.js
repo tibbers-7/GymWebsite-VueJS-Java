@@ -24,15 +24,6 @@ Vue.component("memberships-customer", {
 			</div>
 			
 			
-<<<<<<< Updated upstream
-    	<div class="bar">
-    	<ul>
-			 <li><a class="inactive" href="#/csp">Naši objekti</a></li>
-			 <li><a class="inactive" href="#/ct">Moji Treninzi</a></li>
-			 <li><a class="active" href="#/cm">Moje Članarine</a></li>
-		</ul>
-		</div>
-=======
     	<div class="barBase">
 		    <table style="width: 20%;">
 		        <tr>
@@ -42,7 +33,6 @@ Vue.component("memberships-customer", {
 		        </tr>
 		    </table>
     	</div>
->>>>>>> Stashed changes
 		
 		
     <div class="membership_grid">
@@ -60,19 +50,11 @@ Vue.component("memberships-customer", {
                 </div>
                 <div class="values">
                     <ul style="list-style: none;">
-<<<<<<< Updated upstream
-                        <li>{{m.type}}</li>
-                        <li>{{m.dateBought}}</li>
-                        <li>{{m.expiry}}</li>
-                        <li>{{m.price}}</li>
-                        <li>{{m.termNumber}}</li>
-=======
                         <li>membership.type</li>
                         <li>membership.dateBought</li>
                         <li>membership.expiry</li>
                         <li>membership.price</li>
                         <li>membership.termNumber</li>
->>>>>>> Stashed changes
                     </ul>
                 </div>
               </div>
@@ -80,13 +62,7 @@ Vue.component("memberships-customer", {
 
         <div class="points">
             <div class="points_container">
-<<<<<<< Updated upstream
-                <div class="points_text">
-                Broj poena: {{c.points}}
-            </div>
-=======
                 <div class="points_text">Broj poena: customer.points</div>
->>>>>>> Stashed changes
             </div>
         </div>
 
