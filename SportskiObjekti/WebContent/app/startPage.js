@@ -165,8 +165,7 @@ Vue.component("start-page", {
 	mounted() {
 		axios.get('rest/sportsobjects')
 			.then(response => (this.sportsObjects = response.data)),
-			mode='BROWSE',
-			toast(response)
+			mode='BROWSE'
 				},
 	methods: {
 		
