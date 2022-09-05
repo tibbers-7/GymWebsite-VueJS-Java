@@ -1,8 +1,9 @@
 package data;
 import beans.SportsObject;
+import data.utils.DateTools;
+import data.utils.Gender;
 import beans.Membership;
-import utils.Gender;
-import utils.DateTools;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

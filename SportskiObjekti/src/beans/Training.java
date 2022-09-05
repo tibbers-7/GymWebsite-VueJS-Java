@@ -1,6 +1,12 @@
 package beans;
 
-public class Training {
+import java.io.Serializable;
+
+public class Training  implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 String name;
 public Training(String name, String type, SportsObject sObject, String duration, String trainerID, String description,
 		String image) {

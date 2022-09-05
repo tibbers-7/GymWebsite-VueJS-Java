@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 
 import beans.SportsObject;
 import beans.User;
-import utils.ObjectType;
+import data.utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();

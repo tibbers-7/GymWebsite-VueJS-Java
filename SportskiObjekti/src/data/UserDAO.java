@@ -1,10 +1,11 @@
 package data;
 import beans.SportsObject;
 import beans.User;
-import utils.Gender;
-import utils.UserType;
-import utils.CustomerType;
-import utils.DateTools;
+import data.utils.CustomerType;
+import data.utils.DateTools;
+import data.utils.Gender;
+import data.utils.UserType;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

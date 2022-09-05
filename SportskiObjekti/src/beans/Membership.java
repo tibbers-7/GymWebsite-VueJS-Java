@@ -1,14 +1,19 @@
 package beans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import utils.Gender;
-import utils.MembershipType;
-import utils.ObjectType;
+import data.utils.Gender;
+import data.utils.MembershipType;
+import data.utils.ObjectType;
 
-public class Membership {
+public class Membership implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9199905222200022220L;
 	String ID;
 	public Membership(String iD, MembershipType membershipType, LocalDate payDate, LocalDateTime validUntil, int cena,
 			String customerID, String status, String allowedNumber) {

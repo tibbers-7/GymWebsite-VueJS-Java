@@ -1,10 +1,15 @@
 package beans;
 
+import java.io.Serializable;
 import java.util.List;
 
-import utils.ObjectType;
+import data.utils.ObjectType;
 
-public class SportsObject {
+public class SportsObject  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4048385338677087921L;
 	private String name;
 	public String getName() {
 		return name;

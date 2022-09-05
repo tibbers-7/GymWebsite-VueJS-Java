@@ -3,6 +3,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,28 +15,36 @@ import javax.ws.rs.core.MediaType;
 import beans.Membership;
 import data.MembershipDAO;
 import data.SportsObjectDAO;
+import data.UserDAO;
 
 
-@Path("membership")
+@Path("/membership")
 public class MembershipService {
 
 MembershipDAO membershipDAO;
 	
 	
 	@Context
-	ServletContext ctx;
+	ServletContext context;
 	
 	@SuppressWarnings("unused")
-	public void init() {
-		}
 	
+	@PostConstruct
+	public void init() {
+		
+		if (context.getAttribute("membershipDAO") == null) {
+			String contextPath = context.getRealPath("");
+			MembershipDAO membershipDAO = new MembershipDAO(contextPath);
+			context.setAttribute("membershipDAO", membershipDAO);
+		}
+	}
 	
 	@GET
 	@Path("/")	
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<Membership> getAll() {
-	    membershipDAO = (MembershipDAO) ctx.getAttribute("membershipDAO");
+	    membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
 	    Collection<Membership> memberships = membershipDAO.getMembershipCollection();
 	    Collection<Membership> retVal = new ArrayList<Membership>();
 		for (Membership m : memberships) {			
