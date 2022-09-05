@@ -12,6 +12,9 @@ const UpdateObject = {template:'<object-update></object-update>' }
 const Profile = {template:'<profile></profile>' }
 const InfoChange = {template:'<info-change></info-change>' }
 const PasswordChange = {template:'<password-change></password-change>' }
+const AdminStartPage = { template: '<admin-SP></admin-SP>'}
+const UsersAdmin = {template: '<users-admin></users-admin>'}
+const AddObjectAdmin = {template: '<add-object></add-object>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -28,7 +31,12 @@ const router = new VueRouter({
 	    { path: '/ov', component: ObjectViewManager },
 	    { path: '/uo', component: UpdateObject },
 	    { path: '/ic', component: InfoChange },
-	    { path: '/pc', component: PasswordChange }
+	    { path: '/pc', component: PasswordChange },
+	    { path: '/asp', component: AdminStartPage },
+	    { path: '/ua', component: UsersAdmin },
+	    { path: '/aoa', component: AddObjectAdmin },
+
+
 	   
 	  ]
 });

@@ -19,7 +19,6 @@ Vue.component("manager-SP", {
 					        </div>
 					        <div class="Name"><h1> Fitness </h1></div>
 					        <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
-		
 				</div>
 					
 					

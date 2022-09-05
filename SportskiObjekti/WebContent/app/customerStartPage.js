@@ -7,6 +7,7 @@ Vue.component("customer-SP", {
 		object:null,
 		selected:false,
 		customer:null,
+		types:null,
 		error: '',
 		}
 	},
@@ -43,13 +44,13 @@ Vue.component("customer-SP", {
             <div class="objFilter1_grid">
                 <form>  
                     <label style="font-size: large;"> Tip Objekta </label>  
-                    <select class="selectBox">  
-                    <option value = "Gym" > Teretana   
-                    </option>  
-                    <option value = "Sauna"> Sauna   
-                    </option>  
-                    <option value = "Spa"> Spa  
-                    </select>  
+                    <select class="selectBox" @change="filterObj($event)">  
+                    <option value="" selected disabled>Odaberi</option>
+                        <option v-for="type in types" :value="country.code" :key="type.id">{{ country.name }}</option>
+	                    <option value = "Gym" > Teretana </option>  
+	                    <option value = "Sauna"> Sauna </option>  
+	                    <option value = "Spa"> Spa</option>
+	                 </select>  
                 </form> 
             </div>
             <div class="objFilter2_grid">
@@ -93,7 +94,7 @@ Vue.component("customer-SP", {
                 <th class="header__item">Radno vreme</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row"  v-for="(o, index) in sportsObjects" v-on:click="selectedObject(o)">
+            <tr class="table-row"  v-for="(o, index) in sportsObjects"  v-on:click="selectedObject(o)">
                 <td class="table-data">{{o.name}}</td>
                  <td class="table-data">{{o.type}}</td>
                  <td class="table-data">{{o.services}}</td>
@@ -172,8 +173,13 @@ Vue.component("customer-SP", {
 				},
 	methods: {
 		selectedObject: function(sportsObject){
-			this.object=sportsObject;
-			this.selected=true;
+			axios.post('rest/user/selectedObject', this.user)
+					.then(response => {
+						toast('Uspešno logovanje!')
+						if(response.code!=400)
+						this.mode='LOGGED'
+						router.push("/csp");
+					})
 		},
 		
 		logOut: function(){

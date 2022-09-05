@@ -9,25 +9,22 @@ Vue.component("admin-SP", {
 		error: '',
 	},
 	 template: ` 
-    	<div>
+    	<div style="bodyStyle">
     	
     	<div class="header_container">
 			        <div class="Img">
 			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
-			        <div class="Login"><button class="Button"   href="#/lp" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
-			        <div class="Register"><button class="Button"  href="#/rp" v-bind:hidden="mode=='LOGGED'" >Registrujte se</button></div>
-			        <div class="Register"><button class="Button"  href="#/" v-bind:hidden="mode!=='LOGGED'" >Odjavite se</button></div>
-
+			        <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
 			</div>
 			
 			
     <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/asp">Naši Objekti</a></button></th>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/au">Korisnici</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" v-on:click="showUsers()"><p class="inactive">Korisnici</p></button></th>
 	        </tr>
 	    </table>
     </div>
@@ -36,9 +33,6 @@ Vue.component("admin-SP", {
 	<!-- TABELA SVIH OBJEKATA -->
 		
 		<div v-if="selected==true">
-        <div class="es001"></div>
-        <div class="es002"></div>
-        <div class="es003"></div>
         
         <div class="objectSpec_grid">
           <div class="objectFilter_grid">
@@ -157,20 +151,14 @@ Vue.component("admin-SP", {
 	            </div>
 	        </div>
 	    </div>
-	    <div class="back_Btn2_grid">
-	        <a href="#/csp"><img src="back.png" class="images/back_img"></img></a>
-	    </div>
-	    <div class="es1"></div>
-	    <div class="es3"></div>
-	    <div class="es2"></div>
 	  </div>
     </div>       
     </div>    
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeManager')
-		         .then(response => this.customer = response.data);
+		         .get('rest/users/activeAdmin')
+		         .then(response => this.admin = response.data);
 		axios.get('rest/sportsobjects/')
 			.then(response => (this.sportsObjects = response.data))
 			
@@ -179,6 +167,14 @@ Vue.component("admin-SP", {
 		selectedObject: function(sportsObject){
 			this.object=sportsObject;
 			this.selected=true;
+		},
+		
+		logOut: function(){
+			router.push(`/`);
+		},
+		
+		showUsers: function(){
+			router.push(`/au`);
 		},
 		
 		
