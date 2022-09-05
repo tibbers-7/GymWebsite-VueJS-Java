@@ -135,6 +135,12 @@ public class User implements Serializable{
 	private String last_name;
 	private data.utils.Gender gender;
 	private String birthDate;
+	public Boolean getActive() {
+		return active;
+	}
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 	private Boolean active;
 	private UserType userType;
 	private String membershipID;
@@ -170,6 +176,12 @@ public class User implements Serializable{
 			this.userType = userType;
 			this.active=active;
 		}
+		public Boolean getActive() {
+			return active;
+		}
+		public void setActive(Boolean active) {
+			this.active = active;
+		}
 		public UserBuilder membership(String membershipID)
 		{
 			this.membershipID=membershipID;
@@ -200,5 +212,6 @@ public class User implements Serializable{
 			return user;
 		}
 	}
+
 	
 }

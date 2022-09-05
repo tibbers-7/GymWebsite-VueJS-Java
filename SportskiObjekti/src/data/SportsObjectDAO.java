@@ -77,7 +77,7 @@ public class SportsObjectDAO {
 		private void loadSportsObjects() {
 			BufferedReader in = null;
 			try {
-				File file = new File(sportsObjectsPath + "/sportsObjects.txt");
+				File file = new File(sportsObjectsPath + "/sportsObjects.csv");
 				System.out.println(file.getCanonicalPath());
 				in = new BufferedReader(new FileReader(file));
 				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="",imgName="";

@@ -70,12 +70,12 @@ public class UserDAO {
 	
 	public void addUser(User u) {
 		users.put(u.getUsername(), u);
-		saveUser(u);
+		saveUsers();
 	}
 	public void editUser(User u) {
 		users.remove(u.getUsername());
 		users.put(u.getUsername(), u);
-		saveUser(u);
+		saveUsers();
 	}
 	
 	private void saveUser(User u) {
@@ -92,7 +92,25 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
-	
+	private void saveUsers() {
+		FileOutputStream outputStream;
+		try {
+			String str="p";
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(userFilepath + "/users.csv", true));
+		    writer.write("");
+		    for (User u : getUserCollection()) {
+				str=u.toString();
+		    writer.append(str);
+		    writer.append("\n");
+		    }
+		    writer.close();
+		    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		
+			e.printStackTrace();
+		}
+	}
 	
 	public User searchUser(String username) {
 		if (getUserCollection() != null) {
@@ -104,6 +122,11 @@ public class UserDAO {
 		}
 		return null;
 	}
+	public void deactivateUser(String username){
+		User u =searchUser(username);
+		u.setActive(false);
+		saveUsers();
+	}
 	
 	private void loadUsers() {
 		BufferedReader in = null;
@@ -113,7 +136,7 @@ public class UserDAO {
 			in = new BufferedReader(new FileReader(file));
 			String line, username = "", password = "", name = "", last_name=""
 					, gender="", birth_date="",userType="",membershipID="",sportsObjectID="",
-					visitedObjects="",points="",customerType="";
+					visitedObjects="",points="",customerType="",active="";
 			StringTokenizer st;
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
@@ -134,6 +157,7 @@ public class UserDAO {
 					visitedObjects="";
 					points="";
 					customerType="";
+					active="";
 					username = st.nextToken().trim();
 					password = st.nextToken().trim();
 					name = st.nextToken().trim();
@@ -146,14 +170,16 @@ public class UserDAO {
 					visitedObjects=st.nextToken().trim();
 					points=st.nextToken().trim();
 					customerType=st.nextToken().trim();
+					active=st.nextToken().trim();;
 				}
 				Gender genderEnum;
 				if(gender.equals("M")) genderEnum=Gender.MALE; else genderEnum=Gender.FEMALE;
 				SimpleDateFormat parser = new SimpleDateFormat("dd.MM.yyyy.");
 		        Date date = parser.parse(birth_date);
-				User user=new User(username,password,name,last_name,genderEnum,birth_date,
-					UserType.valueOf(userType),membershipID,
-						sportsObjectID,visitedObjects,Integer.parseInt(points),CustomerType.valueOf(customerType));
+				User user= new User.UserBuilder(username,password,name,last_name,Gender.valueOf(gender),
+						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active))
+						.membership(membershipID).customerType(CustomerType.valueOf(customerType)).sportsObject(Integer.parseInt(points))
+						.sportsObject(sportsObjectID).visitedObjects(visitedObjects).build();
 				users.put(user.getUsername(), user);
 			}
 		} catch (Exception e) {

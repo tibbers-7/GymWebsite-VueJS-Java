@@ -1,5 +1,6 @@
 Vue.component("admin-SP", {
-	data: {
+	data: function(){
+		return{
 		title: "adminStartPage",
 		mode: "LOGGED",
 		sportsObjects: null,
@@ -7,6 +8,7 @@ Vue.component("admin-SP", {
 		selected:false,
 		admin:null,
 		error: '',
+		}
 	},
 	 template: ` 
     	<div style="bodyStyle">
