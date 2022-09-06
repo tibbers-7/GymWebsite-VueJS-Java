@@ -13,6 +13,9 @@ import data.utils.UserType;
 public class User implements Serializable{
 	
 	
+	public User() {
+		super();
+	}
 	/**
 	 * 
 	 */

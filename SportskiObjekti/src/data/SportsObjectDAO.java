@@ -41,7 +41,7 @@ public class SportsObjectDAO {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
 			loadSportsObjects();
-			test();
+			//test();
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
 			if (getSportsObjectsCollection() != null) {
@@ -102,13 +102,13 @@ public class SportsObjectDAO {
 					Boolean isOpen_=false;
 					if(isOpen.equals("true")) isOpen_=true;
 					
-					String[] servicesStrings=services.split(",");
+					String[] servicesStrings=services.split("-");
 					List<String> servicesList=new ArrayList<String>();
 					for(String s : servicesStrings) {
 						servicesList.add(s);
 					}
-					String imgFilepath=sportsObjectsPath+"/images/"+imgName;
-					SportsObject sportsObject=new SportsObject(id,name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
+					String imgFilepath="images/"+imgName;
+					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
 			} catch (Exception e) {
