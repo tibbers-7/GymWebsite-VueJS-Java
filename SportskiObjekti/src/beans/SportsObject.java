@@ -1,10 +1,15 @@
 package beans;
 
+import java.io.Serializable;
 import java.util.List;
 
-import utils.ObjectType;
+import data.utils.ObjectType;
 
-public class SportsObject {
+public class SportsObject  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4048385338677087921L;
 	private String name;
 	public String getName() {
 		return name;
@@ -66,6 +71,10 @@ public class SportsObject {
 		this.avgScore = avgScore;
 		this.logoPath = logoPath;
 		this.openHours = openHours;
+		this.servicesString="";
+		for(String s: services) {
+			servicesString=servicesString+s+",";
+		}
 	}
 	private List<String> services;
 	private Boolean isOpen;
@@ -73,4 +82,5 @@ public class SportsObject {
 	private float avgScore;
 	private String logoPath;
 	private String openHours;
+	private String servicesString;
 }

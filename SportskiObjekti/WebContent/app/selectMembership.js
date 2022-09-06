@@ -1,7 +1,7 @@
 //import * as toast from 'toast.js';
 Vue.component("choose-membership", {
-	el: '#chooseMembership',
-	data: {
+	data: function() {
+		return{
 		memberships: null,
 		mem: null,
 		customer: null,
@@ -9,6 +9,7 @@ Vue.component("choose-membership", {
 		title: "Odabir Članarine",
 		text: "",
 		error: '',
+		}
 	},
 	 template: ` 
     	<div class="bodyStyle">

@@ -1,23 +1,48 @@
 package beans;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import utils.ObjectType;
+import data.utils.Gender;
+import data.utils.MembershipType;
+import data.utils.ObjectType;
 
-public class Membership {
-
-	public String ID;
+public class Membership implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9199905222200022220L;
+	String ID;
+	public Membership(String iD, MembershipType membershipType, LocalDate payDate, LocalDateTime validUntil, int cena,
+			String customerID, String status, String allowedNumber) {
+		super();
+		ID = iD;
+		this.membershipType = membershipType;
+		this.payDate = payDate;
+		this.validUntil = validUntil;
+		this.cena = cena;
+		this.customerID = customerID;
+		this.status = status;
+		this.allowedNumber = allowedNumber;
+	}
 	public String getID() {
 		return ID;
 	}
 	public void setID(String iD) {
 		ID = iD;
 	}
-	public Date getPayDate() {
+	public MembershipType getMembershipType() {
+		return membershipType;
+	}
+	public void setMembershipType(MembershipType membershipType) {
+		this.membershipType = membershipType;
+	}
+	public LocalDate getPayDate() {
 		return payDate;
 	}
-	public void setPayDate(Date payDate) {
+	public void setPayDate(LocalDate payDate) {
 		this.payDate = payDate;
 	}
 	public LocalDateTime getValidUntil() {
@@ -38,25 +63,32 @@ public class Membership {
 	public void setCustomerID(String customerID) {
 		this.customerID = customerID;
 	}
-	public String getTrainerID() {
-		return trainerID;
+	public String getStatus() {
+		return status;
 	}
-	public void setTrainerID(String trainerID) {
-		this.trainerID = trainerID;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	public Date payDate;
-	public Membership(String iD, Date payDate, LocalDateTime validUntil, int cena, String customerID,
-			String trainerID) {
-		super();
-		ID = iD;
-		this.payDate = payDate;
-		this.validUntil = validUntil;
-		this.cena = cena;
-		this.customerID = customerID;
-		this.trainerID = trainerID;
+	public String getAllowedNumber() {
+		return allowedNumber;
 	}
-	public LocalDateTime validUntil;
-	public int cena;
-	public String customerID;
-	public String trainerID;
+	public void setAllowedNumber(String allowedNumber) {
+		this.allowedNumber = allowedNumber;
+	}
+	MembershipType membershipType;
+	LocalDate payDate;
+	LocalDateTime validUntil;
+	int cena;
+	String customerID;
+	String status;
+	String allowedNumber;
+	public Membership(String iD2, Date parse, LocalDateTime parse2, int parseInt, String customerID2, String status2,
+			String allowedUntil) {
+		// TODO Auto-generated constructor stub
+	}
+	public String getMemberString() {
+		String s= ID+","+payDate+","+validUntil+","+cena+","+customerID+","+status+","+allowedNumber;
+		return s;
+	}
+	
 }

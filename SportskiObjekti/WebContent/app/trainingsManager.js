@@ -1,9 +1,9 @@
 //import * as toast from 'toast.js';
-Vue.component("trainings-customer", {
+Vue.component("trainings-manager", {
 	data: function() {
 		return{
 		trainings: null,
-		customer: null,
+		manager: null,
 		title: "Treninzi",
 		text: "",
 		error: '',
@@ -33,17 +33,24 @@ Vue.component("trainings-customer", {
 		</div>
 		
 		<div class="objectTable_grid" style="margin-top:2%;">
+		
 		    <table class="table">
 		        <tr class="table-header" >
 		            <th class="header__item">Naziv</th>
-		            <th class="header__item">Objekat</th>
-		            <th class="header_item">Datum treniranja</th>
+		            <th class="header__item">Tip</th>
+		            <th class="header__item">Trajanje</th>
+		            <th class="header__item">Trener</th>
+		            <th class="header__item">Opis</th>
+		            <th class="header__item">Slika</th>
 		        </tr>
 		        <div class="table-content">  
 		        <tr class="table-row"  v-for="(t, index) in trainings">
 		            <td class="table-data">{{t.name}}</td>
-		             <td class="table-data">{{t.sportsObject}}</td>
-		             <td class="table-data">{{t.date}}</td>
+		             <td class="table-data">{{t.type}}</td>
+		             <td class="table-data">{{t.duration}}</td>
+		             <td class="table-data">{{t.trainer}}</td>
+		             <td class="table-data">{{t.description}}</td>
+		             <td class="table-data">{{t.logoPath}}</td>
 		        </tr>
 		    </table>
 		
@@ -55,9 +62,9 @@ Vue.component("trainings-customer", {
 		axios
          .get('rest/users/activeCustomer')
          .then(response => { 
-			this.customer = response.data;
+			this.manager = response.data;
 			axios
-			.post('rest/trainings/getTrainings', { id: this.customer.id })
+			.post('rest/trainings/getTrainingsObject', { id: this.manager.object.id })
 			.then(response => this.trainings = response.data); 
 			});
 	},
@@ -66,11 +73,11 @@ Vue.component("trainings-customer", {
 		logOut: function(){
 			router.push(`/`);
 		},
-		memberships: function(){
-			router.push(`/cm`);
-		},
 		homePage: function(){
-			router.push(`/csp`);
+			router.push(`/msp`);
+		},
+		showObject: function(){
+			router.push(`/ov`);
 		}
 	}
 		

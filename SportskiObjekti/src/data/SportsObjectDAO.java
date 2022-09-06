@@ -1,7 +1,9 @@
 package data;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +14,7 @@ import java.util.StringTokenizer;
 
 import beans.SportsObject;
 import beans.User;
-import utils.ObjectType;
+import data.utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
@@ -40,6 +42,17 @@ public class SportsObjectDAO {
 			this.sportsObjectsPath = sportsObjectsPath;
 			loadSportsObjects();
 		}
+		public SportsObject getSportsObject(String sportsObjectID) {
+			if (getSportsObjectsCollection() != null) {
+				for (SportsObject s : getSportsObjectsCollection()) {
+					if (s.getName().equals(sportsObjectID)) {
+						return s;
+					}
+				}
+			}
+			return null;
+		}
+		
 
 		private String sportsObjectsPath = "";
 
@@ -64,10 +77,10 @@ public class SportsObjectDAO {
 		private void loadSportsObjects() {
 			BufferedReader in = null;
 			try {
-				File file = new File(sportsObjectsPath + "/sportsObjects.txt");
+				File file = new File(sportsObjectsPath + "/sportsObjects.csv");
 				System.out.println(file.getCanonicalPath());
 				in = new BufferedReader(new FileReader(file));
-				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="";
+				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="",imgName="";
 				StringTokenizer st;
 				while ((line = in.readLine()) != null) {
 					line = line.trim();
@@ -82,8 +95,18 @@ public class SportsObjectDAO {
 						location = st.nextToken().trim();
 						avgScore = st.nextToken().trim();
 						openHours = st.nextToken().trim();
+						imgName = st.nextToken().trim();
 					}
-					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),null,Boolean.getBoolean(isOpen),location,Float.parseFloat(avgScore),"",openHours);
+					Boolean isOpen_=false;
+					if(isOpen.equals("true")) isOpen_=true;
+					
+					String[] servicesStrings=services.split(",");
+					List<String> servicesList=new ArrayList<String>();
+					for(String s : servicesStrings) {
+						servicesList.add(s);
+					}
+					String imgFilepath=sportsObjectsPath+"/images/"+imgName;
+					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
 			} catch (Exception e) {

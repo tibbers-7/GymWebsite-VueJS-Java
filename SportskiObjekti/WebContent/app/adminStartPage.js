@@ -1,18 +1,17 @@
-Vue.component("customer-SP", {
-	data: function() {
+Vue.component("admin-SP", {
+	data: function(){
 		return{
-		title: "customerStartPage",
-		MODE: "LOGGED",
+		title: "adminStartPage",
+		mode: "LOGGED",
 		sportsObjects: null,
 		object:null,
 		selected:false,
-		customer:null,
-		types:null,
+		admin:null,
 		error: '',
 		}
 	},
 	 template: ` 
-    	<div class="bodyStyle">
+    	<div style="bodyStyle">
     	
     	<div class="header_container">
 			        <div class="Img">
@@ -20,16 +19,14 @@ Vue.component("customer-SP", {
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
 			        <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
-
 			</div>
 			
 			
     <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</a></button></th>
-	            <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="inactive">Moji Treninzi</a></button></th>
-	            <th align="left" class="header_item"><button class="barButton" v-on:click="memberships()"><p class="inactive">Moje članarine</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" v-on:click="showUsers()"><p class="inactive">Korisnici</p></button></th>
 	        </tr>
 	    </table>
     </div>
@@ -44,13 +41,13 @@ Vue.component("customer-SP", {
             <div class="objFilter1_grid">
                 <form>  
                     <label style="font-size: large;"> Tip Objekta </label>  
-                    <select class="selectBox" @change="filterObj($event)">  
-                    <option value="" selected disabled>Odaberi</option>
-                        <option v-for="type in types" :value="country.code" :key="type.id">{{ country.name }}</option>
-	                    <option value = "Gym" > Teretana </option>  
-	                    <option value = "Sauna"> Sauna </option>  
-	                    <option value = "Spa"> Spa</option>
-	                 </select>  
+                    <select class="selectBox">  
+                    <option value = "Gym" > Teretana   
+                    </option>  
+                    <option value = "Sauna"> Sauna   
+                    </option>  
+                    <option value = "Spa"> Spa  
+                    </select>  
                 </form> 
             </div>
             <div class="objFilter2_grid">
@@ -94,7 +91,7 @@ Vue.component("customer-SP", {
                 <th class="header__item">Radno vreme</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row"  v-for="(o, index) in sportsObjects"  v-on:click="selectedObject(o)">
+            <tr class="table-row"  v-for="(o, index) in sportsObjects" v-on:click="selectedObject(o)">
                 <td class="table-data">{{o.name}}</td>
                  <td class="table-data">{{o.type}}</td>
                  <td class="table-data">{{o.services}}</td>
@@ -156,42 +153,32 @@ Vue.component("customer-SP", {
 	            </div>
 	        </div>
 	    </div>
-	    <div class="back_Btn2_grid">
-	        <a href="#/csp"><img src="back.png" class="back_img"></img></a>
-	    </div>
 	  </div>
     </div>       
     </div>    
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeCustomer')
-		         .then(response => this.customer = response.data);
+		         .get('rest/users/activeAdmin')
+		         .then(response => this.admin = response.data);
 		axios.get('rest/sportsobjects/')
 			.then(response => (this.sportsObjects = response.data))
 			
 				},
 	methods: {
 		selectedObject: function(sportsObject){
-			axios.post('rest/user/selectedObject', this.user)
-					.then(response => {
-						toast('Uspešno logovanje!')
-						if(response.code!=400)
-						this.mode='LOGGED'
-						router.push("/csp");
-					})
+			this.object=sportsObject;
+			this.selected=true;
 		},
 		
 		logOut: function(){
 			router.push(`/`);
 		},
 		
-		trainings: function(){
-			router.push(`/ct`);
+		showUsers: function(){
+			router.push(`/au`);
 		},
-		memberships: function(){
-			router.push(`/cm`);
-		}
+		
 		
 		
 	}

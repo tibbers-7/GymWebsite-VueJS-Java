@@ -1,7 +1,7 @@
 //import * as toast from 'toast.js';
 Vue.component("trainings-trainer", {
-	el: '#trainingsTrainer',
-	data: {
+	data: function() {
+		return{
 		personalTrainings: null,
 		groupTrainings:null,
 		selected:false,
@@ -10,13 +10,14 @@ Vue.component("trainings-trainer", {
 		title: "Treninzi",
 		text: "",
 		error: '',
+		}
 	},
 	 template: ` 
     	<div class="bodyStyle">
     	
     	<div class="header_container">
 			        <div class="Img">
-			            <img src="logo.png"style="height: 115px; width: 115px;"/>
+			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
 			        <div class="Login"><button class="Button"   href="#/lp" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>

@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 
 import beans.SportsObject;
 import data.SportsObjectDAO;
+import data.UserDAO;
 
 @Path("/sportsobjects")
 public class SportsObjectService {
@@ -29,7 +30,6 @@ public class SportsObjectService {
 	}
 	
 	@PostConstruct
-	// ctx polje je null u konstruktoru, mora se pozvati nakon konstruktora (@PostConstruct anotacija)
 	public void init() {
 		// Ovaj objekat se instancira vi�e puta u toku rada aplikacije
 		// Inicijalizacija treba da se obavi samo jednom
@@ -53,7 +53,6 @@ public class SportsObjectService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public SportsObject newProduct(SportsObject object) {
 		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("productDAO");
-		//return dao.save(product);
 		return object;
 	}
 	

@@ -14,8 +14,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+
 import beans.User;
 import data.UserDAO;
+import data.utils.CustomerType;
+import data.utils.UserType;
 
 
 @Path("/user")
@@ -35,8 +38,8 @@ public class UserService {
 	@Path("/users")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<User> getUsers() {
-		UserDAO UserDAO = (UserDAO) context.getAttribute("users");
-		return UserDAO.getUserCollection();
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		return userDAO.getUserCollection();
 	}
 	
 	
@@ -59,7 +62,7 @@ public class UserService {
 	}
 
 	@GET
-	@Path("/loginstat")
+	@Path("/loggedinstatus")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User loginStat() {
 
@@ -87,11 +90,11 @@ public class UserService {
 
 		}
 		
-		UserDAO UserDAO = (UserDAO) context.getAttribute("users");
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 
-		if (UserDAO.searchUser(userToLogIn.getUsername()) != null) {
+		if (userDAO.searchUser(userToLogIn.getUsername()) != null) {
 
-			User user = UserDAO.searchUser(userToLogIn.getUsername());
+			User user = userDAO.searchUser(userToLogIn.getUsername());
 
 			if (user.getPassword().equals(userToLogIn.getPassword()) == true) {
 				session.setAttribute("user", user);
@@ -120,34 +123,26 @@ public class UserService {
 			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
 		}
 		
-		UserDAO UserDAO = (UserDAO) context.getAttribute("users");
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 
-		if (UserDAO.searchUser(userToRegister.getUsername()) != null) {
+		if (userDAO.searchUser(userToRegister.getUsername()) != null) {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
-			UserDAO.addUser(userToRegister);
+			userDAO.addUser(userToRegister);
 			return Response.status(200).build();
 		}
 	}
+	
 
 	@PostConstruct
 	public void init() {
 		
-		if (context.getAttribute("users") == null) {
+		if (context.getAttribute("userDAO") == null) {
 			String contextPath = context.getRealPath("");
 			UserDAO UserDAO = new UserDAO(contextPath);
-			context.setAttribute("users", UserDAO);
+			context.setAttribute("userDAO", UserDAO);
 		}
-		
-//		HttpSession session = request.getSession();
-//		if (session.getAttribute("cart") == null) {
-//			List<StavkaPorudzbine> stavkaPorudzbine = new ArrayList<StavkaPorudzbine>();
-//			session.setAttribute("cart", stavkaPorudzbine);
-//		}
-//		if (session.getAttribute("cartadmin") == null) {
-//			List<StavkaPorudzbine> stavkaPorudzbine = new ArrayList<StavkaPorudzbine>();
-//			session.setAttribute("cartadmin", stavkaPorudzbine);
-//		}
+	
 	}
 
 }

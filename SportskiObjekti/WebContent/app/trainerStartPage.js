@@ -1,6 +1,6 @@
 Vue.component("trainer-SP", {
-	el: '#trainerStartPage',
-	data: {
+	data: function() {
+		return{
 		title: "trainerStartPage",
 		MODE: "LOGGED",
 		sportsObjects: null,
@@ -8,13 +8,14 @@ Vue.component("trainer-SP", {
 		selected:false,
 		trainer:null,
 		error: '',
+		}
 	},
 	 template: ` 
-    	<div>
+    	<div class="bodyStyle">
     	
     	<div class="header_container">
 			        <div class="Img">
-			            <img src="logo.png"style="height: 115px; width: 115px;"/>
+			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
 			        <div class="Login"><button class="Button"   href="#/lp" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
@@ -37,9 +38,6 @@ Vue.component("trainer-SP", {
 	<!-- TABELA SVIH OBJEKATA -->
 		
 		<div v-if="selected==true">
-        <div class="es001"></div>
-        <div class="es002"></div>
-        <div class="es003"></div>
         
         <div class="objectSpec_grid">
           <div class="objectFilter_grid">
@@ -77,12 +75,12 @@ Vue.component("trainer-SP", {
 
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
-            <button class="ascButton" v-on:click="ascName()" style="margin-left:12%"><img src="arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="descButton" v-on:click="descName()"><img src="arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="ascButton" v-on:click="ascLoc()" style="margin-left:42%"><img src="arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="descButton" v-on:click="descLoc()"><img src="arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="ascButton" v-on:click="ascGrade()" style="margin-left:8%"><img src="arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
-            <button class="descButton" v-on:click="descGrade()"><img src="arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="ascButton" v-on:click="ascName()" style="margin-left:12%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="descButton" v-on:click="descName()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="ascButton" v-on:click="ascLoc()" style="margin-left:42%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="descButton" v-on:click="descLoc()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="ascButton" v-on:click="ascGrade()" style="margin-left:8%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="descButton" v-on:click="descGrade()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
         </div>
         <table class="table">
             <tr class="table-header" >
@@ -159,11 +157,8 @@ Vue.component("trainer-SP", {
 	        </div>
 	    </div>
 	    <div class="back_Btn2_grid">
-	        <a href="#/tsp"><img src="back.png" class="back_img"></img></a>
+	        <a href="#/tsp"><img src="images/back.png" class="back_img"></img></a>
 	    </div>
-	    <div class="es1"></div>
-	    <div class="es3"></div>
-	    <div class="es2"></div>
 	  </div>
     </div>       
     </div>    
