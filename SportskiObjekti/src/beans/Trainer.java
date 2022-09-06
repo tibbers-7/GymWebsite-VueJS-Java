@@ -1,5 +1,5 @@
 package beans;
 
-class Trainer extends User{
-	private List<Training> trainingHistory;
-}
+//class Trainer extends User{
+//	private List<Training> trainingHistory;
+//}

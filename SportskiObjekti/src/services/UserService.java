@@ -98,7 +98,7 @@ public class UserService {
 
 			if (user.getPassword().equals(userToLogIn.getPassword()) == true) {
 				session.setAttribute("user", user);
-				return Response.status(200).build();
+				return Response.status(200).entity(user.getUserType()).build();
 			} else {
 				return Response.status(400).entity("Pogresan password!").build();
 			}
@@ -143,6 +143,18 @@ public class UserService {
 			context.setAttribute("userDAO", UserDAO);
 		}
 	
+	}
+	
+	
+	@GET
+	@Path("activeCustomer")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public User getActiveUser() {
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		String username = (String)context.getAttribute("username");
+		String password = (String)context.getAttribute("password");
+		return userDAO.getUser(username,password);
 	}
 
 }

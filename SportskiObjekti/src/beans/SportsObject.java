@@ -76,6 +76,7 @@ public class SportsObject  implements Serializable{
 			servicesString=servicesString+s+",";
 		}
 	}
+	//TODO: List<String> -> List<Content>
 	private List<String> services;
 	private Boolean isOpen;
 	private String location;

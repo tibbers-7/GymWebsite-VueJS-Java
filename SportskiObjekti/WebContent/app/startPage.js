@@ -8,6 +8,9 @@ Vue.component("start-page", {
 		mode: "BROWSE",
 		text: "",
 		error: '',
+		contents:null,
+		filterType:null,
+		filterAvailability:null
 		}
 	},
 	 template: ` 
@@ -32,33 +35,24 @@ Vue.component("start-page", {
 		
 		<!-- TABELA SVIH OBJEKATA -->
 		
-		<div v-if="selected==true">
+		<div>
         
         <div class="objectSpec_grid">
           <div class="objectFilter_grid">
             <div class="objFilter1_grid">
-                <form>  
                     <label style="font-size: large;"> Tip Objekta </label>  
-                    <select class="selectBox">  
-                    <option value = "Gym" > Teretana   
-                    </option>  
-                    <option value = "Sauna"> Sauna   
-                    </option>  
-                    <option value = "Spa"> Spa  
-                    </option>
-                    </select>  
-                </form> 
+                    <select class="selectBox" v-model="filterType">
+					    <option disabled value="">Odaberite</option>
+					    <option v-for="content in contents" :value="content">{{content}}</content>
+					 </select>  
             </div>
             <div class="objFilter2_grid">
-                <form>  
                     <label style="font-size: large;"> Dostupnost </label>  
-                    <select class="selectBox"> 
-                    <option value = "Open"> Otvoreno   
-                    </option>  
-                    <option value = "Closed"> Zatvoreno   
-                    </option>  
-                    </select>  
-                    </form>  
+                    <select v-model="filterAvailability">
+					    <option disabled value="">Odaberite</option>
+					    <option>Otvoreno</option>
+					    <option>Zatvoreno</option>
+					</select>
               </div>
             </div>
           <div class="objectSearch_grid">
@@ -91,14 +85,14 @@ Vue.component("start-page", {
             </tr>
             <div class="table-content">  
             <tr class="table-row"  v-for="(o, index) in sportsObjects" v-on:click="selectedObject(o)">
-                <td class="table-data">o.name</td>
-                 <td class="table-data">o.type</td>
-                 <td class="table-data">o.services</td>
-                 <td class="table-data">o.isOpen</td>
-                 <td class="table-data">o.location</td>
-                 <td class="table-data">o.avgScore</td>
-                 <td class="table-data"><img src=o.logoPath></td>
-                 <td class="table-data">o.openHours</td>
+                <td class="table-data">{{o.name}}</td>
+                 <td class="table-data">{{o.type}}</td>
+                 <td class="table-data">{{o.services</td>
+                 <td class="table-data">{{o.isOpen</td>
+                 <td class="table-data">{{o.location</td>
+                 <td class="table-data">{{o.avgScore</td>
+                 <td class="table-data"><img src={{o.logoPath}}></td>
+                 <td class="table-data">{{o.openHours}}</td>
             </tr>
             </div>  
         </table>
@@ -163,15 +157,18 @@ Vue.component("start-page", {
 		</div>       
     	`,
 	mounted() {
-		axios.get('rest/sportsobjects')
-			.then(response => (this.sportsObjects = response.data)),
-			mode='BROWSE'
+		axios.get('rest/getAll')
+			.then(response => (this.sportsObjects = response.data));
+			
+		axios.get('rest/getContent')
+			.then(response => (this.contents = response.data));
 				},
+				
 	methods: {
 		
 		selectedObject: function(sportsObject){
-			this.object=sportsObject;
-			this.selected=true;
+			
+			// send selected obj to objectViewGeneral
 		},
 		logIn : function() {
     		router.push(`/lp`);
@@ -202,22 +199,12 @@ Vue.component("start-page", {
 			
 		},
 		
-		filterName: function() {
-    		this.sportsObjects.filter((object) => {
-      		object.name.contains(text);
-		    })
-		  },
 		  filterType: function() {
 		    this.sportsObjects.filter((object) => {
 		      object.type.contains(text);
 		    })
 		  },
-		  filterAddress: function() {
-		    this.sportsObjects.filter((object) => {
-		      object.location.contains(text);
-		    })
-		  },
-		  filterScore: function() {
+		  filterAvailability: function() {
 		    this.sportsObjects.filter((object) => {
 		      object.avgScore.contains(text);
 		    })

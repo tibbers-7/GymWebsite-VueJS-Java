@@ -5,8 +5,6 @@ Vue.component("login-page", {
 		user : { username: null, password: null },
 		error: '',
 		mode: '',
-		username: "",
-		password: "",
 		
 	}
 	},
@@ -53,10 +51,10 @@ Vue.component("login-page", {
 		loginUser: function () {
 				axios.post('rest/user/login', this.user)
 					.then(response => {
-						toast('Uspešno logovanje!')
-						if(response.code!=400)
-						this.mode='LOGGED'
-						router.push("/csp");
+						toast(response);
+						if(response.code!=400){
+							switch(this.us)
+						}
 					})
 		},
 		register : function() {

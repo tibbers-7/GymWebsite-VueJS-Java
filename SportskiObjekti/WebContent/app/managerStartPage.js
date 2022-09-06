@@ -39,34 +39,26 @@ Vue.component("manager-SP", {
 		        <div class="objectSpec_grid">
 		          <div class="objectFilter_grid">
 		            <div class="objFilter1_grid">
-		                <form>  
 		                    <label style="font-size: large;"> Tip Objekta </label>  
-		                    <select class="selectBox">  
-		                    <option value = "Gym" > Teretana   
-		                    </option>  
-		                    <option value = "Sauna"> Sauna   
-		                    </option>  
-		                    <option value = "Spa"> Spa  
-		                    </select>  
-		                </form> 
+		                    <select class="selectBox" v-model="filterType">
+							    <option disabled value="">Odaberite</option>
+							    <option v-for="content in contents" :value="content">{{content}}</content>
+							 </select>  
 		            </div>
 		            <div class="objFilter2_grid">
-		                <form>  
 		                    <label style="font-size: large;"> Dostupnost </label>  
-		                    <select class="selectBox"> 
-		                    <option value = "Open"> Otvoreno   
-		                    </option>  
-		                    <option value = "Closed"> Zatvoreno   
-		                    </option>  
-		                    </select>  
-		                    </form>  
+		                    <select v-model="filterAvailability">
+							    <option disabled value="">Odaberite</option>
+							    <option>Otvoreno</option>
+							    <option>Zatvoreno</option>
+							</select>
+		              </div>
 		            </div>
-		            </div>
-		            
 		          <div class="objectSearch_grid">
 		                <input type="text" class="input-search" placeholder="Pretraga">
+		             
 		          </div>
-		        </div>
+        		</div>
 		       
 		
 		      <div class="objectTable_grid">
@@ -151,9 +143,6 @@ Vue.component("manager-SP", {
 			                </ul>
 			            </div>
 			        </div>
-			    </div>
-			    <div class="back_Btn2_grid">
-			        <a href="#/csp"><img src="back.png" class="images/back_img"></img></a>
 			    </div>
 			  </div>
     </div>    

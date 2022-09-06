@@ -36,33 +36,22 @@ Vue.component("trainer-SP", {
     
     
 	<!-- TABELA SVIH OBJEKATA -->
-		
-		<div v-if="selected==true">
-        
-        <div class="objectSpec_grid">
+		<div class="objectSpec_grid">
           <div class="objectFilter_grid">
             <div class="objFilter1_grid">
-                <form>  
                     <label style="font-size: large;"> Tip Objekta </label>  
-                    <select class="selectBox">  
-                    <option value = "Gym" > Teretana   
-                    </option>  
-                    <option value = "Sauna"> Sauna   
-                    </option>  
-                    <option value = "Spa"> Spa  
-                    </select>  
-                </form> 
+                    <select class="selectBox" v-model="filterType">
+					    <option disabled value="">Odaberite</option>
+					    <option v-for="content in contents" :value="content">{{content}}</content>
+					 </select>  
             </div>
             <div class="objFilter2_grid">
-                <form>  
                     <label style="font-size: large;"> Dostupnost </label>  
-                    <select class="selectBox"> 
-                    <option value = "Open"> Otvoreno   
-                    </option>  
-                    <option value = "Closed"> Zatvoreno   
-                    </option>  
-                    </select>  
-                    </form>  
+                    <select v-model="filterAvailability">
+					    <option disabled value="">Odaberite</option>
+					    <option>Otvoreno</option>
+					    <option>Zatvoreno</option>
+					</select>
               </div>
             </div>
           <div class="objectSearch_grid">
@@ -155,9 +144,6 @@ Vue.component("trainer-SP", {
 	                </ul>
 	            </div>
 	        </div>
-	    </div>
-	    <div class="back_Btn2_grid">
-	        <a href="#/tsp"><img src="images/back.png" class="back_img"></img></a>
 	    </div>
 	  </div>
     </div>       
