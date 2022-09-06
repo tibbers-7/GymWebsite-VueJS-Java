@@ -46,12 +46,6 @@ public class SportsObjectDAO {
 			this.sportsObjectsPath = sportsObjectsPath;
 			contentDAO=new ContentDAO(sportsObjectsPath);
 			loadSportsObjects();
-			try {
-				test();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
 			if (getSportsObjectsCollection() != null) {
@@ -67,14 +61,9 @@ public class SportsObjectDAO {
 
 		private String sportsObjectsPath = "";
 
-		public SportsObjectDAO() {
+		public SportsObjectDAO() throws IOException {
 			// TODO Auto-generated constructor stub
-			try {
 				test();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 
 		/*public SportsObjectsDAO(String contextPath) {
@@ -128,7 +117,7 @@ public class SportsObjectDAO {
 						contentList.add(contentDAO.getByID(Integer.parseInt(id)));
 					}
 					String imgFilepath=sportsObjectsPath+"/images/"+imgName;
-					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),contentList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
+					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
 			} catch (Exception e) {
@@ -142,7 +131,7 @@ public class SportsObjectDAO {
 				}}
 			}
 
-private void test() {
+private void test() throws IOException {
 			ArrayList<String> s=new ArrayList();
 			s.add("1-bb;");
 			s.add("2-dd");
