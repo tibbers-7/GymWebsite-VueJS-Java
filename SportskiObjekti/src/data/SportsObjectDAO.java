@@ -12,12 +12,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import beans.Content;
 import beans.SportsObject;
 import beans.User;
 import data.utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
+		private ContentDAO contentDAO;
 		
 		public HashMap<Integer, SportsObject> getSportsObjects() {
 			return sportsObjects;
@@ -34,15 +36,22 @@ public class SportsObjectDAO {
 			this.sportsObjectsPath = sportsObjectsPath;
 		}
 
-		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) {
+		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) throws IOException {
 			this.sportsObjects = sportsObjects;
+			
 		}
 
 		public SportsObjectDAO(String sportsObjectsPath) {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
-			ContentDAO contentDAO=new ContentDAO(sportsObjectsPath);
+			contentDAO=new ContentDAO(sportsObjectsPath);
 			loadSportsObjects();
+			try {
+				test();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
 			if (getSportsObjectsCollection() != null) {
@@ -60,7 +69,12 @@ public class SportsObjectDAO {
 
 		public SportsObjectDAO() {
 			// TODO Auto-generated constructor stub
-			test();
+			try {
+				test();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		/*public SportsObjectsDAO(String contextPath) {
@@ -69,11 +83,17 @@ public class SportsObjectDAO {
 
 		}*/
 	
-		public void addSportsObject(SportsObject s) {
+		public void addSportsObject(SportsObject s) throws IOException {
 			int maxId = 0;
 			maxId=getSportsObjectsCollection().size();
 			maxId++;
 			sportsObjects.put(maxId, s);
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath + "/sportsObjects.csv", true));
+		    String str=s.toString();
+		    writer.append("\n");
+		    writer.append(str);
+		    writer.close();
+		    writer.close();
 		}
 
 		private void loadSportsObjects() {
@@ -88,7 +108,7 @@ public class SportsObjectDAO {
 					line = line.trim();
 					if (line.equals(""))
 						continue;
-					st = new StringTokenizer(line, ";");
+					st = new StringTokenizer(line, ",");
 					while (st.hasMoreTokens()) {
 						name = st.nextToken().trim();
 						type = st.nextToken().trim();
@@ -102,13 +122,13 @@ public class SportsObjectDAO {
 					Boolean isOpen_=false;
 					if(isOpen.equals("true")) isOpen_=true;
 					
-					String[] servicesStrings=services.split(",");
-					List<String> servicesList=new ArrayList<String>();
-					for(String s : servicesStrings) {
-						servicesList.add(s);
+					String[] contentIds=services.split("-");
+					List<Content> contentList=new ArrayList<Content>();
+					for(String id : contentIds) {
+						contentList.add(contentDAO.getByID(Integer.parseInt(id)));
 					}
 					String imgFilepath=sportsObjectsPath+"/images/"+imgName;
-					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours, imgFilepath);
+					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),contentList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
 			} catch (Exception e) {
@@ -122,7 +142,7 @@ public class SportsObjectDAO {
 				}}
 			}
 
-private void test() {
+private void test() throws IOException {
 
 			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
 			addSportsObject(s1);

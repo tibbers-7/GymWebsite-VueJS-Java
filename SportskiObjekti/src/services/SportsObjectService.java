@@ -44,7 +44,6 @@ public class SportsObjectService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<SportsObject> getAll() {
 		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
-		
 		return dao.getSportsObjectsCollection();
 	}
 	
