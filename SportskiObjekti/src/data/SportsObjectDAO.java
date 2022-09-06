@@ -18,11 +18,8 @@ import data.utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
-<<<<<<< HEAD
 		private ContentDAO contentDAO;
 		private String sportsObjectsPath = "";
-=======
->>>>>>> parent of 6286cda (sportsObjects)
 		
 		public HashMap<Integer, SportsObject> getSportsObjects() {
 			return sportsObjects;
@@ -47,18 +44,9 @@ public class SportsObjectDAO {
 		public SportsObjectDAO(String sportsObjectsPath) {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
-<<<<<<< HEAD
-			try {
-				this.setSportsObjects(new HashMap<Integer, SportsObject>());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.setSportsObjects(new HashMap<Integer, SportsObject>());
 			contentDAO=new ContentDAO(sportsObjectsPath);
-=======
-			ContentDAO contentDAO=new ContentDAO(sportsObjectsPath);
->>>>>>> parent of 6286cda (sportsObjects)
-			loadSportsObjects();
+			//loadSportsObjects();
 			test();
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
@@ -71,11 +59,6 @@ public class SportsObjectDAO {
 			}
 			return null;
 		}
-		
-
-<<<<<<< HEAD
-=======
-		private String sportsObjectsPath = "";
 
 		public SportsObjectDAO() {
 			// TODO Auto-generated constructor stub
@@ -88,13 +71,11 @@ public class SportsObjectDAO {
 
 		}*/
 	
->>>>>>> parent of 6286cda (sportsObjects)
 		public void addSportsObject(SportsObject s) {
 			int maxId = 0;
 			maxId=getSportsObjectsCollection().size();
 			maxId++;
 			sportsObjects.put(maxId, s);
-<<<<<<< HEAD
 		    BufferedWriter writer;
 			try {
 				writer = new BufferedWriter(new FileWriter(sportsObjectsPath + "/sportsObjects.csv", true));
@@ -106,8 +87,6 @@ public class SportsObjectDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-=======
->>>>>>> parent of 6286cda (sportsObjects)
 		}
 
 		private void loadSportsObjects() {
@@ -156,13 +135,11 @@ public class SportsObjectDAO {
 				}}
 			}
 
-<<<<<<< HEAD
-			private void test()  {
-=======
 private void test() {
->>>>>>> parent of 6286cda (sportsObjects)
-
-			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
+			ArrayList<String> s=new ArrayList();
+			s.add("1-bb;");
+			s.add("2-dd");
+			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM,s, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
 			addSportsObject(s1);
 			addSportsObject(s1);
 			addSportsObject(s1);

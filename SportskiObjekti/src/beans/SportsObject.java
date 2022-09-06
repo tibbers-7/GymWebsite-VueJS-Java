@@ -60,12 +60,15 @@ public class SportsObject  implements Serializable{
 		this.openHours = openHours;
 	}
 	private ObjectType type;
-	public SportsObject(String name, ObjectType type, List<Content> contents, Boolean isOpen, String location,
+	public SportsObject(String name, ObjectType type, List<String> servicesList, Boolean isOpen, String location,
 			float avgScore, String logoPath, String openHours) {
 		super();
 		this.name = name;
 		this.type = type;
-		this.contents = contents;
+		for (String s : servicesList)
+		{
+			contents.add(new Content(s));
+		}
 		this.isOpen = isOpen;
 		this.location = location;
 		this.avgScore = avgScore;
@@ -75,15 +78,11 @@ public class SportsObject  implements Serializable{
 	private List<Content> contents;
 	@Override
 	public String toString() {
-<<<<<<< Updated upstream
-		return name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
-=======
 		String contentString="";
 		for(Content c: contents) {
 			contentString+=c.toString()+";";
 		}
 		return name + ", " + type + ", " + contentString + ", " + isOpen + ", " + location + ", " + avgScore + ", "
->>>>>>> Stashed changes
 				+ logoPath + ", " + openHours + ", " + servicesString;
 	}
 	private List<String> services;
