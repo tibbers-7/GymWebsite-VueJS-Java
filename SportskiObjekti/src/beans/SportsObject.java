@@ -82,8 +82,10 @@ public class SportsObject  implements Serializable{
 	public String getServicesString() {
 		return servicesString;
 	}
-	public void setServicesString(String servicesString) {
-		this.servicesString = servicesString;
+	public void setContentString(String contentString) {
+		//this.contentString = contentString;
+		String[] separated=servicesString.split(",");
+		
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
