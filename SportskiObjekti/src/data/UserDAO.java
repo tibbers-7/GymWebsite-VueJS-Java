@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -131,7 +132,6 @@ public class UserDAO {
 	private void loadUsers() {
 		BufferedReader in = null;
 		try {
-			System.out.println(System.getProperty("user.dir"));
 			File file = new File(userFilepath+"/users.csv");
 			in = new BufferedReader(new FileReader(file));
 			String line, username = "", password = "", name = "", last_name=""
