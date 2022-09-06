@@ -142,17 +142,11 @@ public class SportsObjectDAO {
 				}}
 			}
 
-<<<<<<< Updated upstream
-private void test() throws IOException {
-
-			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
-=======
 private void test() {
 			ArrayList<String> s=new ArrayList();
 			s.add("1-bb;");
 			s.add("2-dd");
 			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
->>>>>>> Stashed changes
 			addSportsObject(s1);
 			addSportsObject(s1);
 			addSportsObject(s1);
