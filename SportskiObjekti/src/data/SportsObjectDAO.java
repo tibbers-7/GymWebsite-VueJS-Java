@@ -72,17 +72,22 @@ public class SportsObjectDAO {
 
 		}*/
 	
-		public void addSportsObject(SportsObject s) throws IOException {
+		public void addSportsObject(SportsObject s)  {
 			int maxId = 0;
 			maxId=getSportsObjectsCollection().size();
 			maxId++;
 			sportsObjects.put(maxId, s);
+			try {
 		    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath + "/sportsObjects.csv", true));
 		    String str=s.toString();
+		    
 		    writer.append("\n");
 		    writer.append(str);
 		    writer.close();
 		    writer.close();
+		    } catch (IOException e){
+		    	
+		    }
 		}
 
 		private void loadSportsObjects() {
@@ -131,7 +136,7 @@ public class SportsObjectDAO {
 				}}
 			}
 
-private void test() throws IOException {
+private void test() {
 			ArrayList<String> s=new ArrayList();
 			s.add("1-bb;");
 			s.add("2-dd");
