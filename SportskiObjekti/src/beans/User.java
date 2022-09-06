@@ -124,10 +124,9 @@ public class User implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return username + "," + password + "," + name + "," + last_name
-				+"," + gender + "," + birthDate + "," + userType +","
-				+ membershipID + "," + sportsObjectID + "," + visitedObjectsID
-				+ "," + points + "," + customerType;
+		return username + ", " + password + ", " + name + ", " + last_name + ", " + gender + ", " + birthDate + ", "
+				+ active + ", " + userType + ", " + membershipID + ", " + sportsObjectID + ", " + visitedObjectsID
+				+ ", " + points + ", " + customerType;
 	}
 	private String username;
 	private String password;
