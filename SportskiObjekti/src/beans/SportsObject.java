@@ -23,8 +23,8 @@ public class SportsObject  implements Serializable{
 	public void setType(ObjectType type) {
 		this.type = type;
 	}
-	public List<Content> getServices() {
-		return contents;
+	public List<Integer> getContentIds() {
+		return contentIds;
 	}
 	public void setServices(List<Content> services) {
 		this.contents = services;

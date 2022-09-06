@@ -7,13 +7,13 @@ import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.StringTokenizer;
 
+import beans.Content;
 import beans.SportsObject;
 import beans.User;
 import data.utils.ObjectType;
@@ -35,44 +35,16 @@ public class SportsObjectDAO {
 		public void setSportsObjectsPath(String sportsObjectsPath) {
 			this.sportsObjectsPath = sportsObjectsPath;
 		}
-		public void addService(String ID, String service) {
-			for (SportsObject s : getSportsObjectsCollection()) 
-				if (s.getId().equals(ID))
-				{
-					List<String> newServices=s.getServices();
-					newServices.add(service);
-					s.setServices(newServices);
-					saveObjects();
-				}
-		}
-		
-		public void removeService(String ID, String service) {
-			for (SportsObject s : getSportsObjectsCollection()) 
-				if (s.getId().equals(ID))
-				{
-					List<String> newServices=s.getServices();
-					newServices.remove(service);
-					s.setServices(newServices);
-					saveObjects();
-				}
+
+		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) throws IOException {
+			this.sportsObjects = sportsObjects;
+			
 		}
 
-		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) {
-			this.sportsObjects = sportsObjects;
-		}
-		public Boolean checkService(String ID, String service) {
-			for (SportsObject s : getSportsObjectsCollection()) 
-				if (s.getId().equals(ID))
-				{
-					if(s.getServices().contains(service))
-						return true;
-				}
-			return false;
-		}
 		public SportsObjectDAO(String sportsObjectsPath) {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
-			ContentDAO contentDAO=new ContentDAO(sportsObjectsPath);
+			contentDAO=new ContentDAO(sportsObjectsPath);
 			loadSportsObjects();
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
@@ -112,7 +84,7 @@ public class SportsObjectDAO {
 				File file = new File(sportsObjectsPath + "/sportsObjects.csv");
 				System.out.println(file.getCanonicalPath());
 				in = new BufferedReader(new FileReader(file));
-				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="",imgName="",id="";
+				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="",imgName="";
 				StringTokenizer st;
 				while ((line = in.readLine()) != null) {
 					line = line.trim();
@@ -120,7 +92,6 @@ public class SportsObjectDAO {
 						continue;
 					st = new StringTokenizer(line, ",");
 					while (st.hasMoreTokens()) {
-						id = st.nextToken().trim();
 						name = st.nextToken().trim();
 						type = st.nextToken().trim();
 						services = st.nextToken().trim();
@@ -134,13 +105,13 @@ public class SportsObjectDAO {
 					String [] hours=openHours.split("-");
 					if(LocalDateTime.now().getHour()>=Integer.parseInt(hours[0])&&LocalDateTime.now().getHour()<=Integer.parseInt(hours[1])) isOpen_=true;
 					
-					String[] servicesStrings=services.split("-");
-					List<String> servicesList=new ArrayList<String>();
-					for(String s : servicesStrings) {
-						servicesList.add(s);
+					String[] contentIds=services.split("-");
+					List<Content> contentList=new ArrayList<Content>();
+					for(String id : contentIds) {
+						contentList.add(contentDAO.getByID(Integer.parseInt(id)));
 					}
-					String imgFilepath="images/"+imgName;
-					SportsObject sportsObject=new SportsObject(id,name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
+					String imgFilepath=sportsObjectsPath+"/images/"+imgName;
+					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),contentList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
 			} catch (Exception e) {
