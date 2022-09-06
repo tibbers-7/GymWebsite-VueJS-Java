@@ -41,6 +41,7 @@ public class SportsObjectDAO {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
 			loadSportsObjects();
+			test();
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
 			if (getSportsObjectsCollection() != null) {
