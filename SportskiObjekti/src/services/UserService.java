@@ -19,8 +19,10 @@ import beans.Membership;
 import beans.SportsObject;
 import beans.User;
 import data.MembershipDAO;
+import beans.User.UserBuilder;
 import data.UserDAO;
 import data.utils.CustomerType;
+import data.utils.Gender;
 import data.utils.UserType;
 
 
@@ -145,21 +147,23 @@ public class UserService {
 	@Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response register(User userToRegister) {
+	public Response register(String username,String password,String name, String last_name,
+			String gender,String birth_date,String userType,String active,
+			String membershipID,String sportsObjectID,String visitedObjectsID,String points,String customerType) {
 
-		if (userToRegister.getUsername() == null || userToRegister.getPassword() == null
-				 || userToRegister.getUsername().equals("")
-				|| userToRegister.getPassword().equals("")) {
+		if (username == null || password == null
+				 || username==""
+				|| password == "") {
 			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
 		}
 		
 		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 
-		if (userDAO.searchUser(userToRegister.getUsername()) != null) {
+		if (userDAO.searchUser(username) != null) {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
-			userDAO.registerCustomer(userToRegister);
-			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
+			userDAO.addUser(new User(new User.UserBuilder(username, password, name, last_name, Gender.valueOf(gender), birth_date, UserType.valueOf(userType), Boolean.parseBoolean(active))));
+			return Response.status(200).build();
 		}
 	}
 	
