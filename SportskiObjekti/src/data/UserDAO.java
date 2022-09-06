@@ -176,7 +176,7 @@ public class UserDAO {
 				if(gender.equals("M")) genderEnum=Gender.MALE; else genderEnum=Gender.FEMALE;
 				SimpleDateFormat parser = new SimpleDateFormat("dd.MM.yyyy.");
 		        Date date = parser.parse(birth_date);
-				User user= new User.UserBuilder(username,password,name,last_name,Gender.valueOf(gender),
+				User user= new User.UserBuilder(username,password,name,last_name,genderEnum,
 						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active))
 						.membership(membershipID).customerType(CustomerType.valueOf(customerType)).sportsObject(Integer.parseInt(points))
 						.sportsObject(sportsObjectID).visitedObjects(visitedObjects).build();

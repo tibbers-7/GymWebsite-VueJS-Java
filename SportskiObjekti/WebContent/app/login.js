@@ -3,6 +3,8 @@ Vue.component("login-page", {
 		return{
 		title: "login",
 		user : { username: null, password: null },
+		username:null,
+		password:null,
 		error: '',
 		mode: '',
 		
@@ -24,7 +26,7 @@ Vue.component("login-page", {
 			                <tr><td class="credential_labels" align="center">Korisničko ime</td></tr>
 							<tr>
 								<td align="center">
-			                        <input class="credential_inputs"  type="text" v-model = "user.username" name="username" >
+			                        <input class="credential_inputs"  type="text" v-model = "username" name="username" >
 			                    </td>
 							</tr>
 			                <tr>
@@ -32,12 +34,12 @@ Vue.component("login-page", {
 			                </tr>
 							<tr>
 								<td align="center">
-			                        <input class="credential_inputs" type="text" name="password" v-model = "user.password">
+			                        <input class="credential_inputs" type="text" name="password" v-model = "password">
 			                    </td>
 							</tr>
 							<tr>
 								<td align="center">
-			                        <button class="Button"  v-on:click = "loginUser">Log In</button>
+			                        <button class="Button"  v-on:click = "loginUser()">Log In</button>
 								</td>
 							</tr>
 						</table>
@@ -49,10 +51,13 @@ Vue.component("login-page", {
 				},
 	methods: {
 		loginUser: function () {
-				axios.post('rest/user/login', this.user)
+				axios.post('rest/user/login', {
+    			username: this.username,
+			 	password: this.password
+    		})
 					.then(response => {
 						this.user = response.data;
-						toast(response);
+						toast(response.code);
 						if(response.code!=400){
 							switch(user.type){
 								case CUSTOMER: router.push(`/csp`);
