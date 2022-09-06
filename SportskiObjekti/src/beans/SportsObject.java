@@ -72,6 +72,11 @@ public class SportsObject  implements Serializable{
 		this.logoPath = logoPath;
 		this.openHours = openHours;
 	}
+	@Override
+	public String toString() {
+		return name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
+				+ logoPath + ", " + openHours + ", " + servicesString;
+	}
 	private List<String> services;
 	private Boolean isOpen;
 	private String location;
@@ -82,8 +87,10 @@ public class SportsObject  implements Serializable{
 		return servicesString;
 	}
 	public void setServicesString(String servicesString) {
-		var strings= servicesString.split(",");
-		
+		String[] strings = servicesString.split(",");
+		for(String s : strings)
+			services.add(s);
+		 	
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

@@ -86,7 +86,7 @@ public class SportsObjectDAO {
 					line = line.trim();
 					if (line.equals(""))
 						continue;
-					st = new StringTokenizer(line, ";");
+					st = new StringTokenizer(line, ",");
 					while (st.hasMoreTokens()) {
 						name = st.nextToken().trim();
 						type = st.nextToken().trim();
@@ -106,7 +106,7 @@ public class SportsObjectDAO {
 						servicesList.add(s);
 					}
 					String imgFilepath=sportsObjectsPath+"/images/"+imgName;
-					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours, imgFilepath);
+					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
 			} catch (Exception e) {
