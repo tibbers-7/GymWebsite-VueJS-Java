@@ -60,7 +60,7 @@ Vue.component("trainer-SP", {
           </div>
         </div>
        
-      </div>
+      
 
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
@@ -153,9 +153,8 @@ Vue.component("trainer-SP", {
 		axios
 		         .get('rest/users/activeTrainer')
 		         .then(response => this.trainer = response.data);
-		axios.get('rest/sportsobjects/')
-			.then(response => (this.sportsObjects = response.data))
-			
+		axios.get('rest/sportsobjects/getAll')
+			.then(response => (this.sportsObjects = response.data));
 				},
 	methods: {
 		selectedObject: function(sportsObject){

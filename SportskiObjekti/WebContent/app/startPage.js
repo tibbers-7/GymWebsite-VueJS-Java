@@ -97,61 +97,7 @@ Vue.component("start-page", {
     </div>
     
     
-    <!-- PRIKAZ OBJEKTA -->
     
-    <div class="objectInfo_grid" v-if="selected == true">
-	    <div class="content_grid">
-	        <table class="table" style="width:60%;">
-	            <tr class="table-header" >
-	                <th class="header__item">Sadržaj</th>
-	            </tr>
-	            <div class="table-content">  
-	            <tr class="table-row"  v-for="(c, index) in sportsObjects">
-	                <td class="table-data">{{c.name}}</td>
-	            </tr>
-	            </div>  
-	        </table>
-	    </div>
-	    <div class="comments_grid">
-	        <table class="table" style="width:60%;">
-	            <tr class="table-header" >
-	                <th class="header__item">Komentari</th>
-	            </tr>
-	            <div class="table-content">  
-	                <tr class="table-row"  v-for="(c, index) in object">
-	                    <td class="table-data">{{c.text}}</td>
-	                </tr>
-	            </div>  
-	        </table>
-	    </div>
-	    <div class="basicInfo_grid">
-	        <div class="objectView_container" >
-	            
-	            <div class="grid_name">{{object.name}}</div>
-	            <div class="headers">
-	                <ul style="list-style:none">
-	                    <li>Tip:</li>
-	                    <li>Status:</li>
-	                    <li>Ocena:</li>
-	                </ul>
-	            </div>
-	            <div class="values">
-	                <ul style="list-style:none">
-	                    <li>{{object.type}}</li>
-	                    <li>{{object.status}}</li>
-	                    <li>{{object.grade}}</li>
-	                </ul>
-	            </div>
-	        </div>
-	    </div>
-	    <div class="back_Btn2_grid">
-	        <a href="#/csp"><img src="images/back.png" class="back_img"></img></a>
-	    </div>
-	  </div>
-   
-    
-    </div>       
-        
 		</div>       
     	`,
 	mounted() {
@@ -165,9 +111,12 @@ Vue.component("start-page", {
 	methods: {
 		
 		selectedObject: function(sportsObject){
-			
-			// send selected obj to objectViewGeneral
+			axios.post('rest/sportsobjects/setSelectedObject', sportsObject)
+					.then(response => {
+						router.push("/ovg");
+					})
 		},
+		
 		logIn : function() {
     		router.push(`/lp`);
     	},

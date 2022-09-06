@@ -57,12 +57,11 @@ Vue.component("customer-SP", {
               </div>
             </div>
           <div class="objectSearch_grid">
-                <input type="text" class="input-search" placeholder="Pretraga">
-             
+                <input type="text" class="input-search" placeholder="Pretraga"/>    
           </div>
         </div>
        
-      </div>
+      
 
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
@@ -156,20 +155,17 @@ Vue.component("customer-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeCustomer')
+		         .get('rest/users/activeUser')
 		         .then(response => this.customer = response.data);
-		axios.get('rest/sportsobjects/')
-			.then(response => (this.sportsObjects = response.data))
-			
+		axios.get('rest/sportsobjects/getAll')
+			.then(response => (this.sportsObjects = response.data));
 				},
 	methods: {
 		selectedObject: function(sportsObject){
-			axios.post('rest/user/selectedObject', this.user)
+			axios.post('rest/sportsobjects/setSelectedObject', {id:sportsObject.id})
 					.then(response => {
-						toast('Uspešno logovanje!')
-						if(response.code!=400)
-						this.mode='LOGGED'
-						router.push("/csp");
+						
+						router.push("/ovg");
 					})
 		},
 		

@@ -100,7 +100,7 @@ public class UserService {
 			User user = userDAO.searchUser(userToLogIn.getUsername());
 
 			if (user.getPassword().equals(userToLogIn.getPassword()) == true) {
-				session.setAttribute("user", user);
+				session.setAttribute("activeUser", user);
 				
 				return Response.status(200).entity(user).build();
 			} else {
@@ -155,15 +155,23 @@ public class UserService {
 	}
 	
 	
+	
+	
 	@GET
-	@Path("activeCustomer")
+	@Path("activeUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public User getActiveUser() {
-		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
-		String username = (String)context.getAttribute("username");
-		String password = (String)context.getAttribute("password");
-		return userDAO.getUser(username,password);
+		
+		HttpSession session = request.getSession();
+		User user=(User) session.getAttribute("activeUser");
+		return user;
+		
+//		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+//		String username = (String)context.getAttribute("username");
+//		String password = (String)context.getAttribute("password");
+//		return userDAO.getUser(username,password);
+		
 	}
 
 }

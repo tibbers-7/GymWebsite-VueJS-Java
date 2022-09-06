@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.SportsObject;
 import beans.Training;
 import data.TrainingDAO;
 
@@ -38,5 +39,13 @@ public class TrainingService {
 	public Collection<Training> getAll() {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.getTrainingCollection().values();
+	}
+	
+	@POST
+	@Path("/getByObject")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Training> getByObjectId(SportsObject s) {
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		return dao.getTrainingsByObject(s.getId());
 	}
 }

@@ -10,7 +10,7 @@ public class SportsObject  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 4048385338677087921L;
-	private String name;
+	
 	public String getName() {
 		return name;
 	}
@@ -38,6 +38,12 @@ public class SportsObject  implements Serializable{
 	public String getLocation() {
 		return location;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public void setLocation(String location) {
 		this.location = location;
 	}
@@ -60,9 +66,10 @@ public class SportsObject  implements Serializable{
 		this.openHours = openHours;
 	}
 	private ObjectType type;
-	public SportsObject(String name, ObjectType type, List<String> services, Boolean isOpen, String location,
+	public SportsObject(String id,String name, ObjectType type, List<String> services, Boolean isOpen, String location,
 			float avgScore, String logoPath, String openHours) {
 		super();
+		this.id=id;
 		this.name = name;
 		this.type = type;
 		this.services = services;
@@ -74,9 +81,12 @@ public class SportsObject  implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
+		return id + ", "+ name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
 				+ logoPath + ", " + openHours + ", " + servicesString;
 	}
+	
+	private String id;
+	private String name;
 	private List<String> services;
 	private Boolean isOpen;
 	private String location;

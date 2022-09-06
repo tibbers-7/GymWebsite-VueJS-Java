@@ -78,7 +78,7 @@ Vue.component("view-object", {
 			this.user = response.data;
 			});
 		axios
-         .get('rest/sportsObjects/selectedObject')
+         .get('rest/sportsobjects/getSelectedObject')
          .then(response => { 
 			this.object = response.data;
 			});

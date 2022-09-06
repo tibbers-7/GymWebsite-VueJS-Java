@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -29,6 +30,16 @@ public class TrainingDAO{
 		maxId=getTrainingCollection().size();
 		maxId++;
 		getTrainingCollection().put(maxId, t);
+	}
+	
+	public Collection<Training> getTrainingsByObject(String objId){
+		List<Training> trainings=new ArrayList<Training>();
+		for(Training t: trainingCollection.values()) {
+			if(t.getsObject().equals(objId)) {
+				trainings.add(t);
+			}
+		}
+		return trainings;
 	}
 
 

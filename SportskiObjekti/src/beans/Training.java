@@ -67,4 +67,5 @@ String duration;
 String trainerID;
 String description;
 String image;
+
 }

@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.SportsObject;
+import beans.User;
 import data.SportsObjectDAO;
 import data.UserDAO;
 
@@ -47,6 +49,20 @@ public class SportsObjectService {
 		return dao.getSportsObjectsCollection();
 	}
 	
+	@GET
+	@Path("/setSelectedObject")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void setSelectedObject(SportsObject s) {
+		ctx.setAttribute("selectedObject", s);
+	}
+	
+	@GET
+	@Path("/getSelectedObject")
+	@Produces(MediaType.APPLICATION_JSON)
+	public SportsObject getSelectedObject(SportsObject s) {
+		return (SportsObject) ctx.getAttribute("selectedObject");
+	}
+	
 	@POST
 	@Path("/addNew")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -55,5 +71,7 @@ public class SportsObjectService {
 		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("productDAO");
 		return object;
 	}
+	
+	
 	
 }
