@@ -8,9 +8,7 @@ Vue.component("start-page", {
 		mode: "BROWSE",
 		text: "",
 		error: '',
-		contents:null,
-		filterType:null,
-		filterAvailability:null
+		contents:null
 		}
 	},
 	 template: ` 
@@ -43,7 +41,7 @@ Vue.component("start-page", {
                     <label style="font-size: large;"> Tip Objekta </label>  
                     <select class="selectBox" v-model="filterType">
 					    <option disabled value="">Odaberite</option>
-					    <option v-for="content in contents" :value="content">{{content}}</content>
+					    <option v-for="content in contents" :value="content">{{content}}</option>
 					 </select>  
             </div>
             <div class="objFilter2_grid">
@@ -91,7 +89,7 @@ Vue.component("start-page", {
                  <td class="table-data">{{o.isOpen}}</td>
                  <td class="table-data">{{o.location}}</td>
                  <td class="table-data">{{o.avgScore}}</td>
-                 <td class="table-data"><img src={{o.logoPath}}></td>
+                 <td class="table-data"><img :src=""o.logoPath"></td>
                  <td class="table-data">{{o.openHours}}</td>
             </tr>
             </div>  
@@ -157,7 +155,7 @@ Vue.component("start-page", {
 		</div>       
     	`,
 	mounted() {
-		axios.get('rest/getAll')
+		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data));
 			
 		axios.get('rest/getContent')

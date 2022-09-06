@@ -61,7 +61,7 @@ public class SportsObject  implements Serializable{
 	}
 	private ObjectType type;
 	public SportsObject(String name, ObjectType type, List<String> services, Boolean isOpen, String location,
-			float avgScore, String logoPath, String openHours, String servicesString) {
+			float avgScore, String logoPath, String openHours) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -71,7 +71,6 @@ public class SportsObject  implements Serializable{
 		this.avgScore = avgScore;
 		this.logoPath = logoPath;
 		this.openHours = openHours;
-		this.servicesString = servicesString;
 	}
 	private List<String> services;
 	private Boolean isOpen;
@@ -83,7 +82,8 @@ public class SportsObject  implements Serializable{
 		return servicesString;
 	}
 	public void setServicesString(String servicesString) {
-		this.servicesString = servicesString;
+		var strings= servicesString.split(",");
+		
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
