@@ -136,7 +136,7 @@ public class SportsObjectDAO {
 			}
 
 private void test() {
-			ArrayList<String> s=new ArrayList();
+			ArrayList<String> s=new ArrayList<String>();
 			s.add("1-bb;");
 			s.add("2-dd");
 			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM,s, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
