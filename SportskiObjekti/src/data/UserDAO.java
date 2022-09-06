@@ -35,6 +35,7 @@ public class UserDAO {
 	}
 	
 	public Collection<User> getUserCollection() {
+		ArrayList<User> listica=(ArrayList<User>) users.values();
 		return users.values();
 	}
 	public void registerCustomer(User u){
@@ -70,7 +71,7 @@ public class UserDAO {
 	
 	public void addUser(User u) {
 		users.put(u.getUsername(), u);
-		saveUsers();
+		saveUser(u);
 	}
 	public void editUser(User u) {
 		users.remove(u.getUsername());

@@ -30,8 +30,15 @@ public class UserService {
 	@Context
 	HttpServletRequest request;
 
-	public UserService() {
-		// TODO Auto-generated constructor stub
+	@PostConstruct
+	public void init() {
+		
+		if (context.getAttribute("userDAO") == null) {
+			String contextPath = context.getRealPath("");
+			UserDAO userDAO = new UserDAO(contextPath);
+			context.setAttribute("userDAO", userDAO);
+		}
+	
 	}
 	
 	@GET
@@ -134,21 +141,9 @@ public class UserService {
 		}
 	}
 	
-
-	@PostConstruct
-	public void init() {
-		
-		if (context.getAttribute("userDAO") == null) {
-			String contextPath = context.getRealPath("");
-			UserDAO UserDAO = new UserDAO(contextPath);
-			context.setAttribute("userDAO", UserDAO);
-		}
-	
-	}
-	
 	
 	@GET
-	@Path("activeCustomer")
+	@Path("/activeCustomer")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public User getActiveUser() {

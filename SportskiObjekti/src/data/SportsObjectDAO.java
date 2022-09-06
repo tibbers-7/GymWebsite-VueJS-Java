@@ -20,11 +20,13 @@ import data.utils.ObjectType;
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
 		private ContentDAO contentDAO;
+		private String sportsObjectsPath = "";
 		
 		public HashMap<Integer, SportsObject> getSportsObjects() {
 			return sportsObjects;
 		}
 		public Collection<SportsObject> getSportsObjectsCollection() {
+			Collection<SportsObject> ee=sportsObjects.values();
 			return sportsObjects.values();
 		}
 
@@ -44,14 +46,15 @@ public class SportsObjectDAO {
 		public SportsObjectDAO(String sportsObjectsPath) {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
-			contentDAO=new ContentDAO(sportsObjectsPath);
-			loadSportsObjects();
 			try {
-				test();
+				this.setSportsObjects(new HashMap<Integer, SportsObject>());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			contentDAO=new ContentDAO(sportsObjectsPath);
+			loadSportsObjects();
+			test();
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
 			if (getSportsObjectsCollection() != null) {
@@ -65,35 +68,22 @@ public class SportsObjectDAO {
 		}
 		
 
-		private String sportsObjectsPath = "";
-
-		public SportsObjectDAO() {
-			// TODO Auto-generated constructor stub
-			try {
-				test();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		/*public SportsObjectsDAO(String contextPath) {
-			this.setSportsObjects(new HashMap<Integer, SportsObject>());
-			this.setSportsObjectsPath(contextPath);
-
-		}*/
-	
-		public void addSportsObject(SportsObject s) throws IOException {
+		public void addSportsObject(SportsObject s) {
 			int maxId = 0;
 			maxId=getSportsObjectsCollection().size();
 			maxId++;
 			sportsObjects.put(maxId, s);
-		    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath + "/sportsObjects.csv", true));
-		    String str=s.toString();
-		    writer.append("\n");
-		    writer.append(str);
-		    writer.close();
-		    writer.close();
+		    BufferedWriter writer;
+			try {
+				writer = new BufferedWriter(new FileWriter(sportsObjectsPath + "/sportsObjects.csv", true));
+			    String str=s.toString();
+			    writer.append("\n");
+			    writer.append(str);
+			    writer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		private void loadSportsObjects() {
@@ -142,7 +132,7 @@ public class SportsObjectDAO {
 				}}
 			}
 
-private void test() throws IOException {
+			private void test()  {
 
 			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
 			addSportsObject(s1);
