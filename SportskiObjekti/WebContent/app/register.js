@@ -28,13 +28,13 @@ Vue.component("register-page", {
         
      </div>
 
-      <form id="forma"  @submit='createUser'>
+      <form id="forma">
         <table class="register_container">
             <tr>
                 <td class="credential_labels" align="center">Korisničko ime</td>
             </tr>
             <tr>
-                <td align="center"><input class="credential_inputs"  v-bind:disabled="mode!='CREATE'" type="text" v-model = "username" name="username" ></td>
+                <td align="center"><input class="credential_inputs"  type="text" name="username" v-model = "username"></td>
             </tr>
             <tr>
                 <td class="credential_labels" align="center">Šifra</td>
@@ -72,7 +72,7 @@ Vue.component("register-page", {
                 <td align="center"><input class="credential_inputs" type="date" name="birthDate" v-model = "birthDate"></td>
             </tr>
             <tr>
-                <td  align="center"><input class="Button" type="submit" value="Pošalji"></td>
+                <td  align="center"><input class="Button" v-on:click=createUser() value="Pošalji"></td>
             </tr>
         </table>
        </form>

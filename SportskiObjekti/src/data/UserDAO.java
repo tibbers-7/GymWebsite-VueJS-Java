@@ -70,7 +70,7 @@ public class UserDAO {
 	
 	public void addUser(User u) {
 		users.put(u.getUsername(), u);
-		saveUsers();
+		saveUser(u);
 	}
 	public void editUser(User u) {
 		users.remove(u.getUsername());
@@ -83,8 +83,8 @@ public class UserDAO {
 		try {
 			String str = u.toString();
 		    BufferedWriter writer = new BufferedWriter(new FileWriter(userFilepath + "/users.csv", true));
-		    writer.append("\n");
 		    writer.append(str);
+		    writer.append("\n");
 		    writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -95,13 +95,13 @@ public class UserDAO {
 	private void saveUsers() {
 		FileOutputStream outputStream;
 		try {
-			String str="p";
-		    BufferedWriter writer = new BufferedWriter(new FileWriter(userFilepath + "/users.csv", true));
+			String str="";
+		    BufferedWriter writer = new BufferedWriter(new FileWriter("/users.csv", true));
 		    writer.write("");
 		    for (User u : getUserCollection()) {
 				str=u.toString();
-		    writer.append(str);
-		    writer.append("\n");
+				writer.append(str);
+				writer.append("\n");
 		    }
 		    writer.close();
 		    
@@ -131,8 +131,8 @@ public class UserDAO {
 	private void loadUsers() {
 		BufferedReader in = null;
 		try {
-			File file = new File(userFilepath + "/users.csv");
-			System.out.println(file.getCanonicalPath());
+			System.out.println(System.getProperty("user.dir"));
+			File file = new File(userFilepath+"/users.csv");
 			in = new BufferedReader(new FileReader(file));
 			String line, username = "", password = "", name = "", last_name=""
 					, gender="", birth_date="",userType="",membershipID="",sportsObjectID="",
@@ -142,7 +142,7 @@ public class UserDAO {
 				line = line.trim();
 				if (line.equals("") || line.indexOf('#') == 0)
 					continue;
-				st = new StringTokenizer(line, ";");
+				st = new StringTokenizer(line, ",");
 				while (st.hasMoreTokens()) {
 					
 					username = "";
@@ -170,7 +170,7 @@ public class UserDAO {
 					visitedObjects=st.nextToken().trim();
 					points=st.nextToken().trim();
 					customerType=st.nextToken().trim();
-					active=st.nextToken().trim();;
+					active=st.nextToken().trim();
 				}
 				Gender genderEnum;
 				if(gender.equals("M")) genderEnum=Gender.MALE; else genderEnum=Gender.FEMALE;
