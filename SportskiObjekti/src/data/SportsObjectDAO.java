@@ -18,6 +18,7 @@ import data.utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
+		
 		public HashMap<Integer, SportsObject> getSportsObjects() {
 			return sportsObjects;
 		}
@@ -40,6 +41,7 @@ public class SportsObjectDAO {
 		public SportsObjectDAO(String sportsObjectsPath) {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
+			ContentDAO contentDAO=new ContentDAO(sportsObjectsPath);
 			loadSportsObjects();
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
