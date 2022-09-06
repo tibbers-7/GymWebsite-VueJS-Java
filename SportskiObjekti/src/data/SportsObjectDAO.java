@@ -106,7 +106,7 @@ public class SportsObjectDAO {
 					for(String s : servicesStrings) {
 						servicesList.add(s);
 					}
-					String imgFilepath=sportsObjectsPath+"images/"+imgName;
+					String imgFilepath="images/"+imgName;
 					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
