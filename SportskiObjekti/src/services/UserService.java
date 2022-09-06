@@ -1,5 +1,6 @@
 package services;
 
+import java.io.Console;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -81,7 +82,8 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(User userToLogIn) {
-
+		
+		try {
 		HttpSession session = request.getSession();
 
 		if (userToLogIn.getUsername() == null || userToLogIn.getPassword() == null
@@ -89,6 +91,7 @@ public class UserService {
 			return Response.status(400).entity("Prilikom logovanja unesite korisnicko ime i sifru!").build();
 
 		}
+		
 		
 		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 
@@ -109,7 +112,12 @@ public class UserService {
 			return Response.status(400).entity("Vec ste ulogovani!").build();
 		} else {
 			return Response.status(400).entity("Logovanje nije uspesno!").build();
+		}} catch(Exception e) {
+			return Response.status(400).entity("error!").build();
+			
 		}
+		
+		
 	}
 
 	@POST

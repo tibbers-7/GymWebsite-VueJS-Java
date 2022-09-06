@@ -42,7 +42,7 @@ Vue.component("trainings-customer", {
 		        <div class="table-content">  
 		        <tr class="table-row"  v-for="(t, index) in trainings">
 		            <td class="table-data">{{t.name}}</td>
-		             <td class="table-data">{{t.sportsObject}}</td>
+		             <td class="table-data">{{t.sObject}}</td>
 		             <td class="table-data">{{t.date}}</td>
 		        </tr>
 		    </table>
@@ -53,12 +53,16 @@ Vue.component("trainings-customer", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeCustomer')
+         .get('rest/trainings/getAll')
          .then(response => { 
-			this.customer = response.data;
-			axios
-			.post('rest/trainings/getTrainings', { id: this.customer.id })
-			.then(response => this.trainings = response.data); 
+			this.trainings = response.data;
+			//axios
+	        //  .get('rest/users/activeCustomer')
+	        //  .then(response => { 
+			//	this.customer = response.data;
+			//	axios
+			//	.post('rest/trainings/getAll', { id: this.customer.id })
+			//	.then(response => this.trainings = response.data); 
 			});
 	},
 	
