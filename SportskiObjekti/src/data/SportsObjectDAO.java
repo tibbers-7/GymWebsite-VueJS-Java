@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.StringTokenizer;
 
 import beans.Content;
@@ -20,7 +19,8 @@ import data.utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
-		private String sportsObjectsPath = "";
+		private ContentDAO contentDAO;
+		
 		public HashMap<Integer, SportsObject> getSportsObjects() {
 			return sportsObjects;
 		}
@@ -46,15 +46,35 @@ public class SportsObjectDAO {
 			this.sportsObjectsPath = sportsObjectsPath;
 			contentDAO=new ContentDAO(sportsObjectsPath);
 			loadSportsObjects();
+			try {
+				test();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
-			return sportsObjects.get(Integer.parseInt(sportsObjectID));
+			if (getSportsObjectsCollection() != null) {
+				for (SportsObject s : getSportsObjectsCollection()) {
+					if (s.getName().equals(sportsObjectID)) {
+						return s;
+					}
+				}
+			}
+			return null;
 		}
 		
-		
+
+		private String sportsObjectsPath = "";
 
 		public SportsObjectDAO() {
 			// TODO Auto-generated constructor stub
+			try {
+				test();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		/*public SportsObjectsDAO(String contextPath) {
@@ -63,19 +83,17 @@ public class SportsObjectDAO {
 
 		}*/
 	
-
-		public void addSportsObject(SportsObject s) {
-			if(s.getId()==null) setNextKey(s);
-			sportsObjects.put(Integer.parseInt(s.getId()),s);
-			saveObjects();
-		}
-		
-		private void setNextKey(SportsObject s) {
-			int largest=0;
-			for(int i:sportsObjects.keySet()) {
-				if(i>largest) largest=i;
-			} 
-			s.setId(Integer.toString(++largest));
+		public void addSportsObject(SportsObject s) throws IOException {
+			int maxId = 0;
+			maxId=getSportsObjectsCollection().size();
+			maxId++;
+			sportsObjects.put(maxId, s);
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath + "/sportsObjects.csv", true));
+		    String str=s.toString();
+		    writer.append("\n");
+		    writer.append(str);
+		    writer.close();
+		    writer.close();
 		}
 
 		private void loadSportsObjects() {
@@ -102,8 +120,7 @@ public class SportsObjectDAO {
 						imgName = st.nextToken().trim();
 					}
 					Boolean isOpen_=false;
-					String [] hours=openHours.split("-");
-					if(LocalDateTime.now().getHour()>=Integer.parseInt(hours[0])&&LocalDateTime.now().getHour()<=Integer.parseInt(hours[1])) isOpen_=true;
+					if(isOpen.equals("true")) isOpen_=true;
 					
 					String[] contentIds=services.split("-");
 					List<Content> contentList=new ArrayList<Content>();
@@ -124,28 +141,20 @@ public class SportsObjectDAO {
 					catch (Exception e) { }
 				}}
 			}
-		
-		private void saveObjects() {
-			try {
-				String str="";
-			    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath+"/sportsObjects.csv"));
-			    writer.write("");
-			    for (SportsObject s : getSportsObjectsCollection()) {
-					str=s.toString();
-					writer.append(str);
-					writer.append("\n");
-			    }
-			    writer.close();
-			    
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 
-	public Collection<String> getTypes() {
-		List<String> ret=new ArrayList<>();
-		for(ObjectType ot:ObjectType.values()) {
-			ret.add(ot.toString());
-		} return ret;
-	}
+<<<<<<< Updated upstream
+private void test() throws IOException {
+
+			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
+=======
+private void test() {
+			ArrayList<String> s=new ArrayList();
+			s.add("1-bb;");
+			s.add("2-dd");
+			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
+>>>>>>> Stashed changes
+			addSportsObject(s1);
+			addSportsObject(s1);
+			addSportsObject(s1);
+		}
 }

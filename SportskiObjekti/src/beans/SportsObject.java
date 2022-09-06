@@ -60,52 +60,56 @@ public class SportsObject  implements Serializable{
 		this.openHours = openHours;
 	}
 	private ObjectType type;
+<<<<<<< Updated upstream
 	public SportsObject(String name, ObjectType type, List<Content> contents, Boolean isOpen, String location,
+=======
+	public SportsObject(String name, ObjectType type,  Boolean isOpen, String location,
+>>>>>>> Stashed changes
 			float avgScore, String logoPath, String openHours) {
 		super();
 		this.name = name;
 		this.type = type;
+<<<<<<< Updated upstream
 		this.contents = contents;
+=======
+>>>>>>> Stashed changes
 		this.isOpen = isOpen;
 		this.location = location;
 		this.avgScore = avgScore;
 		this.logoPath = logoPath;
 		this.openHours = openHours;
 	}
-
+	private List<Content> contents;
 	@Override
 	public String toString() {
-		String logoStr=" ",openHrsStr=" ";
-		if (isOpen==null) isOpen=false;
-		if (logoPath!=null) logoStr=logoPath.substring(7);
-		if (openHours!=null) openHrsStr=openHours;
-		return id + ", "+ name + ", " + type + ", " + getServicesString() + ", " + isOpen + ", " + location + ", " + avgScore + ","
-				+ openHrsStr+","+logoStr;
+<<<<<<< Updated upstream
+		String contentString="";
+		for(Integer i: contentIds) {
+			contentString=contentString+Integer.toString(i)+"-";
+		}
+		return name + ", " + type + ", " + contentString + ", " + isOpen + ", " + location + ", " + avgScore + ", "
+=======
+		
+		return name + ", " + type + ", "  + ", " + isOpen + ", " + location + ", " + avgScore + ", "
+>>>>>>> Stashed changes
+				+ logoPath + ", " + openHours + ", " + servicesString;
 	}
-	
-	private String id;
-	private String name;
-	private List<String> services;
+	private List<Integer> contentIds;
 	private Boolean isOpen;
 	private String location;
 	private float avgScore;
 	private String logoPath;
 	private String openHours;
+<<<<<<< Updated upstream
 	public String getServicesString() {
-		
-		if(services==null) servicesString=" ";
-		else {
-			servicesString="";
-			for(String s:services) {
-				servicesString=servicesString+s+"-";
-			}
-		}
 		return servicesString;
 	}
 	public void setContentString(String contentString) {
 		
 		
 	}
+=======
+>>>>>>> Stashed changes
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
