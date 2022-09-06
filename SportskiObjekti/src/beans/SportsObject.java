@@ -73,6 +73,12 @@ public class SportsObject  implements Serializable{
 		this.openHours = openHours;
 	}
 	private List<Content> contents;
+	@Override
+	public String toString() {
+		return name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
+				+ logoPath + ", " + openHours + ", " + servicesString;
+	}
+	private List<String> services;
 	private Boolean isOpen;
 	private String location;
 	private float avgScore;
