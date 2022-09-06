@@ -10,7 +10,7 @@ public class SportsObject  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 4048385338677087921L;
-	
+	private String name;
 	public String getName() {
 		return name;
 	}
@@ -23,11 +23,11 @@ public class SportsObject  implements Serializable{
 	public void setType(ObjectType type) {
 		this.type = type;
 	}
-	public List<String> getServices() {
-		return services;
+	public List<Content> getServices() {
+		return contents;
 	}
-	public void setServices(List<String> services) {
-		this.services = services;
+	public void setServices(List<Content> services) {
+		this.contents = services;
 	}
 	public Boolean getIsOpen() {
 		return isOpen;
@@ -37,12 +37,6 @@ public class SportsObject  implements Serializable{
 	}
 	public String getLocation() {
 		return location;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 	public void setLocation(String location) {
 		this.location = location;
@@ -66,13 +60,12 @@ public class SportsObject  implements Serializable{
 		this.openHours = openHours;
 	}
 	private ObjectType type;
-	public SportsObject(String id,String name, ObjectType type, List<String> services, Boolean isOpen, String location,
+	public SportsObject(String name, ObjectType type, List<Content> contents, Boolean isOpen, String location,
 			float avgScore, String logoPath, String openHours) {
 		super();
-		this.id=id;
 		this.name = name;
 		this.type = type;
-		this.services = services;
+		this.contents = contents;
 		this.isOpen = isOpen;
 		this.location = location;
 		this.avgScore = avgScore;
@@ -98,9 +91,6 @@ public class SportsObject  implements Serializable{
 	private float avgScore;
 	private String logoPath;
 	private String openHours;
-	public SportsObject() {
-		super();
-	}
 	public String getServicesString() {
 		
 		if(services==null) servicesString=" ";
@@ -112,11 +102,9 @@ public class SportsObject  implements Serializable{
 		}
 		return servicesString;
 	}
-	public void setServicesString(String servicesString) {
-		String[] strings = servicesString.split(",");
-		for(String s : strings)
-			services.add(s);
-		 	
+	public void setContentString(String contentString) {
+		
+		
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

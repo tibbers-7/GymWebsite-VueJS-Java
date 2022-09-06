@@ -72,6 +72,7 @@ public class SportsObjectDAO {
 		public SportsObjectDAO(String sportsObjectsPath) {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
+			ContentDAO contentDAO=new ContentDAO(sportsObjectsPath);
 			loadSportsObjects();
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
