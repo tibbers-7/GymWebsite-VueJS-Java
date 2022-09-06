@@ -89,7 +89,7 @@ Vue.component("start-page", {
                  <td class="table-data">{{o.isOpen}}</td>
                  <td class="table-data">{{o.location}}</td>
                  <td class="table-data">{{o.avgScore}}</td>
-                 <td class="table-data">{{o.logoPath}}</td>
+                 <td class="table-data"><img:src="o.logoPath">"</td>
                  <td class="table-data">{{o.openHours}}</td>
             </tr>
             </div>  
@@ -157,9 +157,6 @@ Vue.component("start-page", {
 	mounted() {
 		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data));
-			
-		axios.get('rest/sportsobjects/getContent')
-			.then(response => (this.contents = response.data));
 				},
 				
 	methods: {
