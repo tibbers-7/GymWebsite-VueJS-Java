@@ -10,7 +10,7 @@ import beans.Content;
 
 public class ContentDAO {
 
-	private HashMap<Integer, Content> contents=new HashMap<>();
+	private HashMap<Integer, Content> content=new HashMap<>();
 	private String contentPath = "";
 	public ContentDAO(String sportsObjectsPath) {
 		super();	
@@ -18,10 +18,10 @@ public class ContentDAO {
 		loadContent();
 	}
 	public HashMap<Integer, Content> getContent() {
-		return contents;
+		return content;
 	}
 	public void setContent(HashMap<Integer, Content> content) {
-		this.contents = content;
+		this.content = content;
 	}
 	public String getContentPath() {
 		return contentPath;
@@ -36,16 +36,7 @@ public class ContentDAO {
 		maxId++;
 		getContent().put(maxId, c);
 	}
-	
-//	private String getContentString() {
-//		String s="";
-//		for(Content c: contents.values()){
-//			s=s+c.getName()+',';
-//		}
-//	}
-	public Content getByID(int id) {
-		return contents.get(id);
-	}
+
 	private void loadContent() {
 		BufferedReader in = null;
 		try {

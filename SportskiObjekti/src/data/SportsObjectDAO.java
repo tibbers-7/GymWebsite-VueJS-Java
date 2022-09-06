@@ -12,15 +12,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import beans.Content;
 import beans.SportsObject;
 import beans.User;
 import data.utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
+<<<<<<< HEAD
 		private ContentDAO contentDAO;
 		private String sportsObjectsPath = "";
+=======
+>>>>>>> parent of 6286cda (sportsObjects)
 		
 		public HashMap<Integer, SportsObject> getSportsObjects() {
 			return sportsObjects;
@@ -38,14 +40,14 @@ public class SportsObjectDAO {
 			this.sportsObjectsPath = sportsObjectsPath;
 		}
 
-		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) throws IOException {
+		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) {
 			this.sportsObjects = sportsObjects;
-			
 		}
 
 		public SportsObjectDAO(String sportsObjectsPath) {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
+<<<<<<< HEAD
 			try {
 				this.setSportsObjects(new HashMap<Integer, SportsObject>());
 			} catch (IOException e) {
@@ -53,6 +55,9 @@ public class SportsObjectDAO {
 				e.printStackTrace();
 			}
 			contentDAO=new ContentDAO(sportsObjectsPath);
+=======
+			ContentDAO contentDAO=new ContentDAO(sportsObjectsPath);
+>>>>>>> parent of 6286cda (sportsObjects)
 			loadSportsObjects();
 			test();
 		}
@@ -68,11 +73,28 @@ public class SportsObjectDAO {
 		}
 		
 
+<<<<<<< HEAD
+=======
+		private String sportsObjectsPath = "";
+
+		public SportsObjectDAO() {
+			// TODO Auto-generated constructor stub
+			test();
+		}
+
+		/*public SportsObjectsDAO(String contextPath) {
+			this.setSportsObjects(new HashMap<Integer, SportsObject>());
+			this.setSportsObjectsPath(contextPath);
+
+		}*/
+	
+>>>>>>> parent of 6286cda (sportsObjects)
 		public void addSportsObject(SportsObject s) {
 			int maxId = 0;
 			maxId=getSportsObjectsCollection().size();
 			maxId++;
 			sportsObjects.put(maxId, s);
+<<<<<<< HEAD
 		    BufferedWriter writer;
 			try {
 				writer = new BufferedWriter(new FileWriter(sportsObjectsPath + "/sportsObjects.csv", true));
@@ -84,6 +106,8 @@ public class SportsObjectDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+=======
+>>>>>>> parent of 6286cda (sportsObjects)
 		}
 
 		private void loadSportsObjects() {
@@ -112,13 +136,13 @@ public class SportsObjectDAO {
 					Boolean isOpen_=false;
 					if(isOpen.equals("true")) isOpen_=true;
 					
-					String[] contentIds=services.split("-");
-					List<Content> contentList=new ArrayList<Content>();
-					for(String id : contentIds) {
-						contentList.add(contentDAO.getByID(Integer.parseInt(id)));
+					String[] servicesStrings=services.split(",");
+					List<String> servicesList=new ArrayList<String>();
+					for(String s : servicesStrings) {
+						servicesList.add(s);
 					}
 					String imgFilepath=sportsObjectsPath+"/images/"+imgName;
-					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),contentList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
+					SportsObject sportsObject=new SportsObject(name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
 			} catch (Exception e) {
@@ -132,7 +156,11 @@ public class SportsObjectDAO {
 				}}
 			}
 
+<<<<<<< HEAD
 			private void test()  {
+=======
+private void test() {
+>>>>>>> parent of 6286cda (sportsObjects)
 
 			SportsObject s1 = new SportsObject("aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
 			addSportsObject(s1);
