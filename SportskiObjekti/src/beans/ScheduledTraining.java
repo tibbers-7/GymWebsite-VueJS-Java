@@ -1,8 +1,13 @@
 package beans;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class ScheduledTraining {
+public class ScheduledTraining  implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8778761921916943988L;
 LocalDateTime dateTime;
 public ScheduledTraining(LocalDateTime dateTime, Training training, User user, User trainer) {
 	super();

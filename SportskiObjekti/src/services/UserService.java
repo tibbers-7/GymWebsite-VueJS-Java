@@ -17,11 +17,11 @@ import javax.ws.rs.core.Response;
 
 import beans.User;
 import data.UserDAO;
-import utils.CustomerType;
-import utils.UserType;
+import data.utils.CustomerType;
+import data.utils.UserType;
 
 
-@Path("user")
+@Path("/user")
 public class UserService {
 
 	@Context
@@ -35,17 +35,17 @@ public class UserService {
 	}
 	
 	@GET
-	@Path("users")
+	@Path("/users")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<User> getUsers() {
-		UserDAO UserDAO = (UserDAO) context.getAttribute("users");
-		return UserDAO.getUserCollection();
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		return userDAO.getUserCollection();
 	}
 	
 	
 		
 	@GET
-	@Path("logout")
+	@Path("/logout")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response logout() {
 		
@@ -62,7 +62,7 @@ public class UserService {
 	}
 
 	@GET
-	@Path("loginstat")
+	@Path("/loggedinstatus")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User loginStat() {
 
@@ -77,7 +77,7 @@ public class UserService {
 	}
 
 	@POST
-	@Path("login")
+	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(User userToLogIn) {
@@ -90,11 +90,11 @@ public class UserService {
 
 		}
 		
-		UserDAO UserDAO = (UserDAO) context.getAttribute("users");
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 
-		if (UserDAO.searchUser(userToLogIn.getUsername()) != null) {
+		if (userDAO.searchUser(userToLogIn.getUsername()) != null) {
 
-			User user = UserDAO.searchUser(userToLogIn.getUsername());
+			User user = userDAO.searchUser(userToLogIn.getUsername());
 
 			if (user.getPassword().equals(userToLogIn.getPassword()) == true) {
 				session.setAttribute("user", user);
@@ -112,7 +112,7 @@ public class UserService {
 	}
 
 	@POST
-	@Path("register")
+	@Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response register(User userToRegister) {
@@ -123,24 +123,24 @@ public class UserService {
 			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
 		}
 		
-		UserDAO UserDAO = (UserDAO) context.getAttribute("users");
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 
-//		if (UserDAO.searchUser(userToRegister.getUsername()) != null) {
-//			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
-//		} else {
-			UserDAO.addUser(userToRegister);
+		if (userDAO.searchUser(userToRegister.getUsername()) != null) {
+			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
+		} else {
+			userDAO.addUser(userToRegister);
 			return Response.status(200).build();
-		//}
+		}
 	}
 	
 
 	@PostConstruct
 	public void init() {
 		
-		if (context.getAttribute("users") == null) {
+		if (context.getAttribute("userDAO") == null) {
 			String contextPath = context.getRealPath("");
 			UserDAO UserDAO = new UserDAO(contextPath);
-			context.setAttribute("users", UserDAO);
+			context.setAttribute("userDAO", UserDAO);
 		}
 	
 	}

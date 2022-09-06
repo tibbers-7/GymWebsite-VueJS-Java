@@ -1,16 +1,22 @@
 package beans;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import utils.CustomerType;
-import utils.Gender;
-import utils.UserType;
+import data.utils.CustomerType;
+import data.utils.Gender;
+import data.utils.UserType;
 
-public class User {
+public class User implements Serializable{
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6008893841218394652L;
 	
 	public User(String username, String password, String name, String last_name, Gender gender, String birthDate,
 			UserType userType, String membershipID, String sportsObjectID, String visitedObjects,
@@ -28,6 +34,21 @@ public class User {
 		this.visitedObjectsID = visitedObjects;
 		this.points = points;
 		this.customerType = customerType;
+	}
+	public User(UserBuilder builder) {
+		super();
+		this.username = builder.username;
+		this.password = builder.password;
+		this.name = builder.name;
+		this.last_name = builder.last_name;
+		this.gender = builder.gender;
+		this.birthDate = builder.birthDate;
+		this.userType = builder.userType;
+		this.membershipID = builder.membershipID;
+		this.sportsObjectID = builder.sportsObjectID;
+		this.visitedObjectsID = builder.visitedObjectsID;
+		this.points = builder.points;
+		this.customerType = builder.customerType;
 	}
 	public String getUsername() {
 		return username;
@@ -53,10 +74,10 @@ public class User {
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
-	public utils.Gender getGender() {
+	public data.utils.Gender getGender() {
 		return gender;
 	}
-	public void setGender(utils.Gender gender) {
+	public void setGender(data.utils.Gender gender) {
 		this.gender = gender;
 	}
 	public String getBirthDate() {
@@ -112,15 +133,85 @@ public class User {
 	private String password;
 	private String name;
 	private String last_name;
-	private utils.Gender gender;
+	private data.utils.Gender gender;
 	private String birthDate;
+	public Boolean getActive() {
+		return active;
+	}
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+	private Boolean active;
+	private UserType userType;
+	private String membershipID;
+	private String sportsObjectID;
+	private String visitedObjectsID;
+	private int points;
+	private CustomerType customerType;
 	
-	UserType userType;
-	String membershipID;
-	String sportsObjectID;
-	String visitedObjectsID;
-	int points;
-	CustomerType customerType;
-	
+	public static class UserBuilder{
+		
+		private String username;
+		private String password;
+		private String name;
+		private String last_name;
+		private data.utils.Gender gender;
+		private String birthDate;
+		private UserType userType;
+		private Boolean active;
+		private String membershipID;
+		private String sportsObjectID;
+		private String visitedObjectsID;
+		private int points;
+		private CustomerType customerType;
+		
+		public UserBuilder(String username, String password, String name, String last_name, Gender gender, String birthDate,
+				UserType userType, Boolean active) {
+			this.username = username;
+			this.password = password;
+			this.name = name;
+			this.last_name = last_name;
+			this.gender = gender;
+			this.birthDate = birthDate;
+			this.userType = userType;
+			this.active=active;
+		}
+		public Boolean getActive() {
+			return active;
+		}
+		public void setActive(Boolean active) {
+			this.active = active;
+		}
+		public UserBuilder membership(String membershipID)
+		{
+			this.membershipID=membershipID;
+			return this;
+		}
+		public UserBuilder sportsObject(String sportsObjectID)
+		{
+			this.sportsObjectID=sportsObjectID;
+			return this;
+		}	
+		public UserBuilder visitedObjects(String visitedObjects)
+		{
+			this.visitedObjectsID=visitedObjects;
+			return this;
+		}	
+		public UserBuilder sportsObject(int points)
+		{
+			this.points=points;
+			return this;
+		}
+		public UserBuilder customerType(CustomerType customerType)
+		{
+			this.customerType=customerType;
+			return this;
+		}
+		public User build(){
+			User user=new User(this);
+			return user;
+		}
+	}
+
 	
 }

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import utils.CustomerType;
-import utils.Gender;
-import utils.MembershipType;
-import utils.UserType;
+import data.utils.CustomerType;
+import data.utils.Gender;
+import data.utils.MembershipType;
+import data.utils.UserType;
 
 public class Customer extends User{
 

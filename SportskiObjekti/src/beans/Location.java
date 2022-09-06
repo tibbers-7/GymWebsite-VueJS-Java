@@ -1,6 +1,12 @@
 package beans;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2645676152211063851L;
 double GeoWidth;
 public double getGeoWidth() {
 	return GeoWidth;

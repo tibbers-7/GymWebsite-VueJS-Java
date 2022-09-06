@@ -114,7 +114,7 @@ Vue.component("start-page", {
 	                <th class="header__item">Sadržaj</th>
 	            </tr>
 	            <div class="table-content">  
-	            <tr class="table-row"  v-for="(c, index) in object.contents">
+	            <tr class="table-row"  v-for="(c, index) in sportsObjects">
 	                <td class="table-data">{{c.name}}</td>
 	            </tr>
 	            </div>  
@@ -126,7 +126,7 @@ Vue.component("start-page", {
 	                <th class="header__item">Komentari</th>
 	            </tr>
 	            <div class="table-content">  
-	                <tr class="table-row"  v-for="(c, index) in object.comments">
+	                <tr class="table-row"  v-for="(c, index) in object">
 	                    <td class="table-data">{{c.text}}</td>
 	                </tr>
 	            </div>  
@@ -163,7 +163,7 @@ Vue.component("start-page", {
 		</div>       
     	`,
 	mounted() {
-		axios.get('rest/sportsobjects/')
+		axios.get('rest/sportsobjects')
 			.then(response => (this.sportsObjects = response.data)),
 			mode='BROWSE'
 				},
