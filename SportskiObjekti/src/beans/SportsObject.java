@@ -60,19 +60,11 @@ public class SportsObject  implements Serializable{
 		this.openHours = openHours;
 	}
 	private ObjectType type;
-<<<<<<< Updated upstream
-	public SportsObject(String name, ObjectType type, List<Content> contents, Boolean isOpen, String location,
-=======
 	public SportsObject(String name, ObjectType type,  Boolean isOpen, String location,
->>>>>>> Stashed changes
 			float avgScore, String logoPath, String openHours) {
 		super();
 		this.name = name;
 		this.type = type;
-<<<<<<< Updated upstream
-		this.contents = contents;
-=======
->>>>>>> Stashed changes
 		this.isOpen = isOpen;
 		this.location = location;
 		this.avgScore = avgScore;
@@ -82,16 +74,8 @@ public class SportsObject  implements Serializable{
 	private List<Content> contents;
 	@Override
 	public String toString() {
-<<<<<<< Updated upstream
-		String contentString="";
-		for(Integer i: contentIds) {
-			contentString=contentString+Integer.toString(i)+"-";
-		}
-		return name + ", " + type + ", " + contentString + ", " + isOpen + ", " + location + ", " + avgScore + ", "
-=======
 		
 		return name + ", " + type + ", "  + ", " + isOpen + ", " + location + ", " + avgScore + ", "
->>>>>>> Stashed changes
 				+ logoPath + ", " + openHours + ", " + servicesString;
 	}
 	private List<Integer> contentIds;
@@ -100,16 +84,6 @@ public class SportsObject  implements Serializable{
 	private float avgScore;
 	private String logoPath;
 	private String openHours;
-<<<<<<< Updated upstream
-	public String getServicesString() {
-		return servicesString;
-	}
-	public void setContentString(String contentString) {
-		
-		
-	}
-=======
->>>>>>> Stashed changes
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
