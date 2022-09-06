@@ -24,7 +24,7 @@ import data.UserDAO;
 public class SportsObjectService {
 	
 	@Context
-	ServletContext context;
+	ServletContext ctx;
 	
 	public SportsObjectService() {
 	}
@@ -40,93 +40,21 @@ public class SportsObjectService {
 	}
 	
 	@GET
-	@Path("/getByManager")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByManager() {
-		SportsObjectDAO dao = (SportsObjectDAO)context.getAttribute("sportsObjectDAO");
-		User manager=(User) context.getAttribute("activeUser");
-		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
-		return Response.status(200).entity(s).build();
-	}
-	@GET
 	@Path("/getAll")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<SportsObject> getAll() {
-		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
+		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
+		
 		return dao.getSportsObjectsCollection();
-	}
-	@POST
-	@Path("/getContent")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getContent(SportsObject s) {
-		return Response.status(200).entity(s.getServices()).build();
-	}
-	@POST
-	@Path("/setSelectedObject")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response setSelectedObject(SportsObject s) {
-		context.setAttribute("selectedObject", s);
-		return Response.status(200).build();
-	}
-	
-	@GET
-	@Path("/getSelectedObject")
-	@Produces(MediaType.APPLICATION_JSON)
-	public SportsObject getSelectedObject() {
-		return (SportsObject) context.getAttribute("selectedObject");
-	}
-	
-	@GET
-	@Path("/getTypes")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<String> getTypes() {
-		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
-		return dao.getTypes();
-	}
-	
-	@POST
-	@Path("/addService")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addService(String service) {
-		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
-		User manager=(User) context.getAttribute("activeUser");
-		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
-		service=service.substring(11,service.lastIndexOf('"'));
-		dao.checkService(s.getId(),service);
-		dao.addService(s.getId(), service);
-		return Response.status(200).entity(s).build();
-	}
-	
-	@POST
-	@Path("/removeService")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response removeService(String service) {
-		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
-		User manager=(User) context.getAttribute("activeUser");
-		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
-		service=service.substring(11,service.lastIndexOf('"'));
-		dao.removeService(s.getId(), service);
-		return Response.status(200).entity(s).build();
 	}
 	
 	@POST
 	@Path("/addNew")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addNew(SportsObject object) {
-		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
-		dao.addSportsObject(object);
-		return Response.status(200).entity(object).build();
-	}
-	@POST
-	@Path("/setActiveManager")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response setActiveManager(User manager) {
-		context.setAttribute("activeUser", manager);
-		return Response.status(200).build();
+	public SportsObject addNew(SportsObject object) {
+		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("productDAO");
+		return object;
 	}
 	
 }
