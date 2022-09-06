@@ -57,7 +57,6 @@ Vue.component("login-page", {
     		})
 					.then(response => {
 						this.user = response.data;
-						toast(response.data);
 						if(response.code!=400){
 							switch(this.user.userType){
 								case "CUSTOMER": router.push(`/csp`);
