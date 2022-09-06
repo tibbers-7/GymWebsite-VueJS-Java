@@ -104,7 +104,7 @@ Vue.component("manager-object", {
 			router.push(`/`);
 		},
 		
-		trainings: function(){
+		trainingsShow: function(){
 			router.push(`/mt`);
 		},
 		

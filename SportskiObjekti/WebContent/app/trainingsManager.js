@@ -1,5 +1,5 @@
 //import * as toast from 'toast.js';
-Vue.component("trainings-customer", {
+Vue.component("trainings-manager", {
 	data: function() {
 		return{
 		trainings: null,
@@ -73,11 +73,11 @@ Vue.component("trainings-customer", {
 		logOut: function(){
 			router.push(`/`);
 		},
-		memberships: function(){
-			router.push(`/cm`);
-		},
 		homePage: function(){
-			router.push(`/csp`);
+			router.push(`/msp`);
+		},
+		showObject: function(){
+			router.push(`/ov`);
 		}
 	}
 		

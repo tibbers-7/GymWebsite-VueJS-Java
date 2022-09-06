@@ -38,9 +38,6 @@ Vue.component("trainer-SP", {
 	<!-- TABELA SVIH OBJEKATA -->
 		
 		<div v-if="selected==true">
-        <div class="es001"></div>
-        <div class="es002"></div>
-        <div class="es003"></div>
         
         <div class="objectSpec_grid">
           <div class="objectFilter_grid">
@@ -162,9 +159,6 @@ Vue.component("trainer-SP", {
 	    <div class="back_Btn2_grid">
 	        <a href="#/tsp"><img src="images/back.png" class="back_img"></img></a>
 	    </div>
-	    <div class="es1"></div>
-	    <div class="es3"></div>
-	    <div class="es2"></div>
 	  </div>
     </div>       
     </div>    

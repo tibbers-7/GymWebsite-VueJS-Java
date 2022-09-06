@@ -1,4 +1,4 @@
-Vue.component("object-view", {
+Vue.component("view-object", {
 	data: function() {
 		return{
 		title: "Pregled objekta",

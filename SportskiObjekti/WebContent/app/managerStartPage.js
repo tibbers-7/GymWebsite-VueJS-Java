@@ -11,7 +11,7 @@ Vue.component("manager-SP", {
 		}
 	},
 	 template: ` 
-    	<div style="bodyStyle">
+    	<div class="bodyStyle">
     	
 		    	<div class="header_container">
 					        <div class="Img">
@@ -176,7 +176,7 @@ Vue.component("manager-SP", {
 			router.push(`/`);
 		},
 		
-		trainings: function(){
+		trainingsShow: function(){
 			router.push(`/mt`);
 		},
 		objectShow: function(){

@@ -8,6 +8,7 @@ const TrainerStartPage = { template: '<trainer-SP></trainer-SP>'}
 const TrainingsTrainer = {template: '<trainings-trainer></trainings-trainer>'}
 const ManagerStartPage = {template: '<manager-SP></manager-SP>'}
 const ObjectViewManager = {template:'<manager-object></manager-object>'}
+const ObjectGeneral = {template:'<view-object></view-object>'}
 const UpdateObject = {template:'<object-update></object-update>' }
 const Profile = {template:'<profile></profile>' }
 const InfoChange = {template:'<info-change></info-change>' }
@@ -15,6 +16,7 @@ const PasswordChange = {template:'<password-change></password-change>' }
 const AdminStartPage = { template: '<admin-SP></admin-SP>'}
 const UsersAdmin = {template: '<users-admin></users-admin>'}
 const AddObjectAdmin = {template: '<add-object></add-object>'}
+const ManagerTrainings = {template: '<trainings-manager></trainings-manager>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -27,8 +29,10 @@ const router = new VueRouter({
 	    { path: '/cm', component: MembershipsCustomer },
 	    { path: '/tsp', component: TrainerStartPage },
 	    { path: '/tt', component: TrainingsTrainer },
+	    { path: '/mt', component: ManagerTrainings },
 	    { path: '/msp', component: ManagerStartPage },
-	    { path: '/ov', component: ObjectViewManager },
+	    { path: '/ovm', component: ObjectViewManager },
+	    { path: '/ovg', component: ObjectGeneral },
 	    { path: '/uo', component: UpdateObject },
 	    { path: '/ic', component: InfoChange },
 	    { path: '/pc', component: PasswordChange },
