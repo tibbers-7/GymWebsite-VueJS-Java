@@ -52,7 +52,7 @@ public class SportsObjectService {
 	
 	@POST
 	@Path("/setSelectedObject")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response setSelectedObject(SportsObject s) {
 		ctx.setAttribute("selectedObject", s);
 		return Response.status(200).build();

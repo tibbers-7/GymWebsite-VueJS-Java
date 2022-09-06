@@ -4,7 +4,7 @@ Vue.component("view-object", {
 		title: "Pregled objekta",
 		object:null,
 		user:null,
-		error: '',
+		error: ''
 		}
 	},
 	 template: ` 
@@ -72,12 +72,7 @@ Vue.component("view-object", {
     </div>    
     	`,
 	mounted() {
-		axios
-         .get('rest/users/activeUser')
-         .then(response => { 
-			this.user = response.data;
-			});
-		axios
+				axios
          .get('rest/sportsobjects/getSelectedObject')
          .then(response => { 
 			this.object = response.data;
