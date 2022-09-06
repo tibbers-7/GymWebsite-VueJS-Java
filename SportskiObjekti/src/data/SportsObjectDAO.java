@@ -43,6 +43,7 @@ public class SportsObjectDAO {
 			this.sportsObjectsPath = sportsObjectsPath;
 			ContentDAO contentDAO=new ContentDAO(sportsObjectsPath);
 			loadSportsObjects();
+			test();
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
 			if (getSportsObjectsCollection() != null) {
