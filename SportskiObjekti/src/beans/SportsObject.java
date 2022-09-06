@@ -23,8 +23,8 @@ public class SportsObject  implements Serializable{
 	public void setType(ObjectType type) {
 		this.type = type;
 	}
-	public List<Content> getServices() {
-		return contents;
+	public List<Integer> getContentIds() {
+		return contentIds;
 	}
 	public void setServices(List<Content> services) {
 		this.contents = services;
@@ -75,10 +75,14 @@ public class SportsObject  implements Serializable{
 	private List<Content> contents;
 	@Override
 	public String toString() {
-		return name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
+		String contentString="";
+		for(Integer i: contentIds) {
+			contentString=contentString+Integer.toString(i)+"-";
+		}
+		return name + ", " + type + ", " + contentString + ", " + isOpen + ", " + location + ", " + avgScore + ", "
 				+ logoPath + ", " + openHours + ", " + servicesString;
 	}
-	private List<String> services;
+	private List<Integer> contentIds;
 	private Boolean isOpen;
 	private String location;
 	private float avgScore;
