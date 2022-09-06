@@ -98,7 +98,8 @@ public class UserService {
 
 			if (user.getPassword().equals(userToLogIn.getPassword()) == true) {
 				session.setAttribute("user", user);
-				return Response.status(200).entity(user.getUserType()).build();
+				
+				return Response.status(200).entity(user).build();
 			} else {
 				return Response.status(400).entity("Pogresan password!").build();
 			}

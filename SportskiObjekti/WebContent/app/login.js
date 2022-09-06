@@ -51,9 +51,15 @@ Vue.component("login-page", {
 		loginUser: function () {
 				axios.post('rest/user/login', this.user)
 					.then(response => {
+						this.user = response.data;
 						toast(response);
 						if(response.code!=400){
-							switch(this.us)
+							switch(user.type){
+								case CUSTOMER: router.push(`/csp`);
+								case MANAGER: router.push(`/msp`);
+								case ADMIN: router.push(`/asp`);
+								case TRAINER: router.push(`/tsp`);
+							}
 						}
 					})
 		},
