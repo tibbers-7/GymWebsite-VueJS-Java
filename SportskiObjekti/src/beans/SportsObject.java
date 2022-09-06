@@ -75,7 +75,15 @@ public class SportsObject  implements Serializable{
 	private List<Content> contents;
 	@Override
 	public String toString() {
+<<<<<<< Updated upstream
 		return name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
+=======
+		String contentString="";
+		for(Content c: contents) {
+			contentString+=c.toString()+";";
+		}
+		return name + ", " + type + ", " + contentString + ", " + isOpen + ", " + location + ", " + avgScore + ", "
+>>>>>>> Stashed changes
 				+ logoPath + ", " + openHours + ", " + servicesString;
 	}
 	private List<String> services;
@@ -88,7 +96,11 @@ public class SportsObject  implements Serializable{
 		return servicesString;
 	}
 	public void setContentString(String contentString) {
-		
+		String[] strings=contentString.split(";");
+		for(String s : strings)
+		{
+			contents.add(new Content(s));
+		}
 		
 	}
 	public static long getSerialversionuid() {

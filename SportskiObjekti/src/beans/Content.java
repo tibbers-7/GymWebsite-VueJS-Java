@@ -8,6 +8,13 @@ public class Content{
 		this.id = id;
 		this.name = name;
 	}
+	public Content(String content) {
+		super();
+		String[] s= content.split("-");
+		
+		this.id = Integer.parseInt(s[0]);
+		this.name = s[1];
+	}
 	public int getId() {
 		return id;
 	}
@@ -22,7 +29,7 @@ public class Content{
 	}
 	@Override
 	public String toString() {
-		return id + ", " + name;
+		return id + "-" + name;
 	}
 	
 	
