@@ -158,7 +158,7 @@ Vue.component("start-page", {
 		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data));
 			
-		axios.get('rest/getContent')
+		axios.get('rest/sportsObjects/getContent')
 			.then(response => (this.contents = response.data));
 				},
 				
