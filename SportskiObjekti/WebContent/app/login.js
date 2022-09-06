@@ -59,11 +59,19 @@ Vue.component("login-page", {
 						this.user = response.data;
 						toast(response.data);
 						if(response.code!=400){
-							switch(this.user.userType){
-								case "CUSTOMER": router.push(`/csp`);
-								case "MANAGER": router.push(`/msp`);
-								case "ADMIN": router.push(`/asp`);
-								case "TRAINER": router.push(`/tsp`);
+							switch(response.data){
+								case "CUSTOMER":
+									 router.push(`/csp`);
+									 break;
+								case "MANAGER": 
+									router.push(`/msp`);
+									break;
+								case "ADMIN": 
+									router.push(`/asp`);
+									break;
+								case "TRAINER": 
+									router.push(`/tsp`);
+									break;
 							}
 						}
 					})

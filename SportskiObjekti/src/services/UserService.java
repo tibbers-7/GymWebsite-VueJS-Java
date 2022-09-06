@@ -102,7 +102,7 @@ public class UserService {
 			if (user.getPassword().equals(userToLogIn.getPassword()) == true) {
 				session.setAttribute("activeUser", user);
 				
-				return Response.status(200).entity(user).build();
+				return Response.status(200).entity(user.getUserType().toString()).build();
 			} else {
 				return Response.status(400).entity("Pogresan password!").build();
 			}
