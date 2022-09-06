@@ -112,9 +112,8 @@ Vue.component("start-page", {
 		
 		selectedObject: function(sportsObject){
 			axios.post('rest/sportsobjects/setSelectedObject', sportsObject)
-					.then(response => {
-						router.push("/ovg");
-					})
+					.then(
+						router.push("/ovg"))
 		},
 		
 		logIn : function() {
