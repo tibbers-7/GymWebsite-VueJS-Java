@@ -63,7 +63,7 @@ Vue.component("profile", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeUser')
+         .get('rest/user/activeUser')
          .then(response => { 
 			this.user = response.data;
 			});

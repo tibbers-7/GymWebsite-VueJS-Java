@@ -151,7 +151,7 @@ Vue.component("admin-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeAdmin')
+		         .get('rest/user/activeAdmin')
 		         .then(response => this.admin = response.data);
 		axios.get('rest/sportsobjects/')
 			.then(response => (this.sportsObjects = response.data))

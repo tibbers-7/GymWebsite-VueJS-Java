@@ -101,7 +101,7 @@ Vue.component("manager-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeManager')
+		         .get('rest/user/activeManager')
 		         .then(response => this.customer = response.data);
 		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data))

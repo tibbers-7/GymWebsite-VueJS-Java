@@ -34,6 +34,7 @@ const router = new VueRouter({
 	    { path: '/ovm', component: ObjectViewManager },
 	    { path: '/ovg', component: ObjectGeneral },
 	    { path: '/uo', component: UpdateObject },
+	    { path: '/pro', component: Profile },
 	    { path: '/ic', component: InfoChange },
 	    { path: '/pc', component: PasswordChange },
 	    { path: '/asp', component: AdminStartPage },

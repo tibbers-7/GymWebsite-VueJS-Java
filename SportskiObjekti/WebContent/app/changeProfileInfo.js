@@ -27,7 +27,7 @@ Vue.component("info-change", {
                 <tr><td class="credential_labels" align="center">Ime:</td></tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="text" placeholder="{{user.name}}" v-model = "newUser.name" >
+                        <input class="credential_inputs" type="text" v-model = "newUser.name" >
                     </td>
 				</tr>
                 <tr>
@@ -35,7 +35,7 @@ Vue.component("info-change", {
                 </tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="text" placeholder="{{user.last_name}}" v-model = "newUser.last_name">
+                        <input class="credential_inputs" type="text" v-model = "newUser.last_name">
                     </td>
 				</tr>
                 <tr>
@@ -43,7 +43,7 @@ Vue.component("info-change", {
                 </tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="date" placeholder="{{user.birthDate}}" v-model = "newUser.birthDate">
+                        <input class="credential_inputs" type="date" v-model = "newUser.birthDate">
                     </td>
 				</tr>
                 <tr>
@@ -54,7 +54,7 @@ Vue.component("info-change", {
                         <div style="margin-left:30%">
                         
                         <input type="radio" name="gender"  value="female" v-model = "gender"/>
-                        <p style="color:white" style="margin-top: -5%;">Ženski</p>
+                        <p style="color:white margin-top: -5%;">Ženski</p>
                         
                         <input  type="radio" name="gender"  value="male" v-model = "gender"/>
                         <p style="color: white;">Muški</p>
@@ -79,11 +79,11 @@ Vue.component("info-change", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeUser')
+         .get('rest/user/activeUser')
          .then(response => { 
 			this.user = response.data;
-			});
-		newUser=user;
+			}),
+			newUser=user
 	},
 	
 	methods: {
@@ -91,8 +91,20 @@ Vue.component("info-change", {
 			router.push(`/`);
 		},
 		goBack: function(){
-			//  Zavisi koji je tip korisnika
-			//router.push(`/`);
+			switch(newUser.userType){
+								case "CUSTOMER":
+									 router.push(`/csp`);
+									 break;
+								case "MANAGER": 
+									router.push(`/msp`);
+									break;
+								case "ADMIN": 
+									router.push(`/asp`);
+									break;
+								case "TRAINER": 
+									router.push(`/tsp`);
+									break;
+									}
 		},
 		changeInfo: function(){
 			

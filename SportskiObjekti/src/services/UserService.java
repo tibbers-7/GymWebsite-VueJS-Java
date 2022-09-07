@@ -138,7 +138,29 @@ public class UserService {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
 			userDAO.addUser(userToRegister);
-			return Response.status(200).entity("Uspešno kreiran nalog!").build();
+			return Response.status(200).entity("Uspeï¿½no kreiran nalog!").build();
+		}
+	}
+	
+	@POST
+	@Path("/editInfo")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response edit(User userToEdit) {
+
+		if (userToEdit.getUsername() == null || userToEdit.getPassword() == null
+				 || userToEdit.getUsername().equals("")
+				|| userToEdit.getPassword().equals("")) {
+			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
+		}
+		
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+
+		if (userDAO.searchUser(userToEdit.getUsername()).equals(null)) {
+			return Response.status(400).entity("Ne postoji korinsik!").build();
+		} else {
+			userDAO.editUser(userToEdit);
+			return Response.status(200).entity("Uspeï¿½no promenjen nalog!").build();
 		}
 	}
 	
@@ -158,7 +180,7 @@ public class UserService {
 	
 	
 	@GET
-	@Path("activeUser")
+	@Path("/activeUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public User getActiveUser() {
