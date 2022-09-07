@@ -18,9 +18,7 @@ Vue.component("trainer-SP", {
 			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
-			        <div class="Login"><button class="Button"   href="#/lp" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
-			        <div class="Register"><button class="Button"  href="#/rp" v-bind:hidden="mode=='LOGGED'" >Registrujte se</button></div>
-			        <div class="Register"><button class="Button"  href="#/" v-bind:hidden="mode!=='LOGGED'" >Odjavite se</button></div>
+			        <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
 
 			</div>
 			
@@ -28,8 +26,8 @@ Vue.component("trainer-SP", {
     <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="active" href="#/tsp">Naši Objekti</a></button></th>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/tt">Moji Treninzi</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" ><p class="active">Naši Objekti</p></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="inactive" >Moji Treninzi</p></button></th>
 	        </tr>
 	    </table>
     </div>
@@ -98,60 +96,11 @@ Vue.component("trainer-SP", {
     </div>
     
     
-    <!-- PRIKAZ OBJEKTA -->
-    
-    <div class="objectInfo_grid" v-if="selected == true">
-	    <div class="content_grid">
-	        <table class="table" style="width:60%;">
-	            <tr class="table-header" >
-	                <th class="header__item">Sadržaj</th>
-	            </tr>
-	            <div class="table-content">  
-	            <tr class="table-row"  v-for="(c, index) in object.contents">
-	                <td class="table-data">{{c.name}}</td>
-	            </tr>
-	            </div>  
-	        </table>
-	    </div>
-	    <div class="comments_grid">
-	        <table class="table" style="width:60%;">
-	            <tr class="table-header" >
-	                <th class="header__item">Komentari</th>
-	            </tr>
-	            <div class="table-content">  
-	                <tr class="table-row"  v-for="(c, index) in object.comments">
-	                    <td class="table-data">{{c.text}}</td>
-	                </tr>
-	            </div>  
-	        </table>
-	    </div>
-	    <div class="basicInfo_grid">
-	        <div class="objectView_container" >
-	            
-	            <div class="grid_name">{{object.name}}</div>
-	            <div class="headers">
-	                <ul style="list-style:none">
-	                    <li>Tip:</li>
-	                    <li>Status:</li>
-	                    <li>Ocena:</li>
-	                </ul>
-	            </div>
-	            <div class="values">
-	                <ul style="list-style:none">
-	                    <li>{{object.type}}</li>
-	                    <li>{{object.status}}</li>
-	                    <li>{{object.grade}}</li>
-	                </ul>
-	            </div>
-	        </div>
-	    </div>
-	  </div>
-    </div>       
-    </div>    
+    </div>
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeTrainer')
+		         .get('rest/users/activeUser')
 		         .then(response => this.trainer = response.data);
 		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data));
@@ -162,6 +111,13 @@ Vue.component("trainer-SP", {
 			this.selected=true;
 		},
 		
+		logOut: function(){
+			router.push(`/`);
+		},
+		
+		trainings: function(){
+			router.push(`/tt`);
+		},
 		
 		
 	}

@@ -61,7 +61,7 @@ public class SportsObjectService {
 	@GET
 	@Path("/getSelectedObject")
 	@Produces(MediaType.APPLICATION_JSON)
-	public SportsObject getSelectedObject(SportsObject s) {
+	public SportsObject getSelectedObject() {
 		return (SportsObject) ctx.getAttribute("selectedObject");
 	}
 	

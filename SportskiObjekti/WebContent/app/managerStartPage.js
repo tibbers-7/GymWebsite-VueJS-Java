@@ -169,7 +169,7 @@ Vue.component("manager-SP", {
 			router.push(`/mt`);
 		},
 		objectShow: function(){
-			router.push(`/ov`);
+			router.push(`/ovg`);
 		}
 		
 		

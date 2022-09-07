@@ -138,7 +138,7 @@ public class UserService {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
 			userDAO.addUser(userToRegister);
-			return Response.status(200).build();
+			return Response.status(200).entity("Uspešno kreiran nalog!").build();
 		}
 	}
 	

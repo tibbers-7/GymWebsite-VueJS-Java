@@ -57,9 +57,9 @@ Vue.component("register-page", {
             </tr>
             <tr>
                 <td align="center" class="credential_inputs">
-                    <input type="radio" name="gender" id="m" value="female" v-on:click=genderFemale()>
+                    <input type="radio" name="gender" id="f" value="FEMALE" v-model="gender">
                     <label for="f" style="color:white">Ženski</label>
-                    <input type="radio" name="gender" id="f" value="male" v-on:click=genderMale()>
+                    <input type="radio" name="gender" id="m" value="MALE" v-model="gender">
                     <label for="m" style="color: white;">Muški</label>
                 </td>
             </tr>
@@ -67,7 +67,7 @@ Vue.component("register-page", {
                 <td class="credential_labels" align="center">Datum rođenja</td>
             </tr>
             <tr>
-                <td align="center"><input class="credential_inputs" type="text" name="birthDate" v-model = "birthDate">dd/mm/yyyyy</td>
+                <td align="center"><input class="credential_inputs" type="date" name="birthDate" v-model = "birthDate">dd/mm/yyyyy</td>
             </tr>
             <tr>
                 <td  align="center"><input class="Button" v-on:click=createUser() value="Pošalji"></td>
@@ -88,22 +88,16 @@ Vue.component("register-page", {
 		logIn: function () {
 			router.push('/lp');
 			},
-		genderMale: function () {
-			gender='M';
-			},
-		genderFemale: function () {
-			gender='F';
-			},
 		createUser: function () {
 			axios.post('rest/user/register', {
 				 username: this.username,
 			 	 password: this.password,
 			 	 name: this.name,
-			 	 lastName: this.last_name,
+			 	 last_name: this.last_name,
 			 	 gender: this.gender,
-			 	 dateOfBirth: this.birthDate,}).then(response => {
-						toast("Uspešno napravljen korisnički nalog!")
-						router.push("/#lp");
+			 	 birthDate: this.birthDate,}).then(response => {
+						toast(response.data);
+						router.push(`/lp`);
 						
 					})
 				}
