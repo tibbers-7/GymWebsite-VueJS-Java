@@ -46,7 +46,7 @@ public class SportsObjectDAO {
 		public SportsObject getSportsObject(String sportsObjectID) {
 			if (getSportsObjectsCollection() != null) {
 				for (SportsObject s : getSportsObjectsCollection()) {
-					if (s.getName().equals(sportsObjectID)) {
+					if (s.getId().equals(sportsObjectID)) {
 						return s;
 					}
 				}

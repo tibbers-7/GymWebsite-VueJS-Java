@@ -2,6 +2,7 @@ package data;
 import beans.SportsObject;
 import data.utils.DateTools;
 import data.utils.Gender;
+import data.utils.Status;
 import beans.Membership;
 
 import java.io.BufferedReader;
@@ -44,15 +45,15 @@ public class MembershipDAO {
 		this.memberFilepath = memberFilePath;
 	}
 	
-	public void addMembership(Membership u) {
-		members.put(u.getMemberString(), u);
-		saveMembership(u);
+	public void addMembership(Membership m) {
+		members.put(m.getID(), m);
+		saveMembership(m);
 	}
 	
 	private void saveMembership(Membership u) {
 		FileOutputStream outputStream;
 		try {
-			String str = u.getMemberString();
+			String str = u.getMembershipString();
 		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/members.csv", true));
 		    writer.append("\n");
 		    writer.append(str);
@@ -67,9 +68,9 @@ public class MembershipDAO {
 	
 	public Membership searchMembership(String membername) {
 		if (getMembershipCollection() != null) {
-			for (Membership u : getMembershipCollection()) {
-				if (u.getMemberString().equals(membername)) {
-					return u;
+			for (Membership m : getMembershipCollection()) {
+				if (m.getID().equals(membername)) {
+					return m;
 				}
 			}
 		}
@@ -82,15 +83,16 @@ public class MembershipDAO {
 			File file = new File(memberFilepath + "/members.csv");
 			System.out.println(file.getCanonicalPath());
 			in = new BufferedReader(new FileReader(file));
-			String ID="", payDate = "", validUntil = "", cena = "", customerID="", trainerID="", line="",status="",allowedUntil="";
+			String ID="", payDate = "", validUntil = "", cena = "", customerID="", trainerID="", line="",status="",allowedUntil="",type="";
 			StringTokenizer st;
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
 				if (line.equals("") || line.indexOf('#') == 0)
 					continue;
-				st = new StringTokenizer(line, ";");
+				st = new StringTokenizer(line, ",");
 				while (st.hasMoreTokens()) {
 					ID = st.nextToken().trim();
+					type=st.nextToken().trim();
 					payDate = st.nextToken().trim();
 					validUntil = st.nextToken().trim();
 					cena = st.nextToken().trim();
@@ -98,9 +100,10 @@ public class MembershipDAO {
 					status = st.nextToken().trim();
 					allowedUntil=st.nextToken().trim();
 				}
-				SimpleDateFormat parser = new SimpleDateFormat("dd.MM.yyyy.");
-				Membership member=new Membership(ID,parser.parse(payDate),LocalDateTime.parse(validUntil),Integer.parseInt(cena),customerID,status,allowedUntil);
-				members.put(member.getMemberString(), member);
+				
+				
+				Membership member=new Membership(ID,type,payDate,validUntil,cena,customerID,status,allowedUntil);
+				members.put(member.getID(), member);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

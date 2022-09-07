@@ -48,7 +48,7 @@ MembershipDAO membershipDAO;
 	    Collection<Membership> memberships = membershipDAO.getMembershipCollection();
 	    Collection<Membership> retVal = new ArrayList<Membership>();
 		for (Membership m : memberships) {			
-			retVal.add(new Membership(m.getID(), m.getMembershipType(), m.getPayDate(), m.getValidUntil(), m.getCena(), m.getCustomerID(), m.getStatus(),m.getAllowedNumber()));
+			retVal.add(new Membership(m.getID(), m.getMembershipType(), m.getPayDate(), m.getValidUntil(), m.getPrice(), m.getCustomerID(), m.getStatus(),m.getAllowedNumber()));
 		}
 		return retVal;
 	}

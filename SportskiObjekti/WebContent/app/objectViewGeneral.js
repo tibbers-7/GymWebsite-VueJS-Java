@@ -15,7 +15,6 @@ Vue.component("view-object", {
 			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
 			        </div>
 			        <div class="Name"><h1> Fitness </h1></div>
-			        <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
 		
 				</div>
 		
@@ -69,7 +68,7 @@ Vue.component("view-object", {
 		    </div>
 		    
 	    <div class="back_Btn2_grid">
-	        <button v-on:click="goBack()" class="images/back_img" style="margin-top:10%;margin-left:80%;"><img src="back.png" class="back_img"></img></a>
+	        <button v-on:click="goBack()" class="images/back" style="margin-top:10%;margin-left:80%;"><img src="back.png" class="back_img"></img></a>
 	    </div>
  	 </div>
  	 
@@ -95,6 +94,7 @@ Vue.component("view-object", {
 		},
 		
 		goBack: function(){
+			if (user==null) router.push(`/`);
 			switch(user.type){
 				case "ADMINISTRATOR": 
 					router.push(`/asp`);
@@ -108,7 +108,6 @@ Vue.component("view-object", {
 				case "TRAINER": 
 					router.push(`/tsp`);
 					break;
-				default: router.push(`/`);
 			}
 		}
 	}

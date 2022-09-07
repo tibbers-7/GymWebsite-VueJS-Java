@@ -25,9 +25,9 @@ Vue.component("trainings-manager", {
     	<div class="barBase">
 		    <table style="width: 20%;" style="position:relative;top:-22%;">
 		        <tr >
-		            <th align="left"  class="header_item"><button class="barButton"  v-on:click="homePage()"><p class="inactive">Naši Objekti</p></button></th>
-			        <th align="left"  class="header_item"><button class="barButton"><p class="active">Moji Treninzi</p></button></th>
-			        <th align="left" class="header_item"><button class="barButton" v-on:click="memberships()"><p class="inactive">Moje članarine</p></button></th>
+		           <th align="left"  class="header_item"><button class="barButton"><p class="inactive">Naši Objekti</p></button></th>
+			            <th align="left"  class="header_item"><button class="barButton"  v-on:click="objectShow()"><p class="inactive">Moj Sportski Objekat</p></button></th>
+			            <th align="left"  class="header_item"><button class="barButton"  v-on:click="trainingsShow()"><p class="active">Treninzi</p></button></th>
 		        </tr>
 		    </table>
 		</div>

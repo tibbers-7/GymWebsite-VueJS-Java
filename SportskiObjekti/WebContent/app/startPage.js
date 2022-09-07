@@ -8,7 +8,8 @@ Vue.component("start-page", {
 		mode: "BROWSE",
 		text: "",
 		error: '',
-		contents:null
+		contents:null,
+		selectedObj:null
 		}
 	},
 	 template: ` 
@@ -82,7 +83,7 @@ Vue.component("start-page", {
                 <th class="header__item">Radno vreme</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row"  v-for="(o, index) in sportsObjects" v-on:click="selectedObject(o)">
+            <tr class="table-row"  v-for="o in sportsObjects" v-on:click="selectedObject(o)" >
                 <td class="table-data">{{o.name}}</td>
                  <td class="table-data">{{o.type}}</td>
                  <td class="table-data">{{o.services}}</td>
@@ -107,9 +108,8 @@ Vue.component("start-page", {
 				
 	methods: {
 		
-		selectedObject: function(o){
-			console.log(o),
-			axios.post('rest/sportsobjects/setSelectedObject',o)
+		selectedObject: function(selectedObj){
+			axios.post('rest/sportsobjects/setSelectedObject',{id:selectedObj.id})
 					.then(
 						router.push("/ovg"))
 		},
