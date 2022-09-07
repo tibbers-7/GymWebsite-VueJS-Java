@@ -39,6 +39,7 @@ const router = new VueRouter({
 	    { path: '/asp', component: AdminStartPage },
 	    { path: '/ua', component: UsersAdmin },
 	    { path: '/aoa', component: AddObjectAdmin },
+	    { path: '/pro', component:Profile}
 
 
 	   

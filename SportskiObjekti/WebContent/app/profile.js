@@ -24,7 +24,7 @@ Vue.component("profile", {
 <div class="profile_grid">
 
     <div class="profileBack_grid">
-        <button style="margin-top:2%;margin-left:90%;border:none" v-on:click="goBack()"><img src="images/back.png" class="back_img"></img></button>
+        <button style="margin-top:2%;margin-left:90%;border:none;background:transparent;" v-on:click="goBack()"><img src="images/back.png" class="back_img"></img></button>
     </div>
     <div class="profileInfo_grid">
                 <div class="objectView_container"  >
@@ -63,7 +63,7 @@ Vue.component("profile", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeUser')
+         .get('rest/user/activeUser')
          .then(response => { 
 			this.user = response.data;
 			});
