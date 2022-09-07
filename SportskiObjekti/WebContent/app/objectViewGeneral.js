@@ -76,7 +76,7 @@ Vue.component("view-object", {
     	`,
 	mounted() {
 			axios
-         .get('rest/users/activeUser')
+         .get('rest/user/activeUser')
          .then(response => { 
 			this.user = response.data;
 			});

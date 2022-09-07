@@ -89,7 +89,7 @@ Vue.component("manager-object", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeUser')
+         .get('rest/user/activeUser')
          .then(response => { 
 			this.manager = response.data;
 			axios
