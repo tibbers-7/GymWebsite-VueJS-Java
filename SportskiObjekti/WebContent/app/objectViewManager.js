@@ -89,11 +89,11 @@ Vue.component("manager-object", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeManager')
+         .get('rest/users/activeUser')
          .then(response => { 
 			this.manager = response.data;
 			axios
-			.post('rest/sportsObjects/getObjectByManager', { id: this.manager.id })
+			.post('rest/sportsobjects/getByManager', this.manager)
 			.then(response => this.object = response.data); 
 			});
 			

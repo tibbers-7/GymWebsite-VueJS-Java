@@ -25,9 +25,9 @@ Vue.component("trainings-manager", {
     	<div class="barBase">
 		    <table style="width: 20%;" style="position:relative;top:-22%;">
 		        <tr >
-		           <th align="left"  class="header_item"><button class="barButton"><p class="inactive">Naši Objekti</p></button></th>
+		           <th align="left"  class="header_item"><button class="barButton" v-on:click="goHome()><p class="inactive">Naši Objekti</p></button></th>
 			            <th align="left"  class="header_item"><button class="barButton"  v-on:click="objectShow()"><p class="inactive">Moj Sportski Objekat</p></button></th>
-			            <th align="left"  class="header_item"><button class="barButton"  v-on:click="trainingsShow()"><p class="active">Treninzi</p></button></th>
+			            <th align="left"  class="header_item"><button class="barButton"  ><p class="active">Treninzi</p></button></th>
 		        </tr>
 		    </table>
 		</div>
@@ -60,11 +60,11 @@ Vue.component("trainings-manager", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeCustomer')
+         .get('rest/users/activeUser')
          .then(response => { 
 			this.manager = response.data;
 			axios
-			.post('rest/trainings/getByObject', { id: this.manager.object.id })
+			.post('rest/trainings/getByObject', this.manager)
 			.then(response => this.trainings = response.data); 
 			});
 			
@@ -74,11 +74,11 @@ Vue.component("trainings-manager", {
 		logOut: function(){
 			router.push(`/`);
 		},
-		homePage: function(){
+		goHome: function(){
 			router.push(`/msp`);
 		},
 		showObject: function(){
-			router.push(`/ov`);
+			router.push(`/ovm`);
 		}
 	}
 		

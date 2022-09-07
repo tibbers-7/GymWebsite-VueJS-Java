@@ -51,6 +51,14 @@ public class SportsObjectService {
 	}
 	
 	@POST
+	@Path("/getByManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getByManager(User manager) {
+		SportsObjectDAO dao = (SportsObjectDAO)ctx.getAttribute("productDAO");
+		SportsObject s= dao.getByManager(manager.getUsername());
+		return Response.status(200).entity(s).build();
+	}
+	@POST
 	@Path("/setSelectedObject")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response setSelectedObject(SportsObject s) {

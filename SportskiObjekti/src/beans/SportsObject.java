@@ -67,7 +67,7 @@ public class SportsObject  implements Serializable{
 	}
 	private ObjectType type;
 	public SportsObject(String id,String name, ObjectType type, List<String> services, Boolean isOpen, String location,
-			float avgScore, String logoPath, String openHours) {
+			float avgScore, String logoPath, String openHours, String manager) {
 		super();
 		this.id=id;
 		this.name = name;
@@ -78,11 +78,18 @@ public class SportsObject  implements Serializable{
 		this.avgScore = avgScore;
 		this.logoPath = logoPath;
 		this.openHours = openHours;
+		this.manager=manager;
+	}
+	public String getManager() {
+		return manager;
+	}
+	public void setManager(String manager) {
+		this.manager = manager;
 	}
 	@Override
 	public String toString() {
 		return id + ", "+ name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
-				+ logoPath + ", " + openHours + ", " + servicesString;
+				+ logoPath + ", " + openHours + ", " + servicesString+","+manager;
 	}
 	
 	private String id;
@@ -93,6 +100,7 @@ public class SportsObject  implements Serializable{
 	private float avgScore;
 	private String logoPath;
 	private String openHours;
+	private String manager;
 	public String getServicesString() {
 		return servicesString;
 	}

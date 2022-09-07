@@ -45,7 +45,7 @@ public class TrainingDAO{
 	
 	public Collection<Training> getTrainingsByObject(String objId){
 		List<Training> trainings=new ArrayList<Training>();
-		for(Training t: trainingCollection.values()) {
+		for(Training t: getTrainingCollection()) {
 			if(t.getsObject().equals(objId)) {
 				trainings.add(t);
 			}

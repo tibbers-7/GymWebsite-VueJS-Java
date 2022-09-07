@@ -54,15 +54,15 @@ public class TrainingService {
 	@POST
 	@Path("/getByObject")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Training> getByObjectId(SportsObject s) {
+	public Collection<Training> getByObject(User manager) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
-		return dao.getTrainingsByObject(s.getId());
+		return dao.getTrainingsByObject(manager.getSportsObjectID());
 	}
 	
 	@POST
 	@Path("/getByCustomer")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<ScheduledTraining> getByObjectId(User customer) {
+	public Collection<ScheduledTraining> getByCustomer(User customer) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.getScheduledTrainingsByCustomer(customer.getUsername());
 	}
