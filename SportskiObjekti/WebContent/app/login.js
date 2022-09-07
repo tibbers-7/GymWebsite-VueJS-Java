@@ -51,7 +51,7 @@ Vue.component("login-page", {
 				},
 	methods: {
 		loginUser: function () {
-				axios.post('rest/user/login', {
+				axios.post('rest/users/login', {
     			username: this.username,
 			 	password: this.password
     		})
