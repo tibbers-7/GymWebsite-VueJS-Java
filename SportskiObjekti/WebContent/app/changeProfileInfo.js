@@ -5,7 +5,11 @@ Vue.component("info-change", {
 		title: "Promena podataka naloga",
 		text: "",
 		error: '',
-		newUser:null //gender namestiti u template
+		name:"",
+		last_name:"",
+		birthDate:"",
+		gender:""
+		 //gender namestiti u template
 		}
 	},
 	 template: ` 
@@ -27,7 +31,7 @@ Vue.component("info-change", {
                 <tr><td class="credential_labels" align="center">Ime:</td></tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="text" v-model = "newUser.name" >
+                        <input class="credential_inputs" type="text" v-model = "name" v-bind:placeholder="user.name" >
                     </td>
 				</tr>
                 <tr>
@@ -35,7 +39,7 @@ Vue.component("info-change", {
                 </tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="text" v-model = "newUser.last_name">
+                        <input class="credential_inputs" type="text" v-model = "last_name" v-bind:placeholder="user.last_name">
                     </td>
 				</tr>
                 <tr>
@@ -43,7 +47,7 @@ Vue.component("info-change", {
                 </tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="date" v-model = "newUser.birthDate">
+                        <input class="credential_inputs" type="text" v-model = "birthDate" v-bind:placeholder="user.birthDate">
                     </td>
 				</tr>
                 <tr>
@@ -79,11 +83,10 @@ Vue.component("info-change", {
     	`,
 	mounted() {
 		axios
-         .get('rest/user/activeUser')
+         .get('rest/user/activeUser/')
          .then(response => { 
 			this.user = response.data;
-			}),
-			newUser=user
+			})
 	},
 	
 	methods: {
@@ -107,7 +110,16 @@ Vue.component("info-change", {
 									}
 		},
 		changeInfo: function(){
-			
+			axios.post('rest/user/editInfo', {
+				 username: this.username,
+			 	 password: this.password,
+			 	 name: this.name,
+			 	 last_name: this.last_name,
+			 	 gender: this.gender,
+			 	 birthDate: this.birthDate,}).then(response => {
+						toast(response.data);
+						goBack();
+					})
 		},
 	}
 		

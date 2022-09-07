@@ -183,11 +183,11 @@ public class UserService {
 	@Path("/activeUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public User getActiveUser() {
+	public Response getActiveUser() {
 		
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("activeUser");
-		return user;
+		return Response.status(200).entity(user).build();
 		
 //		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 //		String username = (String)context.getAttribute("username");
