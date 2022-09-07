@@ -9,7 +9,8 @@ Vue.component("start-page", {
 		text: "",
 		error: '',
 		contents:null,
-		selectedObj:null
+		selectedObj:null,
+		id:''
 		}
 	},
 	 template: ` 
@@ -109,9 +110,21 @@ Vue.component("start-page", {
 	methods: {
 		
 		selectedObject: function(selectedObj){
-			axios.post('rest/sportsobjects/setSelectedObject',{id:selectedObj.id})
-					.then(
-						router.push("/ovg"))
+			axios.post('rest/sportsobjects/setSelectedObject',{
+				"id": selectedObj.id,
+    			"name": selectedObj.name,
+    			"type": selectedObj.type,
+    			"services": selectedObj.services,
+    			"isOpen": selectedObj.isOpen,
+    			"location": selectedObj.location,
+    			"avgScore": selectedObj.avgScore,
+    			"logoPath": selectedObj.logoPath,
+    			"openHours": selectedObj.openHours
+				
+    	})
+					.then(response => {
+						toast(response.data);
+						router.push(`/ovg`)});
 		},
 		
 		logIn : function() {

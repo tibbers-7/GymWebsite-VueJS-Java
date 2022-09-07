@@ -93,8 +93,11 @@ public class SportsObject  implements Serializable{
 	private float avgScore;
 	private String logoPath;
 	private String openHours;
+	public SportsObject() {
+		super();
+	}
 	public String getServicesString() {
-		return servicesString;
+		return services.toString();
 	}
 	public void setServicesString(String servicesString) {
 		String[] strings = servicesString.split(",");

@@ -54,9 +54,9 @@ public class SportsObjectService {
 	@Path("/setSelectedObject")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response setSelectedObject(SportsObject s) {
-		SportsObjectDAO dao = (SportsObjectDAO)ctx.getAttribute("productDAO");
-		SportsObject sp=dao.getSportsObject(s.getId());
-		ctx.setAttribute("selectedObject", sp);
+//		SportsObjectDAO dao = (SportsObjectDAO)ctx.getAttribute("productDAO");
+//		SportsObject sp=dao.getSportsObject(s.getId());
+		ctx.setAttribute("selectedObject", s);
 		return Response.status(200).build();
 	}
 	
