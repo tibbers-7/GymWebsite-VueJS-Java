@@ -68,10 +68,18 @@ public class TrainingService {
 	}
 	
 	@POST
-	@Path("/getByTrainer")
+	@Path("/getByTrainerPersonal")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<ScheduledTraining> getByTrainer(User trainer) {
+	public Collection<ScheduledTraining> getByTrainerPersonal(User trainer) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
-		return dao.getScheduledTrainingsByTrainer(trainer.getUsername());
+		return dao.getPersonalTrainingsByTrainer(trainer.getUsername());
+	}
+	
+	@POST
+	@Path("/getByTrainerGroup")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<ScheduledTraining> getByTrainerGroup(User trainer) {
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		return dao.getGroupTrainingsByTrainer(trainer.getUsername());
 	}
 }

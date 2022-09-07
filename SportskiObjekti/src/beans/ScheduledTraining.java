@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import data.utils.TrainingType;
+
 public class ScheduledTraining  implements Serializable{
 /**
 	 * 
@@ -22,7 +24,7 @@ public class ScheduledTraining  implements Serializable{
 		this.trainer = trainer;
 	}
 	
-	public ScheduledTraining(String dateTime, String training, String user, String trainer, String sObject) {
+	public ScheduledTraining(String dateTime, String training, String user, String trainer, String sObject, String type) {
 		super();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm;dd.MM.yyyy.");
 		this.dateTime=LocalDateTime.parse(dateTime,formatter);
@@ -31,6 +33,16 @@ public class ScheduledTraining  implements Serializable{
 		this.user = user;
 		this.trainer = trainer;
 		this.sObject=sObject;
+		switch(type) {
+		case "P":
+			this.type=TrainingType.PERSONAL;
+			break;
+		case "G":
+			this.type=TrainingType.GROUP;
+			break;
+		default:
+			this.type=TrainingType.OTHER;
+		}
 	}
 	public LocalDateTime getDateTime() {
 		return dateTime;
@@ -53,6 +65,14 @@ public class ScheduledTraining  implements Serializable{
 	public String getTrainer() {
 		return trainer;
 	}
+	public TrainingType getType() {
+		return type;
+	}
+
+	public void setType(TrainingType type) {
+		this.type = type;
+	}
+
 	public void setTrainer(String trainer) {
 		this.trainer = trainer;
 	}
@@ -62,6 +82,7 @@ public class ScheduledTraining  implements Serializable{
 	LocalDateTime dateTime;
 	String sObject;
 	String dateTimeString;
+	TrainingType type;
 	public String getDateTimeString() {
 		return dateTimeString;
 	}

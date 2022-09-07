@@ -13,6 +13,7 @@ import beans.ScheduledTraining;
 import beans.SportsObject;
 import beans.Training;
 import data.utils.ObjectType;
+import data.utils.TrainingType;
 
 
 public class TrainingDAO{
@@ -132,7 +133,7 @@ public class TrainingDAO{
 			in = new BufferedReader(new FileReader(file));
 			String line="";
 			StringTokenizer st;
-			String dateTime="",training="",user="",trainer="",sObject="";
+			String dateTime="",training="",user="",trainer="",sObject="",type="";
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
 				if (line.equals(""))
@@ -145,8 +146,9 @@ public class TrainingDAO{
 					user = st.nextToken().trim();
 					trainer = st.nextToken().trim();
 					sObject = st.nextToken().trim();
+					type = st.nextToken().trim();
 				}
-				ScheduledTraining t=new ScheduledTraining(dateTime,training,user,trainer,sObject);
+				ScheduledTraining t=new ScheduledTraining(dateTime,training,user,trainer,sObject,type);
 				addScheduledTraining(t);
 			}
 		} catch (Exception e) {
@@ -170,10 +172,20 @@ public class TrainingDAO{
 		return ret;
 	}
 	
-	public Collection<ScheduledTraining> getScheduledTrainingsByTrainer(String username) {
+	public Collection<ScheduledTraining> getPersonalTrainingsByTrainer(String username) {
 		List<ScheduledTraining> ret=new ArrayList<>();
 		for(ScheduledTraining t: getScheduledTrainingCollection()) {
-			if(t.getTrainer().equals(username)) {
+			if(t.getTrainer().equals(username) && t.getType()==TrainingType.PERSONAL) {
+				ret.add(t);
+			}
+		}
+		return ret;
+	}
+	
+	public Collection<ScheduledTraining> getGroupTrainingsByTrainer(String username) {
+		List<ScheduledTraining> ret=new ArrayList<>();
+		for(ScheduledTraining t: getScheduledTrainingCollection()) {
+			if(t.getTrainer().equals(username) && t.getType()==TrainingType.GROUP) {
 				ret.add(t);
 			}
 		}
