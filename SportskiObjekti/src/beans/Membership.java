@@ -74,10 +74,25 @@ public class Membership implements Serializable{
 		this.allowedNumber = allowedNumber;
 	}
 	
+	public String getPayDateString() {
+		return payDateString;
+	}
+	public void setPayDateString(String payDateString) {
+		this.payDateString = payDateString;
+	}
+	public String getValidUntilString() {
+		return validUntilString;
+	}
+	public void setValidUntilString(String validUntilString) {
+		this.validUntilString = validUntilString;
+	}
+
 	String ID;
 	MembershipType membershipType;
 	LocalDate payDate;
+	String payDateString;
 	LocalDate validUntil;
+	String validUntilString;
 	int price;
 	String customerID;
 	Status status;
@@ -91,9 +106,9 @@ public class Membership implements Serializable{
 		this.status=Status.INACTIVE;
 		if(status=="A") this.status=Status.ACTIVE;
 		
-		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy.");
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 		this.payDate=LocalDate.parse(createdDate,formatter);
-				
+		this.payDateString = payDate.format(formatter);
 		
 		switch(type) {
 		case "Y":
@@ -109,6 +124,7 @@ public class Membership implements Serializable{
 			this.validUntil=LocalDate.parse(validUntil,formatter);
 		}
 		
+		this.validUntilString = this.validUntil.format(formatter);
 		this.customerID=customerID;
 		this.price=Integer.parseInt(price);
 		this.allowedNumber=Integer.parseInt(allowedNumber);

@@ -155,7 +155,7 @@ Vue.component("customer-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeUser')
+		         .get('rest/user/activeUser')
 		         .then(response => this.customer = response.data);
 		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data));

@@ -48,8 +48,8 @@ Vue.component("memberships-customer", {
                 <div class="values">
                     <ul style="list-style: none;">
                         <li>{{membership.membershipType}}</li>
-                        <li>{{membership.payDate}}</li>
-                        <li>{{membership.validUntil}}</li>
+                        <li>{{membership.payDateString}}</li>
+                        <li>{{membership.validUntilString}}</li>
                         <li>{{membership.price}}</li>
                         <li>{{membership.allowedNumber}}</li>
                     </ul>
