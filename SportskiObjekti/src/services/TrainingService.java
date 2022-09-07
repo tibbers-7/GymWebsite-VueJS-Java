@@ -12,8 +12,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.ScheduledTraining;
 import beans.SportsObject;
 import beans.Training;
+import beans.User;
 import data.TrainingDAO;
 
 @Path("/trainings")
@@ -34,11 +36,19 @@ public class TrainingService {
 	}
 	
 	@GET
-	@Path("/getAll")
+	@Path("/getAllTypes")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Training> getAll() {
+	public Collection<Training> getAllTypes() {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
-		return dao.getTrainingCollection().values();
+		return dao.getTrainingCollection();
+	}
+	
+	@GET
+	@Path("/getAllScheduled")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<ScheduledTraining> getAllScheduled() {
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		return dao.getScheduledTrainingCollection();
 	}
 	
 	@POST
@@ -47,5 +57,21 @@ public class TrainingService {
 	public Collection<Training> getByObjectId(SportsObject s) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.getTrainingsByObject(s.getId());
+	}
+	
+	@POST
+	@Path("/getByCustomer")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<ScheduledTraining> getByObjectId(User customer) {
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		return dao.getScheduledTrainingsByCustomer(customer.getUsername());
+	}
+	
+	@POST
+	@Path("/getByTrainer")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<ScheduledTraining> getByTrainer(User trainer) {
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		return dao.getScheduledTrainingsByTrainer(trainer.getUsername());
 	}
 }
