@@ -1,21 +1,13 @@
 package data;
-import beans.SportsObject;
-import data.utils.DateTools;
-import data.utils.Gender;
-import data.utils.Status;
 import beans.Membership;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -51,7 +43,7 @@ public class MembershipDAO {
 	}
 	
 	private void saveMembership(Membership u) {
-		FileOutputStream outputStream;
+		
 		try {
 			String str = u.getMembershipString();
 		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/members.csv", true));
@@ -59,10 +51,14 @@ public class MembershipDAO {
 		    writer.append(str);
 		    writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-		
 			e.printStackTrace();
 		}
+	}
+	public Membership getByUser(String username) {
+		for(Membership m : getMembershipCollection()) {
+			if(m.getCustomerID().equals(username)) return m;
+		}
+		return null;
 	}
 	
 	
@@ -80,10 +76,10 @@ public class MembershipDAO {
 	private void loadMemberships() {
 		BufferedReader in = null;
 		try {
-			File file = new File(memberFilepath + "/members.csv");
+			File file = new File(memberFilepath + "/memberships.csv");
 			System.out.println(file.getCanonicalPath());
 			in = new BufferedReader(new FileReader(file));
-			String ID="", payDate = "", validUntil = "", cena = "", customerID="", trainerID="", line="",status="",allowedUntil="",type="";
+			String ID="", payDate = "", validUntil = "", cena = "", customerID="", line="",status="",allowedUntil="",type="";
 			StringTokenizer st;
 			while ((line = in.readLine()) != null) {
 				line = line.trim();

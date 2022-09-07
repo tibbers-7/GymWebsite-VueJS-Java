@@ -2,6 +2,8 @@ package beans;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import data.utils.Status;
 import data.utils.MembershipType;
 
@@ -72,6 +74,7 @@ public class Membership implements Serializable{
 		this.allowedNumber = allowedNumber;
 	}
 	
+	String ID;
 	MembershipType membershipType;
 	LocalDate payDate;
 	LocalDate validUntil;
@@ -79,7 +82,7 @@ public class Membership implements Serializable{
 	String customerID;
 	Status status;
 	int allowedNumber;
-	String ID;
+	
 	
 	//yearly & monthly membership -> validUntil=null
 	
@@ -88,17 +91,22 @@ public class Membership implements Serializable{
 		this.status=Status.INACTIVE;
 		if(status=="A") this.status=Status.ACTIVE;
 		
-		
-		this.payDate=LocalDate.parse(createdDate);
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy.");
+		this.payDate=LocalDate.parse(createdDate,formatter);
 				
-		this.membershipType=MembershipType.OTHER;
-		if (type=="Y") {
+		
+		switch(type) {
+		case "Y":
 			this.validUntil=this.payDate.plusYears(1);
 			this.membershipType=MembershipType.YEARLY;
-		}
-		if (type=="M") {
+			break;
+		case "M":
 			this.validUntil=this.payDate.plusMonths(1);
 			this.membershipType=MembershipType.MONTHLY;
+			break;
+		default:
+			this.membershipType=MembershipType.OTHER;
+			this.validUntil=LocalDate.parse(validUntil,formatter);
 		}
 		
 		this.customerID=customerID;
@@ -109,7 +117,7 @@ public class Membership implements Serializable{
 		
 	}
 	public String getMembershipString() {
-		String s= ID+","+payDate+","+validUntil+","+price+","+customerID+","+status.toString()+","+allowedNumber;
+		String s= ID+","+membershipType+","+payDate+","+validUntil+","+Integer.toString(price)+","+customerID+","+status.toString()+","+Integer.toString(allowedNumber);
 		return s;
 	}
 	

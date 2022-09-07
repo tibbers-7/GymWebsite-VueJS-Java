@@ -167,11 +167,9 @@ public class UserService {
 		User user=(User) session.getAttribute("activeUser");
 		return user;
 		
-//		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
-//		String username = (String)context.getAttribute("username");
-//		String password = (String)context.getAttribute("password");
-//		return userDAO.getUser(username,password);
-		
 	}
+	
+	
+	
 
 }

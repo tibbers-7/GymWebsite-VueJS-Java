@@ -145,19 +145,8 @@ public class UserDAO {
 				st = new StringTokenizer(line, ",");
 				while (st.hasMoreTokens()) {
 					
-					username = "";
-					password = "";
-					name = ""; 
-					last_name="";
-					gender="";
-					birth_date="";
-				    userType="";	
-				    membershipID="";
-				    sportsObjectID="";
-					visitedObjects="";
-					points="";
-					customerType="";
-					active="";
+					username = "";password = "";name = "";last_name="";gender="";birth_date="";userType="";	
+				    membershipID="";sportsObjectID="";visitedObjects="";points="";customerType="";active="";
 					username = st.nextToken().trim();
 					password = st.nextToken().trim();
 					name = st.nextToken().trim();
