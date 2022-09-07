@@ -30,6 +30,8 @@ Vue.component("customer-SP", {
 	            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</a></button></th>
 	            <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="inactive">Moji Treninzi</a></button></th>
 	            <th align="left" class="header_item"><button class="barButton" v-on:click="memberships()"><p class="inactive">Moje članarine</a></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
+
 	        </tr>
 	    </table>
     </div>
@@ -178,7 +180,10 @@ Vue.component("customer-SP", {
 		},
 		memberships: function(){
 			router.push(`/cm`);
-		}
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
 		
 		
 	}

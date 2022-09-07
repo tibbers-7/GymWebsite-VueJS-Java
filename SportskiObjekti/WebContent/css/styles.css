@@ -38,7 +38,9 @@ a, a:visited, a:hover, a:active {
     margin: 0%;
     max-width: 100%;
     overflow-x: hidden;
-    height: 100vh;
+    height: auto;
+    min-height: 100vh;
+    
 }
 
 .title {
@@ -70,6 +72,7 @@ margin-top: 20px;}
 {   grid-area: Name;
 font-size: 30px;
 margin-left: 0;
+color:#ccc;
 }
 .Login 
 {   grid-area: Slot1;
@@ -94,7 +97,7 @@ margin-left: 30%;
     color: #FFFFFF;
     cursor: pointer;
     display: inline-block;
-    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
     font-size: 14px;
     font-weight: 500;
     height: 40px;
@@ -164,8 +167,9 @@ margin-left: 30%;
     border-radius: 15px;
     border-style: none;
     width:30%;
-    height: 200px;
+    height: 50%;
     background-color: #000;
+    line-height: 4em;
   }
   .credential_labels { 
     padding-top: 3px;
@@ -179,15 +183,21 @@ margin-left: 30%;
     height: 30px;
     width: 250px;
     margin-top: -25px;
+    color:#ccc;
+    text-align: center;
+    
+ }
+ .credential_inputs::placeholder{
+  color:rgb(138, 137, 137);
  }
 
  .register_container {
-  margin: 2% auto;
   border-radius: 15px;
   border-style: none;
-  width:30%;
-  height: 70%;
+  width:400px;
+  height: 550px;
   background-color: #000;
+  
 }
 
 /* START PAGE */
@@ -433,36 +443,33 @@ margin-left: 30%;
       grid-area:updateObjBtn_grid;
     }
 
-    .addObj_container {
-      display: grid; 
-      grid-template-columns: 0.2fr 2.1fr 0.4fr; 
-      grid-template-rows: 1fr 1fr 1fr; 
-      gap: 0px 0px; 
-      grid-template-areas: 
-        "backBtn2_grid objInfo2_grid ."
-        ". manager_grid ."
-        ". addObjBtn_grid ."; 
-    }
-    .backBtn3_grid { 
-      grid-area: backBtn2_grid;
-   }
-    .objInfo3_grid { 
-      grid-area: objInfo2_grid;
+    .addObj_container {  
       margin-top:3%;
-      align-items: center;
+      display: grid;
+      grid-template-columns: 0.1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 0.1fr 0.1fr;
+      gap: 0px 0px;
+      grid-auto-flow: row;
+      grid-template-areas:
+        "backBtn3_grid objInfo3_grid manager_grid"
+        ". objInfo3_grid manager_grid"
+        ". oldManager_grid manager_grid"
+        ". addObjBtn_grid manager_grid";
     }
-    .manager_grid { 
-      grid-area: manager_grid;
-      margin-top:1%;
-      align-items: center;
+    
+    .backBtn3_grid { grid-area: backBtn3_grid; }
+    
+    .objInfo3_grid { grid-area: objInfo3_grid; }
+    
+    .oldManager_grid { 
+      grid-area: oldManager_grid;
+      margin-left:50%;
     }
+    
+    .manager_grid { grid-area: manager_grid; }
+    
     .addObjBtn_grid { grid-area: addObjBtn_grid; }
-  
-    .backBtn2 {
-      width:20px;
-      height: 20px;
-      margin-left: 90%;
-    }
+    
 
 
    .name_input {
@@ -690,3 +697,47 @@ margin-left: 30%;
     background: -moz-linear-gradient(90deg, hsla(359, 68%, 22%, 1) 0%, hsla(0, 50%, 2%, 1) 100%);
     background: -webkit-linear-gradient(90deg, hsla(359, 68%, 22%, 1) 0%, hsla(0, 50%, 2%, 1) 100%);
   }
+
+
+  /* PROFILE */
+
+  .profile_grid {  
+    margin-top: 3%;
+    display: grid;
+    grid-template-columns: 0.05 2fr 0.3fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "profileBack_grid profileInfo_grid changePassBttn_grid"
+      "profileBack_grid profileInfo_grid changeInfoBttn_grid";
+  }
+
+  .profileBack_grid { grid-area: profileBack_grid; }
+  
+  .profileInfo_grid { 
+    margin-left:-30%;
+    grid-area: profileInfo_grid; }
+  
+  .changePassBttn_grid { grid-area: changePassBttn_grid; }
+  
+  .changeInfoBttn_grid { grid-area: changeInfoBttn_grid; }
+  
+
+  .changePass_grid {  display: grid;
+    grid-template-columns: 0.1fr 0.8fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "passBackBtn_grid passContainer_grid"
+      ". passContainer_grid"
+      ". changePassBtn_grid";
+  }
+  
+  .passContainer_grid { grid-area: passContainer_grid; }
+  
+  .passBackBtn_grid { grid-area: passBackBtn_grid; }
+  
+  .changePassBtn_grid { grid-area: changePassBtn_grid; }
+  

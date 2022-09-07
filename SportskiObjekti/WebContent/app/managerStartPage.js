@@ -28,6 +28,8 @@ Vue.component("manager-SP", {
 			            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
 			            <th align="left"  class="header_item"><button class="barButton"  v-on:click="objectShow()"><p class="inactive">Moj Sportski Objekat</p></button></th>
 			            <th align="left"  class="header_item"><button class="barButton"  v-on:click="trainingsShow()"><p class="inactive">Treninzi</p></button></th>
+			            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
+
 			        </tr>
 			    </table>
 		    </div>
@@ -122,7 +124,10 @@ Vue.component("manager-SP", {
 		},
 		objectShow: function(){
 			router.push(`/ovg`);
-		}
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
 		
 		
 		
