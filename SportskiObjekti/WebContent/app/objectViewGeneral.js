@@ -68,7 +68,7 @@ Vue.component("view-object", {
 		    </div>
 		    
 	    <div class="back_Btn2_grid">
-	        <button v-on:click="goBack()" class="images/back" style="margin-top:10%;margin-left:80%;"><img src="back.png" class="back_img"></img></a>
+	        <button v-on:click="goBack()" class="images/back.png" style="margin-top:10%;margin-left:80%;"><img src="back.png" class="back_img"></img></a>
 	    </div>
  	 </div>
  	 
