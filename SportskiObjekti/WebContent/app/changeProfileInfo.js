@@ -53,18 +53,6 @@ Vue.component("info-change", {
                 <tr>
                     <td class="credential_labels" align="center">Pol:</td>
                 </tr>
-				<tr>
-					<td style="line-height: 2px ;">
-                        <div style="margin-left:30%">
-                        
-                        <input type="radio" name="gender"  value="female" v-model = "gender"/>
-                        <p style="color:white margin-top: -5%;">Ženski</p>
-                        
-                        <input  type="radio" name="gender"  value="male" v-model = "gender"/>
-                        <p style="color: white;">Muški</p>
-                        </div>
-                    </td>
-				</tr>
                 <tr><td ><br></td></tr>
 				<tr >
 					<td align="center">
@@ -115,7 +103,6 @@ Vue.component("info-change", {
 			 	 password: this.password,
 			 	 name: this.name,
 			 	 last_name: this.last_name,
-			 	 gender: this.gender,
 			 	 birthDate: this.birthDate}).then(response => {
 						toast(response.data);
 						goBack();
