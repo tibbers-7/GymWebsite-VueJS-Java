@@ -5,10 +5,9 @@ Vue.component("info-change", {
 		title: "Promena podataka naloga",
 		text: "",
 		error: '',
-		name:"",
-		last_name:"",
-		birthDate:"",
-		gender:""
+		newUser:null,
+		genderM:false,
+		genderF:false
 		 //gender namestiti u template
 		}
 	},
@@ -31,7 +30,7 @@ Vue.component("info-change", {
                 <tr><td class="credential_labels" align="center">Ime:</td></tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="text" v-model = "name" v-bind:placeholder="user.name" >
+                        <input class="credential_inputs" type="text" v-model = "newUser.name" v-bind:placeholder="user.name" >
                     </td>
 				</tr>
                 <tr>
@@ -39,7 +38,7 @@ Vue.component("info-change", {
                 </tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="text" v-model = "last_name" v-bind:placeholder="user.last_name">
+                        <input class="credential_inputs" type="text" v-model = "newUser.last_name" v-bind:placeholder="user.last_name">
                     </td>
 				</tr>
                 <tr>
@@ -47,7 +46,7 @@ Vue.component("info-change", {
                 </tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="text" v-model = "birthDate" v-bind:placeholder="user.birthDate">
+                        <input class="credential_inputs" type="date" v-model = "newUser.birthDate" v-bind:placeholder="user.birthDate">
                     </td>
 				</tr>
                 <tr>
@@ -55,14 +54,10 @@ Vue.component("info-change", {
                 </tr>
 				<tr>
 					<td style="line-height: 2px ;">
-                        <div style="margin-left:30%">
-                        
-                        <input type="radio" name="gender"  value="female" v-model = "gender"/>
-                        <p style="color:white margin-top: -5%;">Ženski</p>
-                        
-                        <input  type="radio" name="gender"  value="male" v-model = "gender"/>
-                        <p style="color: white;">Muški</p>
-                        </div>
+                        <input type="radio" name="gender" id="f" value="FEMALE" v-model="genderM">
+	                    <label for="f" style="color:white">Ženski</label>
+	                    <input type="radio" name="gender" id="m" value="MALE" v-model="genderF">
+	                    <label for="m" style="color: white;">Muški</label>
                     </td>
 				</tr>
                 <tr><td ><br></td></tr>
@@ -83,10 +78,9 @@ Vue.component("info-change", {
     	`,
 	mounted() {
 		axios
-         .get('rest/user/activeUser/')
-         .then(response => { 
-			this.user = response.data;
-			})
+         .get('rest/user/activeUser')
+         .then(response => (this.user = response.data));
+         this.newUser=this.user;
 	},
 	
 	methods: {
@@ -94,7 +88,7 @@ Vue.component("info-change", {
 			router.push(`/`);
 		},
 		goBack: function(){
-			switch(newUser.userType){
+			switch(this.user.userType){
 								case "CUSTOMER":
 									 router.push(`/csp`);
 									 break;
@@ -110,16 +104,18 @@ Vue.component("info-change", {
 									}
 		},
 		changeInfo: function(){
-			axios.post('rest/user/editInfo', {
-				 username: this.username,
-			 	 password: this.password,
-			 	 name: this.name,
-			 	 last_name: this.last_name,
-			 	 gender: this.gender,
-			 	 birthDate: this.birthDate,}).then(response => {
+			
+			
+			if(this.newUser.name==null | this.newUser.last_name==null | this.newUser.birthDate==null ) toast("Niste uneli sve potrebne podatke!");
+			else if(this.genderM==false && this.genderF==false)  toast("Molimo vas da odaberete pol!");
+			else {
+				if(this.genderM) this.newUser.gender="MALE"; else this.newUser.gender="FEMALE";
+				 axios.post('rest/user/editInfo', this.newUser).then(response => {
 						toast(response.data);
 						goBack();
-					})
+					});
+				
+			}
 		},
 	}
 		
