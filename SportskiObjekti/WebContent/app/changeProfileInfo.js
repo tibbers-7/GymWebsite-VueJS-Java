@@ -94,7 +94,7 @@ Vue.component("info-change", {
 			router.push(`/`);
 		},
 		goBack: function(){
-			switch(newUser.userType){
+			switch(user.userType){
 								case "CUSTOMER":
 									 router.push(`/csp`);
 									 break;
@@ -116,7 +116,7 @@ Vue.component("info-change", {
 			 	 name: this.name,
 			 	 last_name: this.last_name,
 			 	 gender: this.gender,
-			 	 birthDate: this.birthDate,}).then(response => {
+			 	 birthDate: this.birthDate}).then(response => {
 						toast(response.data);
 						goBack();
 					})

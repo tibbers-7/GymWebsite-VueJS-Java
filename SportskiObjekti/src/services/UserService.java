@@ -148,20 +148,15 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response edit(User userToEdit) {
 
-		if (userToEdit.getUsername() == null || userToEdit.getPassword() == null
-				 || userToEdit.getUsername().equals("")
-				|| userToEdit.getPassword().equals("")) {
-			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
-		}
-		
 		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
-
-		if (userDAO.searchUser(userToEdit.getUsername()).equals(null)) {
-			return Response.status(400).entity("Ne postoji korinsik!").build();
-		} else {
-			userDAO.editUser(userToEdit);
+		HttpSession session = request.getSession();
+		User user=(User) session.getAttribute("activeUser");
+		user.setName(userToEdit.getName());
+		user.setLast_name(userToEdit.getLast_name());
+		user.setBirthDate(userToEdit.getBirthDate());
+		userDAO.editUser(user);
+		context.setAttribute("activeUser", user);
 			return Response.status(200).entity("Uspe�no promenjen nalog!").build();
-		}
 	}
 	
 
