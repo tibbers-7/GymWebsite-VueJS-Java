@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 
@@ -182,5 +183,13 @@ public class UserDAO {
 				catch (Exception e) { }
 			}
 		}
+	}
+
+	public Collection<User> getTrainers() {
+		List<User> trainerList =new ArrayList<>();
+		for(User u: getUserCollection()) {
+			if (u.getUserType()==UserType.TRAINER) trainerList.add(u);
+		}
+		return trainerList;
 	}
 }

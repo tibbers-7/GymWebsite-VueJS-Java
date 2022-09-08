@@ -169,6 +169,16 @@ public class UserService {
 		
 	}
 	
+	@GET
+	@Path("getTrainers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Collection<User> getTrainers() {
+		UserDAO dao = (UserDAO) context.getAttribute("userDAO");
+		return dao.getTrainers();
+		
+	}
+	
 	
 	
 

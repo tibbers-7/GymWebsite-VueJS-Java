@@ -37,6 +37,7 @@ public class User implements Serializable{
 		this.visitedObjectsID = visitedObjects;
 		this.points = points;
 		this.customerType = customerType;
+		this.fullName=name+" "+last_name;
 	}
 	public User(UserBuilder builder) {
 		super();
@@ -52,6 +53,7 @@ public class User implements Serializable{
 		this.visitedObjectsID = builder.visitedObjectsID;
 		this.points = builder.points;
 		this.customerType = builder.customerType;
+		this.fullName=name+" "+last_name;
 	}
 	public String getUsername() {
 		return username;
@@ -125,6 +127,9 @@ public class User implements Serializable{
 	public void setCustomerType(CustomerType customerType) {
 		this.customerType = customerType;
 	}
+	public String getFullName() {
+		return fullName;
+	}
 	@Override
 	public String toString() {
 		return username + ", " + password + ", " + name + ", " + last_name + ", " + gender + ", " + birthDate + ", "
@@ -150,6 +155,7 @@ public class User implements Serializable{
 	private String visitedObjectsID;
 	private int points;
 	private CustomerType customerType;
+	private String fullName;
 	
 	public static class UserBuilder{
 		
@@ -166,6 +172,7 @@ public class User implements Serializable{
 		private String visitedObjectsID;
 		private int points;
 		private CustomerType customerType;
+		private String fullName;
 		
 		public UserBuilder(String username, String password, String name, String last_name, Gender gender, String birthDate,
 				UserType userType, Boolean active) {
@@ -177,6 +184,7 @@ public class User implements Serializable{
 			this.birthDate = birthDate;
 			this.userType = userType;
 			this.active=active;
+			this.fullName=name+" "+last_name;
 		}
 		public Boolean getActive() {
 			return active;

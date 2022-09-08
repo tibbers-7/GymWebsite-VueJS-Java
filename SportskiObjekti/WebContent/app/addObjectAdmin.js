@@ -9,7 +9,7 @@ Vue.component("add-object", {
 		}
 	},
 	 template: ` 
-    	<div style="bodyStyle">
+    	<div class="bodyStyle">
     	
 		    	<div class="header_container">
 					        <div class="Img">

@@ -32,6 +32,10 @@ Vue.component("trainings-customer", {
 		    </table>
 		</div>
 		
+		<div>
+			<button class="button2" v-on:click="addTraining()" style="margin-left:5%;margin-top:2%;">Dodaj trening</button>
+		</div>
+		
 		<div class="objectTable_grid" style="margin-top:2%;">
 		    <table class="table">
 		        <tr class="table-header" >
@@ -71,6 +75,9 @@ Vue.component("trainings-customer", {
 		},
 		homePage: function(){
 			router.push(`/csp`);
+		},
+		addTraining: function(){
+			router.push(`/at`);
 		}
 	}
 		

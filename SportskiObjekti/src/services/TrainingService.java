@@ -59,6 +59,8 @@ public class TrainingService {
 		return dao.getTrainingsByObject(manager.getSportsObjectID());
 	}
 	
+	
+	
 	@POST
 	@Path("/getByCustomer")
 	@Produces(MediaType.APPLICATION_JSON)

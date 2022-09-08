@@ -59,6 +59,12 @@ public class SportsObjectService {
 		return Response.status(200).entity(s).build();
 	}
 	@POST
+	@Path("/getContent")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getContent(SportsObject s) {
+		return Response.status(200).entity(s.getServices()).build();
+	}
+	@POST
 	@Path("/setSelectedObject")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response setSelectedObject(SportsObject s) {

@@ -17,6 +17,7 @@ const AdminStartPage = { template: '<admin-SP></admin-SP>'}
 const UsersAdmin = {template: '<users-admin></users-admin>'}
 const AddObjectAdmin = {template: '<add-object></add-object>'}
 const ManagerTrainings = {template: '<trainings-manager></trainings-manager>'}
+const AddTraining ={template: '<add-training></add-training>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -39,8 +40,8 @@ const router = new VueRouter({
 	    { path: '/asp', component: AdminStartPage },
 	    { path: '/ua', component: UsersAdmin },
 	    { path: '/aoa', component: AddObjectAdmin },
-	    { path: '/pro', component:Profile}
-
+	    { path: '/pro', component:Profile},
+		{ path: '/at', component: AddTraining},
 
 	   
 	  ]
