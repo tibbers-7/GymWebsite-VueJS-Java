@@ -76,14 +76,6 @@ public class UserService {
 			return null;
 		}
 	}
-	
-	@GET
-	@Path("/whereDoesHeWrite")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String whereDoesHeWrite() {
-		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
-		return userDAO.whereDoesHeWrite();
-	}
 
 	@POST
 	@Path("/login")
@@ -156,14 +148,19 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response edit(User userToEdit) {
 
+		if (userToEdit.getUsername() == null || userToEdit.getPassword() == null
+				 || userToEdit.getUsername().equals("")
+				|| userToEdit.getPassword().equals("")) {
+			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
+		}
 		
 		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 
 		if (userDAO.searchUser(userToEdit.getUsername()).equals(null)) {
-			return Response.status(400).entity("Ne postoji korisnik!").build();
+			return Response.status(400).entity("Ne postoji korinsik!").build();
 		} else {
 			userDAO.editUser(userToEdit);
-			return Response.status(200).entity("Uspešno promenjen nalog!").build();
+			return Response.status(200).entity("Uspeï¿½no promenjen nalog!").build();
 		}
 	}
 	

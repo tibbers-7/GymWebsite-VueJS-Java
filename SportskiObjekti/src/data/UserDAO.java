@@ -53,10 +53,6 @@ public class UserDAO {
 		users.put(u.getUsername(), u);
 		saveUser(u);
 	}
-	public String whereDoesHeWrite() {
-		return userFilepath + "/users.csv";
-	}
-	
 	public User getUser(String username,String pass){
 		for (User user : users.values()) {
 			if(user.getName()==username&&user.getPassword()==pass)
@@ -101,7 +97,7 @@ public class UserDAO {
 		FileOutputStream outputStream;
 		try {
 			String str="";
-		    BufferedWriter writer = new BufferedWriter(new FileWriter(userFilepath+"/users.csv", true));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter("/users.csv", true));
 		    writer.write("");
 		    for (User u : getUserCollection()) {
 				str=u.toString();
