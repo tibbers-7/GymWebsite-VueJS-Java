@@ -1,7 +1,7 @@
 Vue.component("start-page", {
 	data: function() {
 		return{
-		sportsObjects: null,
+		sportsObjects: [],
 		title: "Sportski objekti",
 		selected:false,
 		object:null,
@@ -11,7 +11,9 @@ Vue.component("start-page", {
 		contents:null,
 		selectedObj:null,
 		id:'',
-		search:'',
+		search:"",
+		showingOpen:true,
+		selectedOpen:"",
 		currentSort:'name',
     	currentSortDir:'asc'
 		}
@@ -44,15 +46,15 @@ Vue.component("start-page", {
           <div class="objectFilter_grid">
             <div class="objFilter1_grid">
                     <label style="font-size: large;"> Tip Objekta </label>  
-                    <select class="selectBox" v-model="filterType">
+                    <select class="selectBox">
 					    <option disabled value="">Odaberite</option>
 					    <option v-for="content in contents" :value="content">{{content}}</option>
 					 </select>  
             </div>
             <div class="objFilter2_grid">
                     <label style="font-size: large;"> Dostupnost </label>  
-                    <select v-model="filterAvailability">
-					    <option disabled value="">Odaberite</option>
+                    <select v-model="selectedOpen"  @change="filterOpen()">
+					    <option disabled value="">default: Otvoreno</option>
 					    <option>Otvoreno</option>
 					    <option>Zatvoreno</option>
 					</select>
@@ -87,8 +89,8 @@ Vue.component("start-page", {
                 <th class="header__item" >Radno vreme</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row" v-for="o in sportsObjects" v-on:click="selectedObject(o)" >
-                 <td class="table-data"{{o.name}}</td>
+            <tr class="table-row" v-for="o in filteredObjects" v-on:click="(o)" >
+                 <td class="table-data">{{o.name}}</td>
                  <td class="table-data">{{o.type}}</td>
                  <td class="table-data">{{o.services}}</td>
                  <td class="table-data">{{o.isOpen}}</td>
@@ -136,6 +138,11 @@ Vue.component("start-page", {
     	register : function() {
     		router.push(`/rp`);
     	},
+    	filterOpen : function() {
+			if(this.selectedOpen==="Otvoreno")
+    		this.showingOpen=true;
+    		else this.showingOpen=false;
+    	},
     	logout : function() {
     		
     	},
@@ -151,34 +158,14 @@ Vue.component("start-page", {
 		descLoc: function(){
 			
 		},
-		
-		  filterType: function() {
-		    this.sportsObjects.filter((object) => {
-		      object.type.contains(text);
-		    })
-		  },
-		  filterAvailability: function() {
-		    this.sportsObjects.filter((object) => {
-		      object.avgScore.contains(text);
-		    })
-		   },
-		sort:function(s) {
-      //if s == current sort, reverse
-      if(s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
-      }
-      this.currentSort = s;
-    	}
-  	},
-	computed:{
-    sortedRows:function() {
-      return this.sportsObjects.sort((a,b) => {
-        let modifier = 1;
-        if(this.currentSortDir === 'desc') modifier = -1;
-        if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-        if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-        return 0;
-      });
-    	}
-	}
+	},
+  	computed: {
+    searchObjects() {
+      return this.sportsObjects.filter((el) => el.name.includes(this.search));
+    },
+    filteredObjects(){
+      return this.searchObjects.filter((el) => el.isOpen === this.showingOpen);
+    },
+    
+  },
 });
