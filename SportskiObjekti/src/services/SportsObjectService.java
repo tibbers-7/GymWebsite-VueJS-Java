@@ -87,6 +87,7 @@ public class SportsObjectService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public SportsObject addNew(SportsObject object) {
 		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("productDAO");
+		dao.addSportsObject(object);
 		return object;
 	}
 	

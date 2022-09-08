@@ -26,8 +26,6 @@ public class TrainingService {
 	@Context
 	ServletContext ctx;
 	
-	@Context
-	HttpServletRequest request;
 	
 	public TrainingService() {
 	}
@@ -106,14 +104,6 @@ public class TrainingService {
 		return dao.getTrainingsByObject(s.getId());
 	}
 	
-	@POST
-	@Path("/postInfo")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void postInfo(SportsObject s,User trainer) {
-		HttpSession session = request.getSession();
-
-		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
-	}
 	
 	@POST
 	@Path("/cancelTraining")

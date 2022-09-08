@@ -96,14 +96,7 @@ Vue.component("trainings-trainer", {
 		cancelTraining: function(){
 			if (this.selectedTraining!=null){
 				axios
-				.post('rest/trainings/cancelTraining',{
-					"id":this.selectedTraining.id,
-					"user":this.selectedTraining.user,
-					"trainer":this.trainer.username,
-					"sObject":this.selectedTraining.sObject,
-					"dateTime":this.selectedTraining.dateTime,
-					"type":this.selectedTraining.type
-					})
+				.post('rest/trainings/cancelTraining',this.selectedTraining)
 				.then(response => this.trainings = response.data); 
 			
 			} else toast("Niste odabrali trening!");

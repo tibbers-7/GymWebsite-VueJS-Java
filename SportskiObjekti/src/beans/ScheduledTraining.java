@@ -16,13 +16,6 @@ public class ScheduledTraining  implements Serializable{
 	 * 
 	 */
 
-	public ScheduledTraining(LocalDateTime dateTime, String training, String user, String trainer) {
-		super();
-		this.dateTime = dateTime;
-		this.training = training;
-		this.user = user;
-		this.trainer = trainer;
-	}
 	
 	public ScheduledTraining(String id,String dateTime, String training, String user, String trainer, String sObject, String type) {
 		super();
@@ -44,6 +37,19 @@ public class ScheduledTraining  implements Serializable{
 		default:
 			this.type=TrainingType.OTHER;
 		}
+	}
+	
+	public ScheduledTraining(int id,LocalDateTime dateTime, String training, String user, String trainer, String sObject, TrainingType type) {
+		super();
+		this.id=id;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm;dd.MM.yyyy.");
+		this.dateTime=dateTime;
+		this.dateTimeString = this.dateTime.format(formatter);
+		this.training = training;
+		this.user = user;
+		this.trainer = trainer;
+		this.sObject=sObject;
+		this.type=type;
 	}
 	public int getId() {
 		return id;
