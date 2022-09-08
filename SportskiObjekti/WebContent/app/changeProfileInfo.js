@@ -50,9 +50,6 @@ Vue.component("info-change", {
                         <input class="credential_inputs" type="text" v-model = "birthDate" v-bind:placeholder="user.birthDate">
                     </td>
 				</tr>
-                <tr>
-                    <td class="credential_labels" align="center">Pol:</td>
-                </tr>
                 <tr><td ><br></td></tr>
 				<tr >
 					<td align="center">
