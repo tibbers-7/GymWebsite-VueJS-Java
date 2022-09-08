@@ -138,8 +138,25 @@ public class UserService {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
 			userDAO.addUser(userToRegister);
-			return Response.status(200).entity("Uspešno kreiran nalog!").build();
+			return Response.status(200).entity("Uspeï¿½no kreiran nalog!").build();
 		}
+	}
+	
+	@POST
+	@Path("/editInfo")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response editInfo(User userToEdit) {
+
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		HttpSession session = request.getSession();
+		User user=(User) session.getAttribute("activeUser");
+		user.setName(userToEdit.getName());
+		user.setLast_name(userToEdit.getLast_name());
+		user.setBirthDate(userToEdit.getBirthDate());
+		userDAO.editUser(user);
+		context.setAttribute("activeUser", user);
+			return Response.status(200).entity("Uspeï¿½no promenjen nalog!").build();
 	}
 	
 
