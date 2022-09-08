@@ -100,4 +100,12 @@ public class TrainingService {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.getTrainingsByObject(s.getId());
 	}
+	
+	@POST
+	@Path("/cancelTraining")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<ScheduledTraining> cancelTraining(ScheduledTraining t) {
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		return dao.cancelTraining(t);
+	}
 }

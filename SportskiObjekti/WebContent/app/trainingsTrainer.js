@@ -4,7 +4,6 @@ Vue.component("trainings-trainer", {
 		return{
 		personalTrainings: null,
 		groupTrainings:null,
-		selected:false,
 		selectedTraining:null,
 		trainer:null,
 		title: "Treninzi",
@@ -44,7 +43,7 @@ Vue.component("trainings-trainer", {
                 <th class="header_item">Datum</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row"  v-for="(t, index) in personalTrainings" v-on:click="cancelTraining(t)">
+            <tr class="table-row"  v-for="(t, index) in personalTrainings" v-on:click="selectedTrainingFunc(t)">
                 <td class="table-data">{{t.training}}</td>
                  <td class="table-data">{{t.sObject}}</td>
                  <td class="table-data">{{t.dateTimeString}}</td>
@@ -68,7 +67,7 @@ Vue.component("trainings-trainer", {
         </table>
     </div>
     <div class="cancelTraining_grid">
-        <button class="button2" style="margin-top:1%; margin-left:5%">Otkaži trening</button>
+        <button class="button2" style="margin-top:1%; margin-left:5%" v-on:click="cancelTraining()">Otkaži trening</button>
     </div>
   </div>
 </div>
@@ -91,12 +90,21 @@ Vue.component("trainings-trainer", {
 	},
 	
 	methods: {
-		cancelTraining: function(training){
-			this.selectedTraining=training;
-			if (selected==true){
+		selectedTrainingFunc:function(t){
+			this.selectedTraining=t;
+		},
+		cancelTraining: function(){
+			if (this.selectedTraining!=null){
 				axios
-			.post('rest/trainings/cancelTraining', { id: this.customer.id });
-			//.then(response => this.trainings = response.data); 
+				.post('rest/trainings/cancelTraining',{
+					"id":this.selectedTraining.id,
+					"user":this.selectedTraining.user,
+					"trainer":this.trainer.username,
+					"sObject":this.selectedTraining.sObject,
+					"dateTime":this.selectedTraining.dateTime,
+					"type":this.selectedTraining.type
+					})
+				.then(response => this.trainings = response.data); 
 			
 			} else toast("Niste odabrali trening!");
 		}

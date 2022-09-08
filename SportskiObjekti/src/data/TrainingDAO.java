@@ -26,9 +26,12 @@ public class TrainingDAO{
 	private HashMap<Integer, ScheduledTraining> scheduledTrainingCollection=new HashMap<>();
 	private String trainingFilepath="";
 	
+	private int idScheduled;
+	
 	
 	public TrainingDAO(String trainingFilepath) {
 		super();
+		idScheduled=0;
 		this.trainingFilepath = trainingFilepath;
 		loadTrainings();
 		loadScheduledTrainings();
@@ -42,9 +45,15 @@ public class TrainingDAO{
 	}
 	
 	public String addScheduledTraining(ScheduledTraining t) {
+		idScheduled++;
+		if(t.getId()==0) {
+			t.setId(idScheduled);
+		}
+		
 		int maxId = 0;
 		maxId=getScheduledTrainingCollection().size();
 		maxId++;
+		
 		scheduledTrainingCollection.put(maxId, t);
 		return saveTraining(t);
 	}
@@ -153,7 +162,7 @@ public class TrainingDAO{
 			in = new BufferedReader(new FileReader(file));
 			String line="";
 			StringTokenizer st;
-			String dateTime="",training="",user="",trainer="",sObject="",type="";
+			String id="",dateTime="",training="",user="",trainer="",sObject="",type="";
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
 				if (line.equals(""))
@@ -161,6 +170,7 @@ public class TrainingDAO{
 				st = new StringTokenizer(line, ",");
 				
 				while (st.hasMoreTokens()) {
+					id = st.nextToken().trim();
 					dateTime = st.nextToken().trim();
 					training = st.nextToken().trim();
 					user = st.nextToken().trim();
@@ -168,7 +178,7 @@ public class TrainingDAO{
 					sObject = st.nextToken().trim();
 					type = st.nextToken().trim();
 				}
-				ScheduledTraining t=new ScheduledTraining(dateTime,training,user,trainer,sObject,type);
+				ScheduledTraining t=new ScheduledTraining(id,dateTime,training,user,trainer,sObject,type);
 				addScheduledTraining(t);
 			}
 		} catch (Exception e) {
@@ -210,5 +220,10 @@ public class TrainingDAO{
 			}
 		}
 		return ret;
+	}
+
+	public Collection<ScheduledTraining> cancelTraining(ScheduledTraining t) {
+		// TODO Auto-generated method stub
+		return getPersonalTrainingsByTrainer(t.getTrainer());
 	}
 }

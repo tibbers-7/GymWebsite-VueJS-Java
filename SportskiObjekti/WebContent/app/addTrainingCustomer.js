@@ -128,10 +128,10 @@ Vue.component("add-training", {
     	addTraining: function(){
 				axios
 					.post('rest/trainings/addTraining',
-							{ user: this.customer.username,
-							  sObject: this.chosenObject,
-							  trainer:this.chosenTrainer.username,
-							  training: this.chosenTraining
+							{ "user": this.customer.username,
+							  "sObject": this.chosenObject,
+							  "trainer":this.chosenTrainer.username,
+							  "training": this.chosenTraining
 							})
 					.then(response => (toast(response.data))); 
 					
