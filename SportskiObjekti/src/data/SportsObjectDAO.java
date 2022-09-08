@@ -129,4 +129,11 @@ private void test() {
 //			addSportsObject(s1);
 //			addSportsObject(s1);
 		}
+public Collection<String> getTypes() {
+	// TODO Auto-generated method stub
+	List<String> ret=new ArrayList<>();
+	for(ObjectType ot:ObjectType.values()) {
+		ret.add(ot.toString());
+	} return ret;
+}
 }

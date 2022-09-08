@@ -81,12 +81,20 @@ public class SportsObjectService {
 		return (SportsObject) ctx.getAttribute("selectedObject");
 	}
 	
+	@GET
+	@Path("/getTypes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<String> getTypes() {
+		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
+		return dao.getTypes();
+	}
+	
 	@POST
 	@Path("/addNew")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public SportsObject addNew(SportsObject object) {
-		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("productDAO");
+		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
 		dao.addSportsObject(object);
 		return object;
 	}
