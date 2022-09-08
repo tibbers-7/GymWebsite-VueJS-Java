@@ -98,4 +98,8 @@ public class ScheduledTraining  implements Serializable{
 	public void setsObject(String sObject) {
 		this.sObject = sObject;
 	}
+	
+	public String trainingString() {
+		return dateTimeString+","+training+","+user+","+trainer+","+sObject+","+type;
+	}
 }

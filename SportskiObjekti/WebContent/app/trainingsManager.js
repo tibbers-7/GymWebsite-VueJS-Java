@@ -64,7 +64,7 @@ Vue.component("trainings-manager", {
          .then(response => { 
 			this.manager = response.data;
 			axios
-			.post('rest/trainings/getByObject', this.manager)
+			.post('rest/trainings/getByManager', this.manager)
 			.then(response => this.trainings = response.data); 
 			});
 			

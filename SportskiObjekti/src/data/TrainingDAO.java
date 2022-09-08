@@ -1,8 +1,12 @@
 package data;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,6 +16,7 @@ import java.util.StringTokenizer;
 import beans.ScheduledTraining;
 import beans.SportsObject;
 import beans.Training;
+import beans.User;
 import data.utils.ObjectType;
 import data.utils.TrainingType;
 
@@ -36,12 +41,27 @@ public class TrainingDAO{
 		trainingCollection.put(maxId, t);
 	}
 	
-	public void addScheduledTraining(ScheduledTraining t) {
+	public String addScheduledTraining(ScheduledTraining t) {
 		int maxId = 0;
 		maxId=getScheduledTrainingCollection().size();
 		maxId++;
 		scheduledTrainingCollection.put(maxId, t);
+		return saveTraining(t);
 	}
+	private String saveTraining(ScheduledTraining t) {
+		try {
+			String str = t.trainingString();
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(trainingFilepath + "/scheduledTrainings.csv", true));
+		    writer.append(str);
+		    writer.append("\n");
+		    writer.close();
+		    return "Uspešno dodat trening!";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Neuspešan upis u fajl";
+		}
+	}
+	
 	
 	public Collection<Training> getTrainingsByObject(String objId){
 		List<Training> trainings=new ArrayList<Training>();

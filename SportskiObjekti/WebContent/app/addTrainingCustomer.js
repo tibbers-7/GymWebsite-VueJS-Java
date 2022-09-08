@@ -4,12 +4,12 @@ Vue.component("add-training", {
 		title: "Dodavanje objekta",
 		customer:null,
 		error: '',
-		contents:null,
+		trainings:null,
 		trainers:null,
 		objects:null,
 		chosenObject:null,
 		chosenTrainer:null,
-		chosenContent:null,
+		chosenTraining:null,
 		datetime:null
 		
 		}
@@ -72,15 +72,15 @@ Vue.component("add-training", {
             </tr>
             <tr>
                 <td align="center">
-                    <select class="selectBox" v-model="chosenContent" style="width:60%;">
+                    <select class="selectBox" v-model="chosenTraining" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
-					    <option v-for="content in contents" :value="content" :key="content" >{{content}}</option>
+					    <option v-for="training in trainings" :value="training" :key="training" >{{training}}</option>
 					 </select>  
                 </td>
             </tr>
             <tr>
                 <td align="center">
-                    <button class="Button"   v-on:click="addObj(object)">Dodaj trening</button>
+                    <button class="Button"   v-on:click="addTraining()">Dodaj trening</button>
                 </td>
             </tr>
            
@@ -119,12 +119,23 @@ Vue.component("add-training", {
 		
 		onChange:function(event){
 			
-			//what am i doing wronggggg
-			
-			this.chosenObject=event.response.value;
-			this.contents=chosenObject.services
+			axios
+					.post('rest/trainings/getByObject',this.chosenObject)
+					.then(response => (this.trainings=response.data)); 
 			
     	},
+    	
+    	addTraining: function(){
+				axios
+					.post('rest/trainings/addTraining',
+							{ user: this.customer.username,
+							  sObject: this.chosenObject,
+							  trainer:this.chosenTrainer.username,
+							  training: this.chosenTraining
+							})
+					.then(response => (toast(response.data))); 
+					
+		}
 		
 	}
 });
