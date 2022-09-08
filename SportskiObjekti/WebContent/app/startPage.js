@@ -10,7 +10,10 @@ Vue.component("start-page", {
 		error: '',
 		contents:null,
 		selectedObj:null,
-		id:''
+		id:'',
+		search:'',
+		currentSort:'name',
+    	currentSortDir:'asc'
 		}
 	},
 	 template: ` 
@@ -56,7 +59,7 @@ Vue.component("start-page", {
               </div>
             </div>
           <div class="objectSearch_grid">
-                <input type="text" class="input-search" placeholder="Pretraga">
+                <input type="text" class="input-search" placeholder="Pretraga" v-model="search">
              
           </div>
         </div>
@@ -74,18 +77,18 @@ Vue.component("start-page", {
         </div>
         <table class="table">
             <tr class="table-header" >
-                <th class="header__item">Naziv</th>
-                <th class="header__item">Tip</th>
-                <th class="header__item">Ponuda</th>
-                <th class="header__item">Otvoreno</th>
-                <th class="header__item">Adresa</th>
-                <th class="header__item">Ocena</th>
-                <th class="header__item">Logo</th>
-                <th class="header__item">Radno vreme</th>
+                <th class="header__item" v-on:click="sort('name')">Naziv</th>
+                <th class="header__item" v-on:click="sort('type')">Tip</th>
+                <th class="header__item" >Ponuda</th>
+                <th class="header__item" v-on:click="sort('open')">Otvoreno</th>
+                <th class="header__item" v-on:click="sort('add')">Adresa</th>
+                <th class="header__item" v-on:click="sort('score')">Ocena</th>
+                <th class="header__item" >Logo</th>
+                <th class="header__item" >Radno vreme</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row"  v-for="o in sportsObjects" v-on:click="selectedObject(o)" >
-                <td class="table-data">{{o.name}}</td>
+            <tr class="table-row" v-for="o in sportsObjects" v-on:click="selectedObject(o)" >
+                 <td class="table-data"{{o.name}}</td>
                  <td class="table-data">{{o.type}}</td>
                  <td class="table-data">{{o.services}}</td>
                  <td class="table-data">{{o.isOpen}}</td>
@@ -142,14 +145,7 @@ Vue.component("start-page", {
 		ascLoc: function(){
 			
 		},
-		ascLoc: function(){
-			
-		},
-		
 		descName: function(){
-			
-		},
-		descLoc: function(){
 			
 		},
 		descLoc: function(){
@@ -165,8 +161,24 @@ Vue.component("start-page", {
 		    this.sportsObjects.filter((object) => {
 		      object.avgScore.contains(text);
 		    })
-		   }
-		
-		
+		   },
+		sort:function(s) {
+      //if s == current sort, reverse
+      if(s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+      }
+      this.currentSort = s;
+    	}
+  	},
+	computed:{
+    sortedRows:function() {
+      return this.sportsObjects.sort((a,b) => {
+        let modifier = 1;
+        if(this.currentSortDir === 'desc') modifier = -1;
+        if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
+    	}
 	}
 });
