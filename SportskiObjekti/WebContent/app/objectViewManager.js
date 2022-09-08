@@ -92,8 +92,9 @@ Vue.component("manager-object", {
          .get('rest/users/activeUser')
          .then(response => { 
 			this.manager = response.data;
+			
 			axios
-			.post('rest/sportsObjects/getObjectByManager', { id: this.manager.id })
+			.get('rest/sportsObjects/getObjectByManager', manager)
 			.then(response => this.object = response.data); 
 			});
 			
