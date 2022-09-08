@@ -83,7 +83,7 @@ Vue.component("manager-object", {
          .then(response => { 
 			this.manager = response.data;
 			axios
-			.post('rest/sportsobjects/getByManager', this.manager)
+			.get('rest/sportsobjects/getByManager', this.manager)
 			.then(response =>{ 
 				this.object = response.data;
 				this.services=this.object.services;
