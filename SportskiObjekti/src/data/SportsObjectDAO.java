@@ -12,8 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import javax.ws.rs.core.Response;
-
 import beans.SportsObject;
 import beans.User;
 import data.utils.ObjectType;
@@ -59,6 +57,17 @@ public class SportsObjectDAO {
 
 		private String sportsObjectsPath = "";
 
+		public SportsObjectDAO() {
+			// TODO Auto-generated constructor stub
+			test();
+		}
+
+		/*public SportsObjectsDAO(String contextPath) {
+			this.setSportsObjects(new HashMap<Integer, SportsObject>());
+			this.setSportsObjectsPath(contextPath);
+
+		}*/
+	
 		public void addSportsObject(SportsObject s) {
 			int maxId = 0;
 			maxId=getSportsObjectsCollection().size();
@@ -72,7 +81,7 @@ public class SportsObjectDAO {
 				File file = new File(sportsObjectsPath + "/sportsObjects.csv");
 				System.out.println(file.getCanonicalPath());
 				in = new BufferedReader(new FileReader(file));
-				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="",imgName="",id="",manager="";
+				String line, name = "", type = "", services = "", isOpen="", location="", avgScore="", openHours="",imgName="",id="";
 				StringTokenizer st;
 				while ((line = in.readLine()) != null) {
 					line = line.trim();
@@ -89,7 +98,6 @@ public class SportsObjectDAO {
 						avgScore = st.nextToken().trim();
 						openHours = st.nextToken().trim();
 						imgName = st.nextToken().trim();
-						manager = st.nextToken().trim();
 					}
 					Boolean isOpen_=false;
 					if(isOpen.equals("true")) isOpen_=true;
@@ -100,7 +108,7 @@ public class SportsObjectDAO {
 						servicesList.add(s);
 					}
 					String imgFilepath="images/"+imgName;
-					SportsObject sportsObject=new SportsObject(id,name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours,manager);
+					SportsObject sportsObject=new SportsObject(id,name,ObjectType.valueOf(type),servicesList,isOpen_,location,Float.parseFloat(avgScore),imgFilepath,openHours);
 					addSportsObject(sportsObject);
 				}
 			} catch (Exception e) {
@@ -113,10 +121,12 @@ public class SportsObjectDAO {
 					catch (Exception e) { }
 				}}
 			}
-	public SportsObject getByManager(String username) {
-		for(SportsObject s: getSportsObjectsCollection()) {
-			if(s.getManager().equals(username)) return s;
+
+private void test() {
+
+//			SportsObject s1 = new SportsObject("1","aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
+//			addSportsObject(s1);
+//			addSportsObject(s1);
+//			addSportsObject(s1);
 		}
-		return null;
-}
 }

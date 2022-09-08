@@ -6,11 +6,10 @@ Vue.component("manager-object", {
 		selected:false,
 		manager:null,
 		error: '',
-		services:{}
 		}
 	},
 	 template: ` 
-    	<div class="bodyStyle">
+    	<div style="bodyStyle">
     	
 		    	<div class="header_container">
 			        <div class="Img">
@@ -37,7 +36,7 @@ Vue.component("manager-object", {
 		            <div class="basicInfo_grid">
 		                <div class="objectView_container" >
 		                    
-		                    <div class="grid_name">{{object.name}}</div>
+		                    <div class="grid_name">{{o.name}}</div>
 		                    <div class="headers">
 		                        <ul style="list-style:none">
 		                            <li>Tip:</li>
@@ -48,8 +47,8 @@ Vue.component("manager-object", {
 		                    <div class="values">
 		                        <ul style="list-style:none">
 		                            <li>{{object.type}}</li>
-		                            <li>{{object.isOpen}}</li>
-		                            <li>{{object.avgScore}}</li>
+		                            <li>{{object.status}}</li>
+		                            <li>{{object.grade}}</li>
 		                        </ul>
 		                    </div>
 		                </div>
@@ -62,33 +61,40 @@ Vue.component("manager-object", {
 		                <th class="header__item">Sadržaj</th>
 		            </tr>
 		            <div class="table-content">  
-			            <tr class="table-row"  v-for="service in object.services">
-			                <td class="table-data">{{service}}</td>
+			            <tr class="table-row"  v-for="(c, index) in object.contents">
+			                <td class="table-data">{{c.name}}</td>
 			            </tr>
 		            </div>  
 		        </table>
 		    </div>
 		    
 		    <div class="addNewContent_grid">
-		        <button class="button2">Dodaj novi sadržaj</button>
+		        <a href="#/nc"><button class="button2">Dodaj novi sadržaj</button></a>
 		    </div>
 		    
-		    
+		    <div class="commentsM_grid">
+		        <table class="table" style="width:60%;">
+		            <tr class="table-header" >
+		                <th class="header__item">Komentari</th>
+		            </tr>
+		            <div class="table-content">  
+		                <tr class="table-row"  v-for="(c, index) in object.comments">
+		                    <td class="table-data">{{c.text}}</td>
+		                </tr>
+		            </div>  
+		        </table>
+		    </div>
 		  </div>
     </div>    
     	`,
 	mounted() {
 		axios
-         .get('rest/user/activeUser')
+         .get('rest/users/activeUser')
          .then(response => { 
 			this.manager = response.data;
 			axios
-			.get('rest/sportsobjects/getByManager', this.manager)
-			.then(response =>{ 
-				this.object = response.data;
-				this.services=this.object.services;
-				this.comments=this.object.services;
-				}); 
+			.post('rest/sportsObjects/getObjectByManager', { id: this.manager.id })
+			.then(response => this.object = response.data); 
 			});
 			
 				},

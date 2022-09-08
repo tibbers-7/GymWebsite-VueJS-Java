@@ -11,7 +11,7 @@ Vue.component("add-object", {
 		mName,
 		last_name:"",
 		birthDate:"",
-		type="",
+		type:"",
 		logo:""
 		}
 	},
