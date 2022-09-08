@@ -11,7 +11,7 @@ Vue.component("admin-SP", {
 		}
 	},
 	 template: ` 
-    	<div style="bodyStyle">
+    	<div class="bodyStyle">
     	
     	<div class="header_container">
 			        <div class="Img">
@@ -37,7 +37,6 @@ Vue.component("admin-SP", {
 		<button class="button2" v-on:click="addObject()">Dodaj objekat</button>
 	</div>
 		
-		<div v-if="selected==true">
         
         <div class="objectSpec_grid">
           <div class="objectFilter_grid">
@@ -63,7 +62,7 @@ Vue.component("admin-SP", {
           </div>
         </div>
        
-      </div>
+      
 
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
@@ -105,9 +104,9 @@ Vue.component("admin-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeAdmin')
+		         .get('rest/user/activeUser')
 		         .then(response => this.admin = response.data);
-		axios.get('rest/sportsobjects/')
+		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data))
 			
 				},
@@ -130,7 +129,7 @@ Vue.component("admin-SP", {
 		
 		
 		addObject:function(){
-			router.push(`/aoa`);
+			router.push(`/ao`);
 		}
 		
 		
