@@ -19,6 +19,8 @@ import beans.Training;
 import beans.User;
 import data.utils.ObjectType;
 import data.utils.TrainingType;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class TrainingDAO{
@@ -49,12 +51,7 @@ public class TrainingDAO{
 		if(t.getId()==0) {
 			t.setId(idScheduled);
 		}
-		
-		int maxId = 0;
-		maxId=getScheduledTrainingCollection().size();
-		maxId++;
-		
-		scheduledTrainingCollection.put(maxId, t);
+		scheduledTrainingCollection.put(t.getId(), t);
 		return saveTraining(t);
 	}
 	private String saveTraining(ScheduledTraining t) {
@@ -68,6 +65,25 @@ public class TrainingDAO{
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "Neuspešan upis u fajl";
+		}
+	}
+	
+	private void saveScheduled() {
+		try {
+			String str="";
+		    BufferedWriter writer = new BufferedWriter(new FileWriter("/scheduledTrainings.csv", true));
+		    writer.write("");
+		    for (ScheduledTraining s : getScheduledTrainingCollection()) {
+				str=s.trainingString();
+				writer.append(str);
+				writer.append("\n");
+		    }
+		    writer.close();
+		    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		
+			e.printStackTrace();
 		}
 	}
 	
@@ -221,9 +237,17 @@ public class TrainingDAO{
 		}
 		return ret;
 	}
+	
+	
 
 	public Collection<ScheduledTraining> cancelTraining(ScheduledTraining t) {
-		// TODO Auto-generated method stub
+		LocalDateTime cancelUntil=t.getDateTime().minusDays(2);
+		LocalDateTime now=LocalDateTime.now();
+		if(now.isAfter(cancelUntil)) return null;
+		else {
+			scheduledTrainingCollection.remove(t.getId());
+			saveScheduled();
+		}
 		return getPersonalTrainingsByTrainer(t.getTrainer());
 	}
 }

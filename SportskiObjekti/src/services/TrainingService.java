@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,6 +25,9 @@ public class TrainingService {
 
 	@Context
 	ServletContext ctx;
+	
+	@Context
+	HttpServletRequest request;
 	
 	public TrainingService() {
 	}
@@ -99,6 +104,15 @@ public class TrainingService {
 	public Collection<Training> getByObject(SportsObject s) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.getTrainingsByObject(s.getId());
+	}
+	
+	@POST
+	@Path("/postInfo")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void postInfo(SportsObject s,User trainer) {
+		HttpSession session = request.getSession();
+
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 	}
 	
 	@POST

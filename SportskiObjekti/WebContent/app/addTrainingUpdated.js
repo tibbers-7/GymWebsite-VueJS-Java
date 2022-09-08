@@ -1,7 +1,6 @@
-Vue.component("add-training", {
+Vue.component("add-trainingUpdated", {
 	data: function(){
 		return{
-		title: "Dodavanje objekta",
 		customer:null,
 		error: '',
 		trainings:null,
@@ -46,15 +45,7 @@ Vue.component("add-training", {
 
         <table class="register_container" style="margin-left:70%;line-height:5px;">
             <tr>
-                <td class="credential_labels" align="center">Trener</td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <select class="selectBox" v-model="chosenTrainer" v-on:change="onChange($event)" style="width:60%;">
-                        <option disabled value="">Odaberite</option>
-                        <option v-for="trainer in trainers" :value="trainer.fullName">{{trainer.fullName}}</option>
-                    </select>  
-                </td>
+                <td class="credential_labels" align="center">Objekat</td>
             </tr>
             <tr>
                 <td align="center">
@@ -65,16 +56,24 @@ Vue.component("add-training", {
                 </td>
             </tr>
             <tr>
-                <td class="credential_labels" align="center">Objekat</td>
+                <td class="credential_labels" align="center">Trener</td>
             </tr>
-            
+            <tr>
+                <td align="center">
+                    <select class="selectBox" v-model="chosenTrainer" style="width:60%;">
+                        <option disabled value="">Odaberite</option>
+                        <option v-for="trainer in trainers" :value="trainer.fullName">{{trainer.fullName}}</option>
+                    </select>  
+                </td>
+            </tr>
             <tr>
                 <td class="credential_labels" align="center">Tip</td>
             </tr>
             <tr>
                 <td align="center">
-                    <select class="selectBox" disabled v-model="chosenTraining" style="width:60%;">
+                    <select class="selectBox" v-model="chosenTraining" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
+					    <option v-for="training in trainings" :value="training" :key="training" >{{training}}</option>
 					 </select>  
                 </td>
             </tr>
@@ -93,10 +92,8 @@ Vue.component("add-training", {
 		axios
 		     .get('rest/user/activeUser')
 		     .then(response => (this.customer = response.data));
-		axios.get('rest/sportsobjects/getAll')
+		axios.get('rest/sportsobjects/getInfo')
 			.then(response => (this.objects = response.data));
-		axios.get('rest/user/getTrainers')
-			.then(response => (this.trainers = response.data));
 	},
 	methods: {
 		
@@ -118,16 +115,22 @@ Vue.component("add-training", {
 		},
 		
 		onChange:function(event){
-			if (chosenTrainer!=null && chosenObject!=null){
+			
 			axios
-					.post('rest/trainings/postInfo',this.chosenObject,this.chosenTrainer)
-					.then(response => (router.push(`/atu`))); 
-		 }
+					.post('rest/trainings/getByObject',this.chosenObject)
+					.then(response => (this.trainings=response.data)); 
 			
     	},
     	
     	addTraining: function(){
-				toast("Niste odabrali sve potrebne podatke!");
+				axios
+					.post('rest/trainings/addTraining',
+							{ "user": this.customer.username,
+							  "sObject": this.chosenObject,
+							  "trainer":this.chosenTrainer.username,
+							  "training": this.chosenTraining
+							})
+					.then(response => (toast(response.data))); 
 					
 		}
 		
