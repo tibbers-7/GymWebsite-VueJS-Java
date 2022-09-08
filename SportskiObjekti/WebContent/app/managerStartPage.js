@@ -123,7 +123,7 @@ Vue.component("manager-SP", {
 			router.push(`/mt`);
 		},
 		objectShow: function(){
-			router.push(`/ovg`);
+			router.push(`/ovm`);
 		},
 		profile: function(){
 			router.push(`/pro`);

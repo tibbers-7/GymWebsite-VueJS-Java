@@ -39,6 +39,12 @@ public class ScheduledTraining  implements Serializable{
 		}
 	}
 	
+	
+	public ScheduledTraining() {
+	super();
+}
+
+
 	public ScheduledTraining(int id,LocalDateTime dateTime, String training, String user, String trainer, String sObject, TrainingType type) {
 		super();
 		this.id=id;
