@@ -9,7 +9,7 @@ Vue.component("manager-object", {
 		}
 	},
 	 template: ` 
-    	<div style="bodyStyle">
+    	<div style="style">
     	
 		    	<div class="header_container">
 			        <div class="Img">
@@ -36,7 +36,7 @@ Vue.component("manager-object", {
 		            <div class="basicInfo_grid">
 		                <div class="objectView_container" >
 		                    
-		                    <div class="grid_name">{{o.name}}</div>
+		                    <div class="grid_name">{{object.name}}</div>
 		                    <div class="headers">
 		                        <ul style="list-style:none">
 		                            <li>Tip:</li>
@@ -47,8 +47,8 @@ Vue.component("manager-object", {
 		                    <div class="values">
 		                        <ul style="list-style:none">
 		                            <li>{{object.type}}</li>
-		                            <li>{{object.status}}</li>
-		                            <li>{{object.grade}}</li>
+		                            <li>{{object.isOpen}}</li>
+		                            <li>{{object.avgScore}}</li>
 		                        </ul>
 		                    </div>
 		                </div>
@@ -88,14 +88,9 @@ Vue.component("manager-object", {
     </div>    
     	`,
 	mounted() {
-		axios
-         .get('rest/users/activeUser')
-         .then(response => { 
-			this.manager = response.data
-			}).then(response => { 
 			axios
-			.get('rest/sportsObjects/getObjectByManager', manager)
-			.then(response => this.object = response.data)}); 			
+			.get('rest/sportsobjects/getByManager')
+			.then(response => this.object = response.data); 			
 				},
 	methods: {
 		

@@ -103,8 +103,8 @@ Vue.component("manager-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeUser')
-		         .then(response => this.customer = response.data);
+		         .get('rest/user/activeUser')
+		         .then(response => this.manager = response.data);
 		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data))
 			
@@ -123,6 +123,7 @@ Vue.component("manager-SP", {
 			router.push(`/mt`);
 		},
 		objectShow: function(){
+			axios.post('rest/sportsobjects/setActiveManager',this.manager);
 			router.push(`/ovm`);
 		},
 		profile: function(){

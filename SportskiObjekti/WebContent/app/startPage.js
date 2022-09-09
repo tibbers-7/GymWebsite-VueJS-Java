@@ -13,9 +13,7 @@ Vue.component("start-page", {
 		id:'',
 		search:"",
 		showingOpen:true,
-		selectedOpen:"",
-		currentSort:'name',
-    	currentSortDir:'asc'
+		selectedOpen:""
 		}
 	},
 	 template: ` 

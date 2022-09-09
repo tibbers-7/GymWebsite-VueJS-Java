@@ -208,4 +208,5 @@ public class UserDAO {
 		customer.setMembershipID(null);
 		editUser(customer);
 	}
+
 }

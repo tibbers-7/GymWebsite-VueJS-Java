@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -21,7 +22,9 @@ import data.SportsObjectDAO;
 public class SportsObjectService {
 	
 	@Context
-	ServletContext ctx;
+	ServletContext context;
+	@Context
+	HttpServletRequest request;
 	
 	public SportsObjectService() {
 	}
@@ -30,36 +33,37 @@ public class SportsObjectService {
 	public void init() {
 		// Ovaj objekat se instancira vi�e puta u toku rada aplikacije
 		// Inicijalizacija treba da se obavi samo jednom
-		if (ctx.getAttribute("sportsObjectDAO") == null) {
-	    	String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("sportsObjectDAO", new SportsObjectDAO(contextPath));
+		if (context.getAttribute("sportsObjectDAO") == null) {
+	    	String contextPath = context.getRealPath("");
+			context.setAttribute("sportsObjectDAO", new SportsObjectDAO(contextPath));
 		}
-	}
-	@GET
-	@Path("/getByManager")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByManager(User manager) {
-		SportsObjectDAO dao = (SportsObjectDAO)ctx.getAttribute("sportsObjectDAO");
-		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
-		return Response.status(200).entity(s).build();
 	}
 	@GET
 	@Path("/getAll")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<SportsObject> getAll() {
-		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
+		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
 		return dao.getSportsObjectsCollection();
 	}
-	
-	@POST
+	@GET
 	@Path("/getByManager")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getByManager(User manager) {
-		SportsObjectDAO dao = (SportsObjectDAO)ctx.getAttribute("productDAO");
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getByManager() {
+		SportsObjectDAO dao = (SportsObjectDAO)context.getAttribute("sportsObjectDAO");
+		User manager=(User) context.getAttribute("activeUser");
 		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
 		return Response.status(200).entity(s).build();
 	}
+	@POST
+	@Path("/setActiveManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response setActiveManager(User manager) {
+		context.setAttribute("activeUser", manager);
+		return Response.status(200).build();
+	}
+	
+	
+	
 	@POST
 	@Path("/getContent")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -70,9 +74,9 @@ public class SportsObjectService {
 	@Path("/setSelectedObject")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response setSelectedObject(SportsObject s) {
-//		SportsObjectDAO dao = (SportsObjectDAO)ctx.getAttribute("productDAO");
+//		SportsObjectDAO dao = (SportsObjectDAO)context.getAttribute("productDAO");
 //		SportsObject sp=dao.getSportsObject(s.getId());
-		ctx.setAttribute("selectedObject", s);
+		context.setAttribute("selectedObject", s);
 		return Response.status(200).build();
 	}
 	
@@ -80,14 +84,14 @@ public class SportsObjectService {
 	@Path("/getSelectedObject")
 	@Produces(MediaType.APPLICATION_JSON)
 	public SportsObject getSelectedObject() {
-		return (SportsObject) ctx.getAttribute("selectedObject");
+		return (SportsObject) context.getAttribute("selectedObject");
 	}
 	
 	@GET
 	@Path("/getTypes")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<String> getTypes() {
-		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
+		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
 		return dao.getTypes();
 	}
 	
@@ -96,7 +100,7 @@ public class SportsObjectService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public SportsObject addNew(SportsObject object) {
-		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
+		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
 		dao.addSportsObject(object);
 		return object;
 	}

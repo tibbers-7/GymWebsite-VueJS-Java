@@ -170,24 +170,10 @@ public class UserService {
 	}
 	
 
-	@PostConstruct
-	public void init() {
-		
-		if (context.getAttribute("userDAO") == null) {
-			String contextPath = context.getRealPath("");
-			UserDAO UserDAO = new UserDAO(contextPath);
-			context.setAttribute("userDAO", UserDAO);
-		}
-	
-	}
-	
-	
-	
 	
 	@GET
 	@Path("/activeUser")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getActiveUser() {
 		
 		HttpSession session = request.getSession();
@@ -197,7 +183,7 @@ public class UserService {
 	}
 	
 	@GET
-	@Path("getTrainers")
+	@Path("/getTrainers")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<User> getTrainers() {
@@ -216,6 +202,18 @@ public class UserService {
 		return Response.status(200).entity("Uspešno poništena članarina!").build();
 
 	}
+	
+	@PostConstruct
+	public void init() {
+		
+		if (context.getAttribute("userDAO") == null) {
+			String contextPath = context.getRealPath("");
+			UserDAO UserDAO = new UserDAO(contextPath);
+			context.setAttribute("userDAO", UserDAO);
+		}
+	
+	}
+	
 	
 	
 	
