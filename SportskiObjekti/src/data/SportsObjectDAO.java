@@ -58,7 +58,15 @@ public class SportsObjectDAO {
 		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) {
 			this.sportsObjects = sportsObjects;
 		}
-
+		public Boolean checkService(String ID, String service) {
+			for (SportsObject s : getSportsObjectsCollection()) 
+				if (s.getId().equals(ID))
+				{
+					if(s.getServices().contains(service))
+						return true;
+				}
+			return false;
+		}
 		public SportsObjectDAO(String sportsObjectsPath) {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;

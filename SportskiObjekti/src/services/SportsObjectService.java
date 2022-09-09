@@ -104,6 +104,7 @@ public class SportsObjectService {
 		User manager=(User) context.getAttribute("activeUser");
 		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
 		service=service.substring(11,service.lastIndexOf('"'));
+		dao.checkService(s.getId(),service);
 		dao.addService(s.getId(), service);
 		return Response.status(200).entity(s).build();
 	}
