@@ -5,7 +5,11 @@ Vue.component("info-change", {
 		title: "Promena podataka naloga",
 		text: "",
 		error: '',
-		newUser:null //gender namestiti u template
+		name:"",
+		last_name:"",
+		birthDate:"",
+		gender:""
+		 //gender namestiti u template
 		}
 	},
 	 template: ` 
@@ -27,7 +31,7 @@ Vue.component("info-change", {
                 <tr><td class="credential_labels" align="center">Ime:</td></tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="text" placeholder="{{user.name}}" v-model = "newUser.name" >
+                        <input class="credential_inputs" type="text" v-model = "name" v-bind:placeholder="user.name" >
                     </td>
 				</tr>
                 <tr>
@@ -35,7 +39,7 @@ Vue.component("info-change", {
                 </tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="text" placeholder="{{user.last_name}}" v-model = "newUser.last_name">
+                        <input class="credential_inputs" type="text" v-model = "last_name" v-bind:placeholder="user.last_name">
                     </td>
 				</tr>
                 <tr>
@@ -43,22 +47,7 @@ Vue.component("info-change", {
                 </tr>
 				<tr>
 					<td align="center">
-                        <input class="credential_inputs" type="date" placeholder="{{user.birthDate}}" v-model = "newUser.birthDate">
-                    </td>
-				</tr>
-                <tr>
-                    <td class="credential_labels" align="center">Pol:</td>
-                </tr>
-				<tr>
-					<td style="line-height: 2px ;">
-                        <div style="margin-left:30%">
-                        
-                        <input type="radio" name="gender"  value="female" v-model = "gender"/>
-                        <p style="color:white" style="margin-top: -5%;">Ženski</p>
-                        
-                        <input  type="radio" name="gender"  value="male" v-model = "gender"/>
-                        <p style="color: white;">Muški</p>
-                        </div>
+                        <input class="credential_inputs" type="text" v-model = "birthDate" v-bind:placeholder="user.birthDate">
                     </td>
 				</tr>
                 <tr><td ><br></td></tr>
@@ -79,11 +68,10 @@ Vue.component("info-change", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeUser')
+         .get('rest/user/activeUser/')
          .then(response => { 
 			this.user = response.data;
-			});
-		newUser=user;
+			})
 	},
 	
 	methods: {
@@ -91,11 +79,31 @@ Vue.component("info-change", {
 			router.push(`/`);
 		},
 		goBack: function(){
-			//  Zavisi koji je tip korisnika
-			//router.push(`/`);
+			switch(user.userType){
+								case "CUSTOMER":
+									 router.push(`/csp`);
+									 break;
+								case "MANAGER": 
+									router.push(`/msp`);
+									break;
+								case "ADMIN": 
+									router.push(`/asp`);
+									break;
+								case "TRAINER": 
+									router.push(`/tsp`);
+									break;
+									}
 		},
 		changeInfo: function(){
-			
+			axios.post('rest/user/editInfo', {
+				 username: this.username,
+			 	 password: this.password,
+			 	 name: this.name,
+			 	 last_name: this.last_name,
+			 	 birthDate: this.birthDate}).then(response => {
+						toast(response.data);
+						goBack();
+					})
 		},
 	}
 		

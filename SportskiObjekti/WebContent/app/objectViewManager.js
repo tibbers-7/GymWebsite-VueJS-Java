@@ -2,7 +2,7 @@ Vue.component("manager-object", {
 	data: function() {
 		return{
 		title: "managerObjectView",
-		object:null,
+		object: {},
 		selected:false,
 		manager:null,
 		error: '',
@@ -61,7 +61,7 @@ Vue.component("manager-object", {
 		                <th class="header__item">Sadržaj</th>
 		            </tr>
 		            <div class="table-content">  
-			            <tr class="table-row"  v-for="(c, index) in object.contents">
+			            <tr class="table-row"  v-for="(c, index) in object.services">
 			                <td class="table-data">{{c.name}}</td>
 			            </tr>
 		            </div>  
@@ -91,12 +91,11 @@ Vue.component("manager-object", {
 		axios
          .get('rest/users/activeUser')
          .then(response => { 
-			this.manager = response.data;
+			this.manager = response.data
+			}).then(response => { 
 			axios
-			.post('rest/sportsObjects/getObjectByManager', { id: this.manager.id })
-			.then(response => this.object = response.data); 
-			});
-			
+			.get('rest/sportsObjects/getObjectByManager', manager)
+			.then(response => this.object = response.data)}); 			
 				},
 	methods: {
 		

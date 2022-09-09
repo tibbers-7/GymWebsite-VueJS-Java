@@ -148,7 +148,7 @@ public class UserService {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
 			userDAO.addUser(userToRegister);
-			return Response.status(200).entity("Uspeï¿½no kreiran nalog!").build();
+			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
 		}
 	}
 	
@@ -166,7 +166,7 @@ public class UserService {
 		user.setBirthDate(userToEdit.getBirthDate());
 		userDAO.editUser(user);
 		context.setAttribute("activeUser", user);
-			return Response.status(200).entity("Uspeï¿½no promenjen nalog!").build();
+			return Response.status(200).entity("Uspe�no promenjen nalog!").build();
 	}
 	
 	@POST
@@ -202,7 +202,7 @@ public class UserService {
 		
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("activeUser");
-		return user;
+		return Response.status(200).entity(user).build();
 		
 	}
 	

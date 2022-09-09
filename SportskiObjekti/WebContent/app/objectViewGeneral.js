@@ -26,8 +26,8 @@ Vue.component("view-object", {
 			                <th class="header__item">Sadržaj</th>
 			            </tr>
 			            <div class="table-content">  
-			            <tr class="table-row"  v-for="(c, index) in object.contents">
-			                <td class="table-data">{{c.name}}</td>
+			            <tr class="table-row"  v-for="(c, index) in object.services">
+			                <td class="table-data">{{c}}</td>
 			            </tr>
 			            </div>  
 			        </table>
@@ -60,8 +60,8 @@ Vue.component("view-object", {
 		            <div class="values">
 		                <ul style="list-style:none">
 		                    <li>{{object.type}}</li>
-		                    <li>{{object.status}}</li>
-		                    <li>{{object.grade}}</li>
+		                    <li>{{object.isOpen}}</li>
+		                    <li>{{object.avgScore}}</li>
 		                </ul>
 		            </div>
 		        </div>
@@ -84,9 +84,8 @@ Vue.component("view-object", {
          .get('rest/sportsobjects/getSelectedObject')
          .then(response => { 
 			this.object = response.data;
-			});
-			
-				},
+			})
+			},
 	methods: {
 		
 		logOut: function(){

@@ -28,19 +28,23 @@ Vue.component("trainer-SP", {
 	        <tr>
 	            <th align="left"  class="header_item"><button class="barButton" ><p class="active">Naši Objekti</p></button></th>
 	            <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="inactive" >Moji Treninzi</p></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 	        </tr>
 	    </table>
     </div>
     
     
 	<!-- TABELA SVIH OBJEKATA -->
-		<div class="objectSpec_grid">
+		
+		<div>
+        
+        <div class="objectSpec_grid">
           <div class="objectFilter_grid">
             <div class="objFilter1_grid">
                     <label style="font-size: large;"> Tip Objekta </label>  
                     <select class="selectBox" v-model="filterType">
 					    <option disabled value="">Odaberite</option>
-					    <option v-for="content in contents" :value="content">{{content}}</content>
+					    <option v-for="content in contents" :value="content">{{content}}</option>
 					 </select>  
             </div>
             <div class="objFilter2_grid">
@@ -58,7 +62,7 @@ Vue.component("trainer-SP", {
           </div>
         </div>
        
-      
+      </div>
 
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
@@ -81,14 +85,14 @@ Vue.component("trainer-SP", {
                 <th class="header__item">Radno vreme</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row"  v-for="(o, index) in sportsObjects" v-on:click="selectedObject(o)">
+            <tr class="table-row"  v-for="o in sportsObjects" v-on:click="selectedObject(o)" >
                 <td class="table-data">{{o.name}}</td>
                  <td class="table-data">{{o.type}}</td>
                  <td class="table-data">{{o.services}}</td>
                  <td class="table-data">{{o.isOpen}}</td>
                  <td class="table-data">{{o.location}}</td>
                  <td class="table-data">{{o.avgScore}}</td>
-                 <td class="table-data"><img src={{o.logoPath}}></td>
+                 <td class="table-data"><img v-bind:src="o.logoPath" width=50 height=50/> </td>
                  <td class="table-data">{{o.openHours}}</td>
             </tr>
             </div>  
@@ -96,11 +100,11 @@ Vue.component("trainer-SP", {
     </div>
     
     
-    </div>
+    
+		</div>       
     	`,
 	mounted() {
-		axios
-		         .get('rest/users/activeUser')
+		axios.get('rest/user/activeUser')
 		         .then(response => this.trainer = response.data);
 		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data));
@@ -113,6 +117,10 @@ Vue.component("trainer-SP", {
 		
 		logOut: function(){
 			router.push(`/`);
+		},
+		
+		profile: function(){
+			router.push(`/pro`);
 		},
 		
 		trainings: function(){
