@@ -89,11 +89,21 @@ MembershipDAO membershipDAO;
 	}
 	
 	@POST
+	@Path("/postUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response postUser(User customer) {
+		context.setAttribute("currentUser", customer);
+		return Response.status(200).build();
+	}
+	
+	@POST
 	@Path("/addMembership")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addMembership(User customer,Membership mem) {
+	public Response addMembership(Membership mem) {
 		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
+		User customer=(User)context.getAttribute("currentUser");
 		membershipDAO.addMembership(customer,mem);
 		return Response.status(200).build();
 

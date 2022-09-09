@@ -170,12 +170,23 @@ public class UserService {
 	}
 	
 	@POST
+	@Path("/rememberMembership")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response rememberMembership(Membership mem) {
+		
+		context.setAttribute("currentMembership", mem);
+		return Response.status(200).build();
+	}
+	
+	@POST
 	@Path("/checkMembership")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response checkMembership(Membership mem,Membership ogMem) {
+	public Response checkMembership(Membership ogMem) {
 
 		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		Membership mem=(Membership)context.getAttribute("currentMembership");
 		String isValid=userDAO.checkMembership((User)context.getAttribute("activeCustomer"),mem,ogMem);
 		return Response.status(200).entity(isValid).build();
 	}
@@ -202,7 +213,7 @@ public class UserService {
 		
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("activeUser");
-		return Response.status(200).entity(user).build();
+		return user;
 		
 	}
 	

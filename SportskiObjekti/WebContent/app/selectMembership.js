@@ -106,7 +106,11 @@ Vue.component("select-membership", {
 		
 		chooseMembership : function() {
 			axios
-	         .post('rest/memberships/addMembership',this.customer,this.mem)
+	         .post('rest/memberships/postUser',this.customer)
+	         .then(response => (toast(response.data)));
+			
+			axios
+	         .post('rest/memberships/addMembership',this.mem)
 	         .then(response => (toast(response.data)));
 			
 		},

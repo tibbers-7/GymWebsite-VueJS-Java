@@ -85,13 +85,18 @@ Vue.component("memberships-customer", {
 			.then(response => {
 						this.membership = response.data;
 						axios
-				         .get('rest/user/activeUser')  //dobavi original da bi mogla provera
+				         .get('rest/memberships/getOriginal')  //dobavi original da bi mogla provera
 				         .then(response => { 
 							this.ogMem=response.data;
 						});
 						
 						axios
-							.post('rest/user/checkMembership',this.membership,this.ogMem) //proveri jel validna
+							.post('rest/user/rememberMembership',this.membership) //sacuvaj korisnikovu clanarinu u kontekst
+							.then(response => {});
+						
+						
+						axios
+							.post('rest/user/checkMembership',this.ogMem) //posalji original na proveru jel validna
 							.then(response => {
 								this.valid=Boolean.parse(response.data);
 								

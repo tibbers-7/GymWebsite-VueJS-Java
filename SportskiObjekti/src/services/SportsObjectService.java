@@ -35,7 +35,7 @@ public class SportsObjectService {
 			ctx.setAttribute("sportsObjectDAO", new SportsObjectDAO(contextPath));
 		}
 	}
-	@GET
+	@POST
 	@Path("/getByManager")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -50,15 +50,6 @@ public class SportsObjectService {
 	public Collection<SportsObject> getAll() {
 		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
 		return dao.getSportsObjectsCollection();
-	}
-	
-	@POST
-	@Path("/getByManager")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getByManager(User manager) {
-		SportsObjectDAO dao = (SportsObjectDAO)ctx.getAttribute("productDAO");
-		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
-		return Response.status(200).entity(s).build();
 	}
 	@POST
 	@Path("/getContent")
