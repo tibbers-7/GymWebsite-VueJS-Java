@@ -3,13 +3,20 @@ Vue.component("add-object", {
 		return{
 		title: "Dodavanje objekta",
 		object:null,
+		admin:null,
 		manager:null,
 		error: '',
-		newManager:true
+		newManager:false,
+		name:"",
+		mName,
+		last_name:"",
+		birthDate:"",
+		type:"",
+		logo:""
 		}
 	},
 	 template: ` 
-    	<div style="bodyStyle">
+    	<div class="bodyStyle">
     	
 		    	<div class="header_container">
 					        <div class="Img">
@@ -32,66 +39,68 @@ Vue.component("add-object", {
 		    
 		    
 			<div class="addObj_container">
-        <div class="backBtn3_grid">
-            <button style="position:relative;left:200px;border:none;background: transparent;" v-on:click="goBack()"><img src="back.png" class="back_img"></img></button>
-        </div>
-        <div class="objInfo3_grid">
-            <div class="objectView_container" style="width:50%;">
-            
-                <div class="grid_name"><input  type="text" class="name_input"  placeholder="Naziv"/></div>
-                <div class="headers">
-                    <ul style="list-style:none">
-                        <li>Tip:</li>
-                        <li>Logo:</li>
-                        <li>Menadžer:</li>
-                    </ul>
-                </div>
-                <div class="values">
-                    <ul style="list-style:none">
-                        <li><input type="text" v-model="object.name"/></li>
-                        <li ><input type="image" v-model="object.logoPath" /></li>
-                        <li>
-                            <p style="font-size: 15px;">Postojeći</label>
-                            <input type="radio" style="margin-top: -8% ;" id="e" name="managerRG" value="Existing" >
-                            
-                        </li>
-                        <li>
-                            <p style="font-size: 15px;">Novi</label>
-                            <input type="radio" style="margin-top: -8% ;"  id="n" name="managerRG" value="New" v-model="newManager">
-                            
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+		        <div class="backBtn3_grid">
+		            <button style="position:relative;left:200px;border:none;background: transparent;" v-on:click="goBack()"><img src="images/back.png" class="back_img"></img></button>
+		        </div>
+	        <div class="objInfo3_grid">
+	            <div class="objectView_container" style="width:50%;">
+	            
+	                <div class="grid_name"><input  type="text" class="name_input" v-model="name"  placeholder="Naziv"/></div>
+	                <div class="headers">
+	                    <ul style="list-style:none">
+	                        <li>Tip:</li>
+	                        <li>Logo:</li>
+	                        <li>Menadžer:</li>
+	                    </ul>
+	                </div>
+	                <div class="values">
+	                    <ul style="list-style:none">
+	                        <li><input type="text" v-model="type"/></li>
+	                        <li ><input type="image" v-model="logo" /></li>
+	                        <li>
+	                            <p style="font-size: 15px;">Postojeći</label>
+	                            <input type="radio" style="margin-top: -8% ;" id="e" name="managerRG" value="Existing" >
+	                            
+	                        </li>
+	                        <li>
+	                            <p style="font-size: 15px;">Novi</label>
+	                            <input type="radio" style="margin-top: -8% ;"  id="n" name="managerRG" value="New" v-model="newManager" v-on:click="plsDoSmth()">
+	                            
+	                            
+	                        </li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
 
 
-         <div class="oldManager_grid" v-mode:hidden="newManager==true">
+         <div class="oldManager_grid" v-show="!newManager">
             <select class="selectBox" style="margin-top:-65%;margin-left:10%;width:40%"> 
-                <!-- Dinamicki generisati opcije -->
-                </select>  
+                <option disabled value="">Odaberite</option>
+				<option v-for="manager in managers" :value="manager.fullName">{{manager.fullName}}</option>
+            </select>  
          </div>
 
-        <div class="manager_grid" name="addNewManager" v-mode:hidden="newManager==false">
+        <div class="manager_grid" name="addNewManager" v-show="newManager===true">
             <table class="register_container">
                 <tr>
                     <td class="credential_labels" align="center">Korisničko ime</td>
                 </tr>
                 <tr>
-                    <td align="center"><input class="credential_inputs"  type="text" v-model = "manager.username" ></td>
+                    <td align="center"><input class="credential_inputs"  type="text" v-model = "username" ></td>
                 </tr>
                 
                 <tr>
                     <td class="credential_labels" align="center">Ime</td>
                 </tr>
                 <tr>
-                    <td align="center"><input class="credential_inputs"  type="text"v-model = "manager.name"></td>
+                    <td align="center"><input class="credential_inputs"  type="text" v-model = "mName"></td>
                 </tr>
                 <tr>
                     <td class="credential_labels" align="center">Prezime</td>
                 </tr>
                 <tr>
-                    <td align="center"><input class="credential_inputs"  type="text" v-model = "manager.last_name"></td>
+                    <td align="center"><input class="credential_inputs"  type="text" v-model = "last_name"></td>
                 </tr>
                 <tr>
                     <td class="credential_labels" align="center">Pol</td>
@@ -108,7 +117,7 @@ Vue.component("add-object", {
                     <td class="credential_labels" align="center">Datum rođenja</td>
                 </tr>
                 <tr>
-                    <td align="center"><input class="credential_inputs" type="date" v-model = "manager.birthDate"></td>
+                    <td align="center"><input class="credential_inputs" type="date" v-model = "birthDate"></td>
                 </tr>
                 <tr>
                     <td  align="center"><button class="Button" style="width: 30%;height:50%" v-on:click="addManager()">Dodeli menadžera</td>
@@ -117,24 +126,23 @@ Vue.component("add-object", {
         </div>
         
         <div class="addObjBtn_grid">
-            <button class="button2" style="margin-top:-30%;margin-left:48%; width:35%;" v-on:click="addObj(object)">Dodaj objekat</button>
+            <button class="button2" style="margin-top:-30%;margin-left:48%; width:35%;" v-on:click="addObj()">Dodaj objekat</button>
         </div>
+    </div>  
     </div>
-    </div>    
     	`,
 	mounted() {
 		axios
-		         .get('rest/users/activeManager')
-		         .then(response => this.customer = response.data);
-		axios.get('rest/sportsobjects/')
-			.then(response => (this.sportsObjects = response.data))
+		     .get('rest/user/activeUser')
+		     .then(response => this.admin = response.data);
+		
+		axios
+		     .get('rest/user/getFreeManagers')
+		     .then(response => this.managers = response.data);
 			
 				},
 	methods: {
-		selectedObject: function(sportsObject){
-			this.object=sportsObject;
-			this.selected=true;
-		},
+		
 		
 		logOut: function(){
 			router.push(`/`);
@@ -146,7 +154,7 @@ Vue.component("add-object", {
 		showUsers: function(){
 			router.push(`/au`);
 		},
-		addObj: function(object){
+		addObj: function(){
 			
 			
 		},
@@ -158,8 +166,12 @@ Vue.component("add-object", {
 		addManager: function(){
 			
 			
-		}
+		},
 		
+		plsDoSmth:function(){
+			this.newManager=true;
+			toast(this.newManager);
+		}
 		
 		
 	}

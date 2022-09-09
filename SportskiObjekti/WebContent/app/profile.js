@@ -12,7 +12,7 @@ Vue.component("profile", {
     	
     	 <div class="header_container">
         <div class="Img">
-            <img src="logo.png"style="height: 115px; width: 115px;"/>
+            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
         </div>
         <div class="Name"><h1> Fitness </h1></div>
         <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
@@ -24,10 +24,10 @@ Vue.component("profile", {
 <div class="profile_grid">
 
     <div class="profileBack_grid">
-        <button style="position:relative;left:350px;border:none;background: transparent;" v-on:click="goBack()"><img src="back.png" class="back_img"></img></button>
+        <button style="margin-top:2%;margin-left:90%;border:none;background:transparent;" v-on:click="goBack()"><img src="images/back.png" class="back_img"></img></button>
     </div>
     <div class="profileInfo_grid">
-                <div class="objectView_container" >
+                <div class="objectView_container"  >
                     
                     <div class="grid_name">{{user.username}}</div>
                     <div class="headers">
@@ -51,10 +51,10 @@ Vue.component("profile", {
 
 
     <div class="changePassBttn_grid">
-        <button class="button2"  v-on:click="changePass()">Promeni lozinku</button>
+        <button class="button2" style="margin-left:10%;margin-top:2%;"  v-on:click="changePass()">Promeni lozinku</button>
     </div>
     <div class="changeInfoBttn_grid">
-        <button class="button2"  v-on:click="changeInfo()">Promeni informacije</button>
+        <button class="button2" style="margin-left:10%;margin-top:2%;"  v-on:click="changeInfo()">Promeni informacije</button>
     </div>
   </div>
 
@@ -78,7 +78,24 @@ Vue.component("profile", {
 		},
 		changeInfo: function(){
 			router.push(`/ic`);
-		}
+		}, 
+		goBack: function(){
+			switch(this.user.userType){
+					case "CUSTOMER":
+						 router.push(`/csp`);
+						 break;
+					case "MANAGER": 
+						router.push(`/msp`);
+						break;
+					case "ADMIN": 
+						router.push(`/asp`);
+						break;
+					case "TRAINER": 
+						router.push(`/tsp`);
+						break;
+					default: router.push(`/`);
+				}
+			}, 
 	}
 		
 		

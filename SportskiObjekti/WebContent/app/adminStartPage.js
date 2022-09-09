@@ -11,7 +11,7 @@ Vue.component("admin-SP", {
 		}
 	},
 	 template: ` 
-    	<div style="bodyStyle">
+    	<div class="bodyStyle">
     	
     	<div class="header_container">
 			        <div class="Img">
@@ -27,14 +27,16 @@ Vue.component("admin-SP", {
 	        <tr>
 	            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
 	            <th align="left"  class="header_item"><button class="barButton" v-on:click="showUsers()"><p class="inactive">Korisnici</p></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 	        </tr>
 	    </table>
     </div>
     
     
-	<!-- TABELA SVIH OBJEKATA -->
+	<div>
+		<button class="button2" v-on:click="addObject()">Dodaj objekat</button>
+	</div>
 		
-		<div v-if="selected==true">
         
         <div class="objectSpec_grid">
           <div class="objectFilter_grid">
@@ -60,7 +62,7 @@ Vue.component("admin-SP", {
           </div>
         </div>
        
-      </div>
+      
 
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
@@ -98,62 +100,13 @@ Vue.component("admin-SP", {
     </div>
     
     
-    <!-- PRIKAZ OBJEKTA -->
-    
-    <div class="objectInfo_grid" v-if="selected == true">
-	    <div class="content_grid">
-	        <table class="table" style="width:60%;">
-	            <tr class="table-header" >
-	                <th class="header__item">Sadržaj</th>
-	            </tr>
-	            <div class="table-content">  
-	            <tr class="table-row"  v-for="(c, index) in object.contents">
-	                <td class="table-data">{{c.name}}</td>
-	            </tr>
-	            </div>  
-	        </table>
-	    </div>
-	    <div class="comments_grid">
-	        <table class="table" style="width:60%;">
-	            <tr class="table-header" >
-	                <th class="header__item">Komentari</th>
-	            </tr>
-	            <div class="table-content">  
-	                <tr class="table-row"  v-for="(c, index) in object.comments">
-	                    <td class="table-data">{{c.text}}</td>
-	                </tr>
-	            </div>  
-	        </table>
-	    </div>
-	    <div class="basicInfo_grid">
-	        <div class="objectView_container" >
-	            
-	            <div class="grid_name">{{object.name}}</div>
-	            <div class="headers">
-	                <ul style="list-style:none">
-	                    <li>Tip:</li>
-	                    <li>Status:</li>
-	                    <li>Ocena:</li>
-	                </ul>
-	            </div>
-	            <div class="values">
-	                <ul style="list-style:none">
-	                    <li>{{object.type}}</li>
-	                    <li>{{object.status}}</li>
-	                    <li>{{object.grade}}</li>
-	                </ul>
-	            </div>
-	        </div>
-	    </div>
-	  </div>
-    </div>       
-    </div>    
+   </div>
     	`,
 	mounted() {
 		axios
-		         .get('rest/user/activeAdmin')
+		         .get('rest/user/activeUser')
 		         .then(response => this.admin = response.data);
-		axios.get('rest/sportsobjects/')
+		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data))
 			
 				},
@@ -170,6 +123,14 @@ Vue.component("admin-SP", {
 		showUsers: function(){
 			router.push(`/au`);
 		},
+		profile: function(){
+			router.push(`/pro`);
+		},
+		
+		
+		addObject:function(){
+			router.push(`/ao`);
+		}
 		
 		
 		

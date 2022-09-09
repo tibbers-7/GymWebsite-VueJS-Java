@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 
@@ -70,6 +71,7 @@ public class UserDAO {
 	}
 	
 	public void addUser(User u) {
+		u.setUserType(UserType.CUSTOMER);
 		users.put(u.getUsername(), u);
 		saveUser(u);
 	}
@@ -145,19 +147,8 @@ public class UserDAO {
 				st = new StringTokenizer(line, ",");
 				while (st.hasMoreTokens()) {
 					
-					username = "";
-					password = "";
-					name = ""; 
-					last_name="";
-					gender="";
-					birth_date="";
-				    userType="";	
-				    membershipID="";
-				    sportsObjectID="";
-					visitedObjects="";
-					points="";
-					customerType="";
-					active="";
+					username = "";password = "";name = "";last_name="";gender="";birth_date="";userType="";	
+				    membershipID="";sportsObjectID="";visitedObjects="";points="";customerType="";active="";
 					username = st.nextToken().trim();
 					password = st.nextToken().trim();
 					name = st.nextToken().trim();
@@ -192,5 +183,29 @@ public class UserDAO {
 				catch (Exception e) { }
 			}
 		}
+	}
+
+	public Collection<User> getTrainers() {
+		List<User> trainerList =new ArrayList<>();
+		for(User u: getUserCollection()) {
+			if (u.getUserType()==UserType.TRAINER) trainerList.add(u);
+		}
+		return trainerList;
+	}
+
+	public Collection<User> getFreeManagers() {
+		List<User> ret=new ArrayList<>();
+		for(User u:getUserCollection()) {
+			if(u.getUserType()==UserType.MANAGER) {
+				//if(u.getSportsObjectID()==null)
+					ret.add(u);
+			}
+		}
+		return ret;
+	}
+
+	public void cancelMembership(User customer) {
+		customer.setMembershipID(null);
+		editUser(customer);
 	}
 }

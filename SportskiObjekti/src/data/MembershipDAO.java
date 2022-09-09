@@ -1,9 +1,6 @@
 package data;
-import beans.SportsObject;
-import data.utils.DateTools;
-import data.utils.Gender;
-import data.utils.Status;
 import beans.Membership;
+import beans.User;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,22 +9,21 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 
 public class MembershipDAO {
 
-	private HashMap<String, Membership> members=new HashMap<>();
+	private HashMap<Integer, Membership> members=new HashMap<>();
 	private String memberFilepath="";
 
 	public MembershipDAO(String filePath) {
 
-		this.setMemberships(new HashMap<String, Membership>());
+		this.setMemberships(new HashMap<Integer, Membership>());
 		this.setFilepath(filePath);
 		loadMemberships();
 		
@@ -37,7 +33,7 @@ public class MembershipDAO {
 		return members.values();
 	}
 	
-	public void setMemberships(HashMap<String, Membership> members) {
+	public void setMemberships(HashMap<Integer, Membership> members) {
 		this.members = members;
 	}
 	
@@ -51,39 +47,55 @@ public class MembershipDAO {
 	}
 	
 	private void saveMembership(Membership u) {
-		FileOutputStream outputStream;
+		
 		try {
 			String str = u.getMembershipString();
-		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/members.csv", true));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/memberships.csv", true));
 		    writer.append("\n");
 		    writer.append(str);
 		    writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveMemberships() {
+		try {
+			String str="";
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/memberships.csv", true));
+		    writer.write("");
+		    for (Membership m : getMembershipCollection()) {
+				str=m.getMembershipString();
+				writer.append(str);
+				writer.append("\n");
+		    }
+		    writer.close();
+		    
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 		
 			e.printStackTrace();
 		}
 	}
+	public Membership getByUser(String username) {
+		for(Membership m : getMembershipCollection()) {
+			if(m.getCustomerID().equals(username)) return m;
+		}
+		return null;
+	}
 	
 	
 	public Membership searchMembership(String membername) {
-		if (getMembershipCollection() != null) {
-			for (Membership m : getMembershipCollection()) {
-				if (m.getID().equals(membername)) {
-					return m;
-				}
-			}
-		}
-		return null;
+		return members.get(Integer.parseInt(membername));
 	}
 	
 	private void loadMemberships() {
 		BufferedReader in = null;
 		try {
-			File file = new File(memberFilepath + "/members.csv");
+			File file = new File(memberFilepath + "/memberships.csv");
 			System.out.println(file.getCanonicalPath());
 			in = new BufferedReader(new FileReader(file));
-			String ID="", payDate = "", validUntil = "", cena = "", customerID="", trainerID="", line="",status="",allowedUntil="",type="";
+			String ID="",name="", payDate = "", validUntil = "", cena = "", customerID="", line="",status="",allowedUntil="",type="";
 			StringTokenizer st;
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
@@ -92,6 +104,7 @@ public class MembershipDAO {
 				st = new StringTokenizer(line, ",");
 				while (st.hasMoreTokens()) {
 					ID = st.nextToken().trim();
+					name=st.nextToken().trim();
 					type=st.nextToken().trim();
 					payDate = st.nextToken().trim();
 					validUntil = st.nextToken().trim();
@@ -100,9 +113,11 @@ public class MembershipDAO {
 					status = st.nextToken().trim();
 					allowedUntil=st.nextToken().trim();
 				}
-				
-				
-				Membership member=new Membership(ID,type,payDate,validUntil,cena,customerID,status,allowedUntil);
+				Membership member=null;
+				if(customerID.equals("/")) {
+					member=new Membership(ID,name,type,cena,allowedUntil);
+				}
+				else member=new Membership(ID,name,type,payDate,validUntil,cena,customerID,status,allowedUntil);
 				members.put(member.getID(), member);
 			}
 		} catch (Exception e) {
@@ -115,5 +130,20 @@ public class MembershipDAO {
 				catch (Exception e) { }
 			}
 		}
+	}
+
+	public Collection<Membership> getAvailable() {
+		List<Membership> ret=new ArrayList<>();
+		for(Membership m:getMembershipCollection()) {
+			if(m.getCustomerID().equals("/")) {
+				ret.add(m);
+			}
+		} return ret;
+	}
+
+	public void cancelMembership(String username) {
+		Membership mem=getByUser(username);
+		members.remove(mem.getID());
+		saveMemberships();
 	}
 }

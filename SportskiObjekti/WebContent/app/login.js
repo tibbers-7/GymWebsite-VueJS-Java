@@ -66,7 +66,7 @@ Vue.component("login-page", {
 								case "MANAGER": 
 									router.push(`/msp`);
 									break;
-								case "ADMIN": 
+								case "ADMINISTRATOR": 
 									router.push(`/asp`);
 									break;
 								case "TRAINER": 

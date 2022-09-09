@@ -8,7 +8,7 @@ Vue.component("start-page", {
 		mode: "BROWSE",
 		text: "",
 		error: '',
-		contents:null,
+		types:null,
 		selectedObj:null,
 		id:'',
 		search:"",
@@ -48,7 +48,7 @@ Vue.component("start-page", {
                     <label style="font-size: large;"> Tip Objekta </label>  
                     <select class="selectBox">
 					    <option disabled value="">Odaberite</option>
-					    <option v-for="content in contents" :value="content">{{content}}</option>
+					    <option v-for="type in types" :value="type">{{type}}</option>
 					 </select>  
             </div>
             <div class="objFilter2_grid">
@@ -67,10 +67,13 @@ Vue.component("start-page", {
         </div>
        
       </div>
+      
+      
 
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
-            <button class="ascButton" v-on:click="ascName()" style="margin-left:12%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+	          
+            <button class="ascButton" v-on:click="sortedNameAsc()" style="margin-left:12%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="descButton" v-on:click="descName()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="ascButton" v-on:click="ascLoc()" style="margin-left:42%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="descButton" v-on:click="descLoc()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
@@ -110,6 +113,8 @@ Vue.component("start-page", {
 	mounted() {
 		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data));
+		axios.get('rest/sportsobjects/getTypes')
+			.then(response => (this.types = response.data));
 				},
 				
 	methods: {

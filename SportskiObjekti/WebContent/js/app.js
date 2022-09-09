@@ -4,6 +4,7 @@ const LoginPage = { template: '<login-page></login-page>' }
 const CustomerStartPage = { template: '<customer-SP></customer-SP>'}
 const TrainingsCustomer = {template: '<trainings-customer></trainings-customer>'}
 const MembershipsCustomer = {template: '<memberships-customer></memberships-customer>'}
+const SelectMembership = {template: '<select-membership></select-membership>'}
 const TrainerStartPage = { template: '<trainer-SP></trainer-SP>'}
 const TrainingsTrainer = {template: '<trainings-trainer></trainings-trainer>'}
 const ManagerStartPage = {template: '<manager-SP></manager-SP>'}
@@ -17,6 +18,9 @@ const AdminStartPage = { template: '<admin-SP></admin-SP>'}
 const UsersAdmin = {template: '<users-admin></users-admin>'}
 const AddObjectAdmin = {template: '<add-object></add-object>'}
 const ManagerTrainings = {template: '<trainings-manager></trainings-manager>'}
+const AddTraining ={template: '<add-training></add-training>'}
+const AddTrainingUpdated ={template: '<add-trainingUpdated></add-trainingUpdated>'}
+
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -27,6 +31,7 @@ const router = new VueRouter({
 	    { path: '/csp', component: CustomerStartPage },
 	    { path: '/ct', component: TrainingsCustomer },
 	    { path: '/cm', component: MembershipsCustomer },
+	    { path: '/sm', component: SelectMembership },
 	    { path: '/tsp', component: TrainerStartPage },
 	    { path: '/tt', component: TrainingsTrainer },
 	    { path: '/mt', component: ManagerTrainings },
@@ -39,8 +44,10 @@ const router = new VueRouter({
 	    { path: '/pc', component: PasswordChange },
 	    { path: '/asp', component: AdminStartPage },
 	    { path: '/ua', component: UsersAdmin },
-	    { path: '/aoa', component: AddObjectAdmin },
-
+	    { path: '/ao', component: AddObjectAdmin },
+	    { path: '/pro', component:Profile},
+		{ path: '/at', component: AddTraining},
+		{ path: '/atu', component: AddTrainingUpdated},
 
 	   
 	  ]

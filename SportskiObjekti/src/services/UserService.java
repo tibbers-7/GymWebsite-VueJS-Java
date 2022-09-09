@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 
 import beans.User;
+import data.MembershipDAO;
 import data.UserDAO;
 import data.utils.CustomerType;
 import data.utils.UserType;
@@ -75,6 +76,15 @@ public class UserService {
 		} else {
 			return null;
 		}
+	}
+	
+	@GET
+	@Path("/getFreeManagers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getFreeManagers() {
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		return userDAO.getFreeManagers();
+		
 	}
 
 	@POST
@@ -146,7 +156,7 @@ public class UserService {
 	@Path("/editInfo")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response edit(User userToEdit) {
+	public Response editInfo(User userToEdit) {
 
 		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 		HttpSession session = request.getSession();
@@ -184,11 +194,30 @@ public class UserService {
 		User user=(User) session.getAttribute("activeUser");
 		return Response.status(200).entity(user).build();
 		
-//		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
-//		String username = (String)context.getAttribute("username");
-//		String password = (String)context.getAttribute("password");
-//		return userDAO.getUser(username,password);
+	}
+	
+	@GET
+	@Path("getTrainers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Collection<User> getTrainers() {
+		UserDAO dao = (UserDAO) context.getAttribute("userDAO");
+		return dao.getTrainers();
 		
 	}
+	
+	@POST
+	@Path("/cancelMembership")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response cancelMembership(User customer) {
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		userDAO.cancelMembership(customer);
+		return Response.status(200).entity("Uspešno poništena članarina!").build();
+
+	}
+	
+	
+	
 
 }

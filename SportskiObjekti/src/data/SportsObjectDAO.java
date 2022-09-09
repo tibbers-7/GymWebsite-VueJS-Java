@@ -124,9 +124,16 @@ public class SportsObjectDAO {
 
 private void test() {
 
-			SportsObject s1 = new SportsObject("1","aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
-			addSportsObject(s1);
-			addSportsObject(s1);
-			addSportsObject(s1);
+//			SportsObject s1 = new SportsObject("1","aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
+//			addSportsObject(s1);
+//			addSportsObject(s1);
+//			addSportsObject(s1);
 		}
+public Collection<String> getTypes() {
+	// TODO Auto-generated method stub
+	List<String> ret=new ArrayList<>();
+	for(ObjectType ot:ObjectType.values()) {
+		ret.add(ot.toString());
+	} return ret;
+}
 }

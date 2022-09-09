@@ -32,6 +32,10 @@ Vue.component("trainings-customer", {
 		    </table>
 		</div>
 		
+		<div>
+			<button class="button2" v-on:click="addTraining()" style="margin-left:5%;margin-top:2%;">Dodaj trening</button>
+		</div>
+		
 		<div class="objectTable_grid" style="margin-top:2%;">
 		    <table class="table">
 		        <tr class="table-header" >
@@ -41,9 +45,9 @@ Vue.component("trainings-customer", {
 		        </tr>
 		        <div class="table-content">  
 		        <tr class="table-row"  v-for="(t, index) in trainings">
-		            <td class="table-data">{{t.name}}</td>
+		            <td class="table-data">{{t.training}}</td>
 		             <td class="table-data">{{t.sObject}}</td>
-		             <td class="table-data">{{t.date}}</td>
+		             <td class="table-data">{{t.dateTimeString}}</td>
 		        </tr>
 		    </table>
 		
@@ -53,16 +57,12 @@ Vue.component("trainings-customer", {
     	`,
 	mounted() {
 		axios
-         .get('rest/trainings/getAll')
+         .get('rest/user/activeUser')
          .then(response => { 
-			this.trainings = response.data;
-			//axios
-	        //  .get('rest/users/activeCustomer')
-	        //  .then(response => { 
-			//	this.customer = response.data;
-			//	axios
-			//	.post('rest/trainings/getAll', { id: this.customer.id })
-			//	.then(response => this.trainings = response.data); 
+			this.customer = response.data;
+			axios
+			.post('rest/trainings/getByCustomer', this.customer)
+			.then(response => this.trainings = response.data); 
 			});
 	},
 	
@@ -75,6 +75,9 @@ Vue.component("trainings-customer", {
 		},
 		homePage: function(){
 			router.push(`/csp`);
+		},
+		addTraining: function(){
+			router.push(`/at`);
 		}
 	}
 		

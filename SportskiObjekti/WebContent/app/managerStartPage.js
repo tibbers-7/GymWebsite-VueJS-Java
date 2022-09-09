@@ -28,6 +28,8 @@ Vue.component("manager-SP", {
 			            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
 			            <th align="left"  class="header_item"><button class="barButton"  v-on:click="objectShow()"><p class="inactive">Moj Sportski Objekat</p></button></th>
 			            <th align="left"  class="header_item"><button class="barButton"  v-on:click="trainingsShow()"><p class="inactive">Treninzi</p></button></th>
+			            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
+
 			        </tr>
 			    </table>
 		    </div>
@@ -101,7 +103,7 @@ Vue.component("manager-SP", {
     	`,
 	mounted() {
 		axios
-		         .get('rest/user/activeManager')
+		         .get('rest/users/activeUser')
 		         .then(response => this.customer = response.data);
 		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.sportsObjects = response.data))
@@ -121,8 +123,11 @@ Vue.component("manager-SP", {
 			router.push(`/mt`);
 		},
 		objectShow: function(){
-			router.push(`/ovg`);
-		}
+			router.push(`/ovm`);
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
 		
 		
 		

@@ -79,6 +79,7 @@ public class SportsObject  implements Serializable{
 		this.logoPath = logoPath;
 		this.openHours = openHours;
 	}
+
 	@Override
 	public String toString() {
 		return id + ", "+ name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
