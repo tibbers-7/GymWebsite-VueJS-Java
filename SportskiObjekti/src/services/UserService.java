@@ -191,20 +191,21 @@ public class UserService {
 		return Response.status(200).entity(isValid).build();
 	}
 	
-
-	@PostConstruct
-	public void init() {
-		
-		if (context.getAttribute("userDAO") == null) {
-			String contextPath = context.getRealPath("");
-			UserDAO UserDAO = new UserDAO(contextPath);
-			context.setAttribute("userDAO", UserDAO);
-		}
 	
+	
+	@POST
+	@Path("/checkMembership")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response checkMembership(Membership ogMem) {
+
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		Membership mem=(Membership)context.getAttribute("currentMembership");
+		String isValid=userDAO.checkMembership((User)context.getAttribute("activeCustomer"),mem,ogMem);
+		return Response.status(200).entity(isValid).build();
 	}
 	
-	
-	
+
 	
 	@GET
 	@Path("/activeUser")
@@ -225,6 +226,19 @@ public class UserService {
 		return dao.getTrainers();
 		
 	}
+	
+	@PostConstruct
+	public void init() {
+		
+		if (context.getAttribute("userDAO") == null) {
+			String contextPath = context.getRealPath("");
+			UserDAO UserDAO = new UserDAO(contextPath);
+			context.setAttribute("userDAO", UserDAO);
+		}
+	
+	}
+	
+	
 	
 	
 	

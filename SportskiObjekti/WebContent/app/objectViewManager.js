@@ -96,14 +96,9 @@ Vue.component("manager-object", {
 </div>    
     	`,
 	mounted() {
-		axios
-         .get('rest/users/activeUser')
-         .then(response => { 
-			this.manager = response.data
-			}).then(response => { 
 			axios
-			.get('rest/sportsObjects/getObjectByManager', manager)
-			.then(response => this.object = response.data)}); 			
+			.get('rest/sportsobjects/getByManager')
+			.then(response => this.object = response.data); 			
 				},
 	methods: {
 		
