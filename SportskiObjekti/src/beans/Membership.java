@@ -13,7 +13,7 @@ public class Membership implements Serializable{
 	 */
 	private static final long serialVersionUID = -9199905222200022220L;
 	
-	public Membership(String iD, MembershipType membershipType, LocalDate payDate, LocalDate validUntil, int price,
+	public Membership(int iD,String name, MembershipType membershipType, LocalDate payDate, LocalDate validUntil, int price,
 			String customerID, Status status, int allowedNumber) {
 		super();
 		ID = iD;
@@ -25,10 +25,10 @@ public class Membership implements Serializable{
 		this.status = status;
 		this.allowedNumber = allowedNumber;
 	}
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
-	public void setID(String iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
 	public MembershipType getMembershipType() {
@@ -87,7 +87,8 @@ public class Membership implements Serializable{
 		this.validUntilString = validUntilString;
 	}
 
-	String ID;
+	int ID;
+	String name;
 	MembershipType membershipType;
 	LocalDate payDate;
 	String payDateString;
@@ -101,7 +102,7 @@ public class Membership implements Serializable{
 	
 	//yearly & monthly membership -> validUntil=null
 	
-	public Membership(String id,String type, String createdDate,String validUntil, String price, String customerID, String status,
+	public Membership(String id,String name,String type, String createdDate,String validUntil, String price, String customerID, String status,
 			String allowedNumber) {
 		this.status=Status.INACTIVE;
 		if(status=="A") this.status=Status.ACTIVE;
@@ -132,8 +133,8 @@ public class Membership implements Serializable{
 		
 		
 	}
-	public Membership(String iD2, String type, String cena, String allowedUntil) {
-		this.ID=iD2;
+	public Membership(String iD2,String name, String type, String cena, String allowedUntil) {
+		this.ID=Integer.parseInt(iD2);
 		switch(type) {
 			case "Y": this.membershipType=MembershipType.YEARLY;break;
 			case "M": this.membershipType=MembershipType.MONTHLY;break;
@@ -144,7 +145,7 @@ public class Membership implements Serializable{
 		
 	}
 	public String getMembershipString() {
-		String s= ID+","+membershipType+","+payDate+","+validUntil+","+Integer.toString(price)+","+customerID+","+status.toString()+","+Integer.toString(allowedNumber);
+		String s= ID+","+name+","+membershipType+","+payDate+","+validUntil+","+Integer.toString(price)+","+customerID+","+status.toString()+","+Integer.toString(allowedNumber);
 		return s;
 	}
 	
