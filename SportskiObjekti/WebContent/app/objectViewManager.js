@@ -6,6 +6,7 @@ Vue.component("manager-object", {
 		selected:false,
 		manager:null,
 		error: '',
+		newContent:''
 		}
 	},
 	 template: ` 
@@ -62,8 +63,8 @@ Vue.component("manager-object", {
                 <th class="header__item">Sadržaj</th>
             </tr>
             <div class="table-content">  
-                <tr class="table-row"  v-for="(c, index) in object.services">
-                    <td class="table-data">{{c.name}}</td>
+                <tr class="table-row"  v-for="(c, index) in object.services" v-on:click=selectContent(c)>
+                    <td class="table-data">{{c}}</td>
                 </tr>
             </div>  
         </table>
@@ -76,7 +77,7 @@ Vue.component("manager-object", {
         <input style="color:white;margin-left:10%;width:300px;text-align:center;font-size: large;" placeholder="Novi sadržaj" type="text" v-model = "newContent"/>
     </div>
     <div class="addNewContent_grid" style="margin-top:6%">
-        <button class="button2" v-on:click="addContent">Dodaj novi sadržaj</button>
+        <button class="button2" v-on:click="addContent()">Dodaj novi sadržaj</button>
     </div>
 
 		    
@@ -87,7 +88,7 @@ Vue.component("manager-object", {
 		            </tr>
 		            <div class="table-content">  
 		                <tr class="table-row"  v-for="(c, index) in object.comments">
-		                    <td class="table-data">{{c.text}}</td>
+		                    <td class="table-data">{{c}}</td>
 		                </tr>
 		            </div>  
 		        </table>
@@ -109,7 +110,19 @@ Vue.component("manager-object", {
 		trainingsShow: function(){
 			router.push(`/mt`);
 		},
-		
+		selectContent: function(selectedService){
+			this.selected=selectedService;
+		},
+		addContent: function(){
+			axios
+			.post('rest/sportsobjects/addService',{string:this.newContent})
+			.then(response => this.object = response.data); 			
+		},
+		deleteContent: function(){
+			axios
+			.post('rest/sportsobjects/removeService',{string:this.selected})
+			.then(response => this.object = response.data); 			
+		},
 		goHome: function(){
 			router.push(`/msp`);
 		}

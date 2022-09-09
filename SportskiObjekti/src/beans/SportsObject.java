@@ -83,7 +83,7 @@ public class SportsObject  implements Serializable{
 	@Override
 	public String toString() {
 		return id + ", "+ name + ", " + type + ", " + services + ", " + isOpen + ", " + location + ", " + avgScore + ", "
-				+ logoPath + ", " + openHours + ", " + servicesString;
+				+ logoPath + ", " + openHours;
 	}
 	
 	private String id;

@@ -7,6 +7,7 @@ import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,6 +33,27 @@ public class SportsObjectDAO {
 		public void setSportsObjectsPath(String sportsObjectsPath) {
 			this.sportsObjectsPath = sportsObjectsPath;
 		}
+		public void addService(String ID, String service) {
+			for (SportsObject s : getSportsObjectsCollection()) 
+				if (s.getId().equals(ID))
+				{
+					List<String> newServices=s.getServices();
+					newServices.add(service);
+					s.setServices(newServices);
+					saveObjects();
+				}
+		}
+		
+		public void removeService(String ID, String service) {
+			for (SportsObject s : getSportsObjectsCollection()) 
+				if (s.getId().equals(ID))
+				{
+					List<String> newServices=s.getServices();
+					newServices.remove(service);
+					s.setServices(newServices);
+					saveObjects();
+				}
+		}
 
 		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) {
 			this.sportsObjects = sportsObjects;
@@ -54,7 +76,25 @@ public class SportsObjectDAO {
 			return null;
 		}
 		
-
+		private void saveObjects() {
+			try {
+				String str="";
+			    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath+"/sportsObjects.csv", true));
+			    writer.write("");
+			    for (SportsObject o : getSportsObjectsCollection()) {
+					str=o.toString();
+					writer.append(str);
+					writer.append("\n");
+			    }
+			    writer.close();
+			    
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+			
+				e.printStackTrace();
+			}
+		}
+		
 		private String sportsObjectsPath = "";
 
 		public SportsObjectDAO() {

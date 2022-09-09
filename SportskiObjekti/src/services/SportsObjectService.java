@@ -96,6 +96,32 @@ public class SportsObjectService {
 	}
 	
 	@POST
+	@Path("/addService")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addService(String service) {
+		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
+		User manager=(User) context.getAttribute("activeUser");
+		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
+		service=service.substring(11,service.lastIndexOf('"'));
+		dao.addService(s.getId(), service);
+		return Response.status(200).entity(s).build();
+	}
+	
+	@POST
+	@Path("/removeService")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response removeService(String service) {
+		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
+		User manager=(User) context.getAttribute("activeUser");
+		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
+		service=service.substring(11,service.lastIndexOf('"'));
+		dao.removeService(s.getId(), service);
+		return Response.status(200).entity(s).build();
+	}
+	
+	@POST
 	@Path("/addNew")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
