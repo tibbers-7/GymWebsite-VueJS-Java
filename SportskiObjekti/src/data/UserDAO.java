@@ -1,4 +1,5 @@
 package data;
+import beans.Membership;
 import beans.SportsObject;
 import beans.User;
 import data.utils.CustomerType;
@@ -15,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -96,10 +98,9 @@ public class UserDAO {
 		}
 	}
 	private void saveUsers() {
-		FileOutputStream outputStream;
 		try {
 			String str="";
-		    BufferedWriter writer = new BufferedWriter(new FileWriter("/users.csv", true));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(userFilepath+"/users.csv", true));
 		    writer.write("");
 		    for (User u : getUserCollection()) {
 				str=u.toString();
@@ -109,8 +110,6 @@ public class UserDAO {
 		    writer.close();
 		    
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-		
 			e.printStackTrace();
 		}
 	}
@@ -148,7 +147,7 @@ public class UserDAO {
 				while (st.hasMoreTokens()) {
 					
 					username = "";password = "";name = "";last_name="";gender="";birth_date="";userType="";	
-				    membershipID="";sportsObjectID="";visitedObjects="";points="";customerType="";active="";
+				    sportsObjectID="";visitedObjects="";points="";customerType="";active="";
 					username = st.nextToken().trim();
 					password = st.nextToken().trim();
 					name = st.nextToken().trim();
@@ -156,7 +155,6 @@ public class UserDAO {
 					gender = st.nextToken().trim();
 					birth_date = st.nextToken().trim();
 					userType=st.nextToken().trim();	
-					membershipID=st.nextToken().trim();
 					sportsObjectID=st.nextToken().trim();
 					visitedObjects=st.nextToken().trim();
 					points=st.nextToken().trim();
@@ -169,7 +167,7 @@ public class UserDAO {
 		        Date date = parser.parse(birth_date);
 				User user= new User.UserBuilder(username,password,name,last_name,genderEnum,
 						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active))
-						.membership(membershipID).customerType(CustomerType.valueOf(customerType)).sportsObject(Integer.parseInt(points))
+						.customerType(CustomerType.valueOf(customerType)).points(Integer.parseInt(points))
 						.sportsObject(sportsObjectID).visitedObjects(visitedObjects).build();
 				users.put(user.getUsername(), user);
 			}
@@ -204,8 +202,25 @@ public class UserDAO {
 		return ret;
 	}
 
-	public void cancelMembership(User customer) {
-		customer.setMembershipID(null);
-		editUser(customer);
+	public String checkMembership(User customer, Membership mem,Membership ogMem) {
+		LocalDate now=LocalDate.now();
+		
+		if(now.isAfter(mem.getValidUntil())) {
+			int totalPoints=(mem.getPrice()/1000)*mem.getAllowedNumber();
+			int numUsed=ogMem.getAllowedNumber()-mem.getAllowedNumber();
+			int oneThird=ogMem.getAllowedNumber()/3;
+			
+			//broj_izgubljenih_bodova = ukupna_cena_članarine/1000 * 133 * 4
+			if(numUsed<oneThird) {
+				int pointsLost=(mem.getPrice()/1000)*133*4;
+				totalPoints=totalPoints-pointsLost;
+			}
+			
+			int newPoints=customer.getPoints()+totalPoints;
+			customer.setPoints(newPoints);
+			editUser(customer);
+			return "false";
+		}
+		return "true";
 	}
 }

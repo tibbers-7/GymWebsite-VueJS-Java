@@ -57,6 +57,7 @@ public class TrainingService {
 	@POST
 	@Path("/getByManager")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<Training> getByManager(User manager) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.getTrainingsByObject(manager.getSportsObjectID());
@@ -67,6 +68,7 @@ public class TrainingService {
 	@POST
 	@Path("/getByCustomer")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<ScheduledTraining> getByCustomer(User customer) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.getScheduledTrainingsByCustomer(customer.getUsername());
@@ -75,6 +77,7 @@ public class TrainingService {
 	@POST
 	@Path("/getByTrainerPersonal")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<ScheduledTraining> getByTrainerPersonal(User trainer) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.getPersonalTrainingsByTrainer(trainer.getUsername());
@@ -83,6 +86,7 @@ public class TrainingService {
 	@POST
 	@Path("/addTraining")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public String addTraining(ScheduledTraining training) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.addScheduledTraining(training);
@@ -91,6 +95,7 @@ public class TrainingService {
 	@POST
 	@Path("/getByTrainerGroup")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<ScheduledTraining> getByTrainerGroup(User trainer) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.getGroupTrainingsByTrainer(trainer.getUsername());
@@ -108,6 +113,7 @@ public class TrainingService {
 	@POST
 	@Path("/cancelTraining")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<ScheduledTraining> cancelTraining(ScheduledTraining t) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		return dao.cancelTraining(t);

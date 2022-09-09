@@ -77,15 +77,41 @@ Vue.component("memberships-customer", {
     	`,
 	mounted() {
 		axios
-         .get('rest/user/activeUser')
+         .get('rest/user/activeUser')  //dobavi korisnika
          .then(response => { 
 			this.customer = response.data;
 			axios
-			.post('rest/memberships/getMembership', this.customer)
-			.then(response => this.membership = response.data); 
+			.post('rest/memberships/getMembership', this.customer) //dobavi njegovu clanarinu
+			.then(response => {
+						this.membership = response.data;
+						axios
+				         .get('rest/user/activeUser')  //dobavi original da bi mogla provera
+				         .then(response => { 
+							this.ogMem=response.data;
+						});
+						
+						axios
+							.post('rest/user/checkMembership',this.membership,this.ogMem) //proveri jel validna
+							.then(response => {
+								this.valid=Boolean.parse(response.data);
+								
+								if(!this.valid){
+									axios
+										.post('rest/memberships/cancelMembership', this.customer) //ako nije obrisi je
+										.then(response => {toast(response.status) }
+										)};
+									this.membership=null;
+							});
+				}); 
 			});
 			
-		if(this.membership==null) show=false;
+		axios
+         .get('rest/user/activeUser')  //dobavi korisnika opet za refresh poena
+         .then(response => { 
+			this.customer = response.data;
+			});
+						
+		if(this.membership===null) show=false;
 	},
 	
 	methods: {
@@ -102,7 +128,7 @@ Vue.component("memberships-customer", {
 		
 		cancelMem: function(){
 			axios
-			.post('rest/user/cancelMembership', this.customer)
+			.post('rest/memberships/cancelMembership', this.customer)
 			.then(response => toast(response.data)); 
 			this.membership=null;
 		},

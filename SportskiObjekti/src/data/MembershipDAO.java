@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -41,15 +42,32 @@ public class MembershipDAO {
 		this.memberFilepath = memberFilePath;
 	}
 	
-	public void addMembership(Membership m) {
-		members.put(m.getID(), m);
-		saveMembership(m);
+	public void addMembership(User customer, Membership newMem) {
+		Membership memToDelete=null;
+		for(Membership m: getMembershipCollection()) {
+			if(m.getCustomerID().equals(customer.getUsername())){
+				memToDelete=m;
+			}
+		}
+		if(memToDelete!=null) members.remove(memToDelete.getID());
+		newMem.setCustomerID(customer.getUsername());
+		newMem.setID(getNextKey());
+		members.put(newMem.getID(), newMem);
+		saveMemberships();
+		
 	}
 	
-	private void saveMembership(Membership u) {
+	private int getNextKey() {
+		int largest=0;
+		for(int i:members.keySet()) {
+			if(i>largest) largest=i;
+		} return largest++;
+	}
+	
+	private void saveMembership(Membership m) {
 		
 		try {
-			String str = u.getMembershipString();
+			String str = m.getMembershipString();
 		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/memberships.csv", true));
 		    writer.append("\n");
 		    writer.append(str);
@@ -58,6 +76,7 @@ public class MembershipDAO {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	private void saveMemberships() {
 		try {
@@ -72,8 +91,6 @@ public class MembershipDAO {
 		    writer.close();
 		    
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-		
 			e.printStackTrace();
 		}
 	}
@@ -132,6 +149,7 @@ public class MembershipDAO {
 		}
 	}
 
+
 	public Collection<Membership> getAvailable() {
 		List<Membership> ret=new ArrayList<>();
 		for(Membership m:getMembershipCollection()) {
@@ -141,9 +159,19 @@ public class MembershipDAO {
 		} return ret;
 	}
 
-	public void cancelMembership(String username) {
-		Membership mem=getByUser(username);
+	public void cancelMembership(User customer) {
+		Membership mem=getByUser(customer.getUsername());
 		members.remove(mem.getID());
 		saveMemberships();
 	}
+
+	public Membership getOriginal(Membership mem) {
+		for(Membership m:getMembershipCollection()) {
+			if(m.getCustomerID()==null) {
+				if(m.getName().equals(mem)) return m;
+			}
+		}
+		return null;
+	}
+	
 }

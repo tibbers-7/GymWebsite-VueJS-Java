@@ -33,7 +33,7 @@ Vue.component("select-membership", {
 		    </table>
     	</div>
 
-	<div v-if="selected != true" class="mems_grid">
+	<div v-if="!selected" class="mems_grid">
 	    <div class="memTable_grid">
 	    <table class="table">
 	        <tr class="table-header" >
@@ -57,7 +57,7 @@ Vue.component("select-membership", {
 	</div>
 
 
-	<div v-if="selected != false" class="selectedMem_grid" >
+	<div v-if="selected" class="selectedMem_grid" >
     <div class="back_Btn_grid">
         <button v-on:click="return" style="background: transparent; border: none;"><img src="back.png" class="back_img0"></img></button>
     </div>
@@ -70,7 +70,6 @@ Vue.component("select-membership", {
                     <li>Tip:</li>
                     <li>Cena:</li>
                     <li>Broj termina:</li>
-                    <li>Status:</li>
                 </ul>
             </div>
             <div class="values">
@@ -78,13 +77,12 @@ Vue.component("select-membership", {
                     <li>{{mem.type}}</li>
                     <li>{{mem.price}}</li>
                     <li>{{mem.termNumber}}</li>
-                    <li>{{mem.status}}</li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="chooseMem_Btn">
-        <button class="mem_button" v-on:click="chooseMembership(m)">Odaberi</button>
+        <button class="mem_button" v-on:click="chooseMembership()">Odaberi</button>
     </div>
 </div>
 
@@ -104,14 +102,14 @@ Vue.component("select-membership", {
 		showMembership : function(membership) {
 		 this.mem = membership;
 		 this.selected = true;
-	},
-	
-	chooseMembership : function() {
+		},
 		
-		
-	},
-		
-	
+		chooseMembership : function() {
+			axios
+	         .post('rest/memberships/addMembership',this.customer,this.mem)
+	         .then(response => (toast(response.data)));
+			
+		},
 	
 	}	
 	

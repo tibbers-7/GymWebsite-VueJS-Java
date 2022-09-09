@@ -87,10 +87,10 @@ public class SportsObjectService {
 	@Path("/addNew")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public SportsObject addNew(SportsObject object) {
+	public Response addNew(SportsObject object) {
 		SportsObjectDAO dao = (SportsObjectDAO) ctx.getAttribute("sportsObjectDAO");
 		dao.addSportsObject(object);
-		return object;
+		return Response.status(200).entity(object).build();
 	}
 	
 	
