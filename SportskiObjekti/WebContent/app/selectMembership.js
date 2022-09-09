@@ -1,5 +1,5 @@
 //import * as toast from 'toast.js';
-Vue.component("choose-membership", {
+Vue.component("select-membership", {
 	data: function() {
 		return{
 		memberships: null,
@@ -14,27 +14,24 @@ Vue.component("choose-membership", {
 	 template: ` 
     	<div class="bodyStyle">
     	
-    	    <div class="header_container">
-        <div class="Img">
-            <img src="logo.png"style="height: 115px; width: 115px;"/>
-        </div>
-	        <div class="Name"><h1> Fitness </h1></div>
-	        <div class="Login"><button class="Button"   href="#/lp" v-bind:hidden="mode=='LOGGED'" >Prijavite se</button></div>
-	        <div class="Register"><button class="Button"  href="#/rp" v-bind:hidden="mode=='LOGGED'" >Registrujte se</button></div>
-	        <div class="Register"><button class="Button"  href="#/" v-bind:hidden="mode!=='LOGGED'" >Odjavite se</button></div>
-
+    	 <div class="header_container">
+			        <div class="Img">
+			            <img src="images/logo.png"style="height: 115px; width: 115px;"/>
+			        </div>
+			        <div class="Name"><h1> Fitness </h1></div>
+			        <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
 		</div>
-
-
-	<div class="barBase">
-	    <table style="width: 20%;">
-	        <tr>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/csp">Naši Objekti</a></button></th>
-	            <th align="left"  class="header_item"><button class="barButton"><a class="inactive" href="#/ct">Moji Treninzi</a></button></th>
-	            <th align="left" class="header_item"><button class="barButton"><a class="active" href="#/cm">Moje članarine</a></button></th>
-	        </tr>
-	    </table>
-	</div>
+			
+			
+    	<div class="barBase">
+		    <table style="width: 20%;">
+		        <tr>
+		            <th align="left"  class="header_item"><button class="barButton"  v-on:click="homePage()"><p class="inactive">Naši Objekti</p></button></th>
+		            <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="inactive">Moji Treninzi</p></button></th>
+		            <th align="left" class="header_item"><button class="barButton"><p class="active">Moje članarine</p></button></th>
+		        </tr>
+		    </table>
+    	</div>
 
 	<div v-if="selected != true" class="mems_grid">
 	    <div class="memTable_grid">
@@ -89,46 +86,33 @@ Vue.component("choose-membership", {
     <div class="chooseMem_Btn">
         <button class="mem_button" v-on:click="chooseMembership(m)">Odaberi</button>
     </div>
-    <div class="es01"></div>
-  <div class="es02"></div>
 </div>
 
     </div>
     	`,
+    mounted() {
+		axios 
+		.get('rest/memberships/getAll')
+		.then(response => (this.memberships = response.data));
+		
+		axios
+         .get('rest/user/activeUser')
+         .then(response => (this.customer = response.data));
+	},
     	
     methods: {
-	
-	showMembership : function(membership) {
+		showMembership : function(membership) {
 		 this.mem = membership;
 		 this.selected = true;
 	},
 	
 	chooseMembership : function() {
-		axios
-         .get('rest/users/activeCustomer')
-         .then(response => (this.customer = response.data));
-		axios
-		.post('rest/customers/updateMembership',{
-			customerId : this.customer.id,
-			membershipId : this.selectMembership.id
-			})
-			.then(response => toast("Članarina je ažurirana!"));
-		},
 		
-	return : function(){
-		this.selected=false;
-	}
-	
+		
 	},
+		
 	
 	
-		
-	mounted() {
-		axios 
-		.get('rest/memberships/getAll')
-		.then(response => (this.memberships = response.data));
-	}
-		
-		
+	}	
 	
 });

@@ -45,7 +45,6 @@ MembershipDAO membershipDAO;
 	@GET
 	@Path("/getAll")	
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<Membership> getAll() {
 	    membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
 	    return membershipDAO.getMembershipCollection();

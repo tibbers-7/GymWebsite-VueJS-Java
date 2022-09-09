@@ -104,7 +104,7 @@ Vue.component("memberships-customer", {
 			router.push(`/cmem`);
 		},
 		newMem: function(){
-			router.push(`/nmem`);
+			router.push(`/sm`);
 		}
 	}
 		

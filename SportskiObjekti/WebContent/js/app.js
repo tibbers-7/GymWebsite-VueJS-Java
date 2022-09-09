@@ -4,6 +4,7 @@ const LoginPage = { template: '<login-page></login-page>' }
 const CustomerStartPage = { template: '<customer-SP></customer-SP>'}
 const TrainingsCustomer = {template: '<trainings-customer></trainings-customer>'}
 const MembershipsCustomer = {template: '<memberships-customer></memberships-customer>'}
+const SelectMembership = {template: '<select-membership></select-membership>'}
 const TrainerStartPage = { template: '<trainer-SP></trainer-SP>'}
 const TrainingsTrainer = {template: '<trainings-trainer></trainings-trainer>'}
 const ManagerStartPage = {template: '<manager-SP></manager-SP>'}
@@ -30,6 +31,7 @@ const router = new VueRouter({
 	    { path: '/csp', component: CustomerStartPage },
 	    { path: '/ct', component: TrainingsCustomer },
 	    { path: '/cm', component: MembershipsCustomer },
+	    { path: '/sm', component: SelectMembership },
 	    { path: '/tsp', component: TrainerStartPage },
 	    { path: '/tt', component: TrainingsTrainer },
 	    { path: '/mt', component: ManagerTrainings },
