@@ -55,22 +55,30 @@ Vue.component("manager-object", {
 		            </div>    
 		    </div>
 		
-		    <div class="objContentM_grid">
-		        <table class="table" style="width:60%;">
-		            <tr class="table-header" >
-		                <th class="header__item">Sadržaj</th>
-		            </tr>
-		            <div class="table-content">  
-			            <tr class="table-row"  v-for="(c, index) in object.services">
-			                <td class="table-data">{{c.name}}</td>
-			            </tr>
-		            </div>  
-		        </table>
-		    </div>
-		    
-		    <div class="addNewContent_grid">
-		        <a href="#/nc"><button class="button2">Dodaj novi sadržaj</button></a>
-		    </div>
+		   
+    <div class="objContentM_grid">
+        <table class="table" style="width:300px;">
+            <tr class="table-header" >
+                <th class="header__item">Sadržaj</th>
+            </tr>
+            <div class="table-content">  
+                <tr class="table-row"  v-for="(c, index) in object.services">
+                    <td class="table-data">{{c.name}}</td>
+                </tr>
+            </div>  
+        </table>
+    </div>
+    <div class="deleteContent_grid">
+        <button class="button2" v-on:click="deleteContent()" style="width:130px;margin-left:-20%;margin-top:3%">Obriši sadržaj</button>
+    </div>
+    
+    <div class="inputContent_grid" style="margin-top:1%">
+        <input style="color:white;margin-left:10%;width:300px;text-align:center;font-size: large;" placeholder="Novi sadržaj" type="text" v-model = "newContent"/>
+    </div>
+    <div class="addNewContent_grid" style="margin-top:6%">
+        <button class="button2" v-on:click="addContent">Dodaj novi sadržaj</button>
+    </div>
+
 		    
 		    <div class="commentsM_grid">
 		        <table class="table" style="width:60%;">
