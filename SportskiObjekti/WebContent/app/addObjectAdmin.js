@@ -64,7 +64,8 @@ Vue.component("add-object", {
 	                        </li>
 	                        <li>
 	                            <p style="font-size: 15px;">Novi</label>
-	                            <input type="radio" style="margin-top: -8% ;"  id="n" name="managerRG" value="New" v-on:click="newManagerSelected()">
+	                            <input type="radio" style="margin-top: -8% ;"  id="n" name="managerRG" value="New" v-model="newManager" v-on:click="plsDoSmth()">
+	                            
 	                            
 	                        </li>
 	                    </ul>
@@ -73,14 +74,14 @@ Vue.component("add-object", {
 	        </div>
 
 
-         <div class="oldManager_grid" v-if="newManager==true">
+         <div class="oldManager_grid" v-show="!newManager">
             <select class="selectBox" style="margin-top:-65%;margin-left:10%;width:40%"> 
                 <option disabled value="">Odaberite</option>
-				<option v-for="manager.fullName in managers" :value="manager.fullName">{{manager.fullName}}</option>
+				<option v-for="manager in managers" :value="manager.fullName">{{manager.fullName}}</option>
             </select>  
          </div>
 
-        <div class="manager_grid" name="addNewManager" v-if="newManager==false">
+        <div class="manager_grid" name="addNewManager" v-show="newManager===true">
             <table class="register_container">
                 <tr>
                     <td class="credential_labels" align="center">Korisničko ime</td>
@@ -93,7 +94,7 @@ Vue.component("add-object", {
                     <td class="credential_labels" align="center">Ime</td>
                 </tr>
                 <tr>
-                    <td align="center"><input class="credential_inputs"  type="text"v-model = "mName"></td>
+                    <td align="center"><input class="credential_inputs"  type="text" v-model = "mName"></td>
                 </tr>
                 <tr>
                     <td class="credential_labels" align="center">Prezime</td>
@@ -128,6 +129,7 @@ Vue.component("add-object", {
             <button class="button2" style="margin-top:-30%;margin-left:48%; width:35%;" v-on:click="addObj()">Dodaj objekat</button>
         </div>
     </div>  
+    </div>
     	`,
 	mounted() {
 		axios
@@ -164,8 +166,12 @@ Vue.component("add-object", {
 		addManager: function(){
 			
 			
-		}
+		},
 		
+		plsDoSmth:function(){
+			this.newManager=true;
+			toast(this.newManager);
+		}
 		
 		
 	}

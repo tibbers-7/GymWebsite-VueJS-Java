@@ -132,6 +132,17 @@ public class Membership implements Serializable{
 		
 		
 	}
+	public Membership(String iD2, String type, String cena, String allowedUntil) {
+		this.ID=iD2;
+		switch(type) {
+			case "Y": this.membershipType=MembershipType.YEARLY;break;
+			case "M": this.membershipType=MembershipType.MONTHLY;break;
+			default: this.membershipType=MembershipType.OTHER; }
+		this.price=Integer.parseInt(cena);
+		this.status=Status.INACTIVE;
+		this.allowedNumber=Integer.parseInt(allowedUntil);
+		
+	}
 	public String getMembershipString() {
 		String s= ID+","+membershipType+","+payDate+","+validUntil+","+Integer.toString(price)+","+customerID+","+status.toString()+","+Integer.toString(allowedNumber);
 		return s;

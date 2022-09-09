@@ -101,7 +101,10 @@ Vue.component("memberships-customer", {
 		},
 		
 		cancelMem: function(){
-			router.push(`/cmem`);
+			axios
+			.post('rest/user/cancelMembership', this.customer)
+			.then(response => toast(response.data)); 
+			this.membership=null;
 		},
 		newMem: function(){
 			router.push(`/sm`);

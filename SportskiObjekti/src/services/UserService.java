@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 
 import beans.User;
+import data.MembershipDAO;
 import data.UserDAO;
 import data.utils.CustomerType;
 import data.utils.UserType;
@@ -75,6 +76,15 @@ public class UserService {
 		} else {
 			return null;
 		}
+	}
+	
+	@GET
+	@Path("/getFreeManagers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getFreeManagers() {
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		return userDAO.getFreeManagers();
+		
 	}
 
 	@POST
@@ -138,7 +148,7 @@ public class UserService {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
 			userDAO.addUser(userToRegister);
-			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
+			return Response.status(200).entity("Uspeï¿½no kreiran nalog!").build();
 		}
 	}
 	
@@ -156,7 +166,7 @@ public class UserService {
 		user.setBirthDate(userToEdit.getBirthDate());
 		userDAO.editUser(user);
 		context.setAttribute("activeUser", user);
-			return Response.status(200).entity("Uspe�no promenjen nalog!").build();
+			return Response.status(200).entity("Uspeï¿½no promenjen nalog!").build();
 	}
 	
 
@@ -194,6 +204,17 @@ public class UserService {
 		UserDAO dao = (UserDAO) context.getAttribute("userDAO");
 		return dao.getTrainers();
 		
+	}
+	
+	@POST
+	@Path("/cancelMembership")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response cancelMembership(User customer) {
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		userDAO.cancelMembership(customer);
+		return Response.status(200).entity("Uspešno poništena članarina!").build();
+
 	}
 	
 	

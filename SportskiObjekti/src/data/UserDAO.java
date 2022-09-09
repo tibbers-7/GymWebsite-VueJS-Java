@@ -203,4 +203,9 @@ public class UserDAO {
 		}
 		return ret;
 	}
+
+	public void cancelMembership(User customer) {
+		customer.setMembershipID(null);
+		editUser(customer);
+	}
 }

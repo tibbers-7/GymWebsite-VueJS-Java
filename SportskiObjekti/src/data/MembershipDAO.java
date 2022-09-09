@@ -7,8 +7,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 
@@ -96,9 +98,11 @@ public class MembershipDAO {
 					status = st.nextToken().trim();
 					allowedUntil=st.nextToken().trim();
 				}
-				
-				
-				Membership member=new Membership(ID,type,payDate,validUntil,cena,customerID,status,allowedUntil);
+				Membership member=null;
+				if(customerID.equals("/")) {
+					member=new Membership(ID,type,cena,allowedUntil);
+				}
+				else member=new Membership(ID,type,payDate,validUntil,cena,customerID,status,allowedUntil);
 				members.put(member.getID(), member);
 			}
 		} catch (Exception e) {
@@ -111,5 +115,24 @@ public class MembershipDAO {
 				catch (Exception e) { }
 			}
 		}
+	}
+
+	public Collection<Membership> getAvailable() {
+		List<Membership> ret=new ArrayList<>();
+		for(Membership m:getMembershipCollection()) {
+			if(m.getCustomerID().equals("/")) {
+				ret.add(m);
+			}
+		} return ret;
+	}
+
+	public void cancelMembership(String username) {
+		Membership mem;
+		for(Membership m:getMembershipCollection()) {
+			if(m.getCustomerID().equals(username)) {
+				mem=m;
+			}
+		}
+		
 	}
 }

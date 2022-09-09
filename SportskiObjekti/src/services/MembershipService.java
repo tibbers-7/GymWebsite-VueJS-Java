@@ -49,6 +49,13 @@ MembershipDAO membershipDAO;
 	    membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
 	    return membershipDAO.getMembershipCollection();
 	}
+	@GET
+	@Path("/getAvailable")	
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Membership> getAvailable() {
+	    membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
+	    return membershipDAO.getAvailable();
+	}
 	
 	@POST
 	@Path("/getMembership")
@@ -60,6 +67,18 @@ MembershipDAO membershipDAO;
 		return Response.status(200).entity(mem).build();
 
 	}
+	
+	@POST
+	@Path("/cancelMembership")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response cancelMembership(User customer) {
+		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
+		membershipDAO.cancelMembership(customer.getUsername());
+		return Response.status(200).build();
+
+	}
+	
 	
 }
 	
