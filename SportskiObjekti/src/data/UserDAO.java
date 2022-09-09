@@ -192,4 +192,15 @@ public class UserDAO {
 		}
 		return trainerList;
 	}
+
+	public Collection<User> getFreeManagers() {
+		List<User> ret=new ArrayList<>();
+		for(User u:getUserCollection()) {
+			if(u.getUserType()==UserType.MANAGER) {
+				//if(u.getSportsObjectID()==null)
+					ret.add(u);
+			}
+		}
+		return ret;
+	}
 }
