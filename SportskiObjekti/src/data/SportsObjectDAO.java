@@ -19,6 +19,7 @@ import data.utils.ObjectType;
 
 public class SportsObjectDAO {
 		private HashMap<Integer, SportsObject> sportsObjects= new HashMap<>();
+		private String sportsObjectsPath = "";
 		public HashMap<Integer, SportsObject> getSportsObjects() {
 			return sportsObjects;
 		}
@@ -71,17 +72,9 @@ public class SportsObjectDAO {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
 			loadSportsObjects();
-			//test();
 		}
 		public SportsObject getSportsObject(String sportsObjectID) {
-			if (getSportsObjectsCollection() != null) {
-				for (SportsObject s : getSportsObjectsCollection()) {
-					if (s.getId().equals(sportsObjectID)) {
-						return s;
-					}
-				}
-			}
-			return null;
+			return sportsObjects.get(Integer.parseInt(sportsObjectID));
 		}
 		
 		private void saveObjects() {
@@ -116,11 +109,19 @@ public class SportsObjectDAO {
 
 		}*/
 	
+
 		public void addSportsObject(SportsObject s) {
-			int maxId = 0;
-			maxId=getSportsObjectsCollection().size();
-			maxId++;
-			sportsObjects.put(maxId, s);
+			if(s.getId()==null) setNextKey(s);
+			sportsObjects.put(Integer.parseInt(s.getId()),s);
+			saveObjects();
+		}
+		
+		private void setNextKey(SportsObject s) {
+			int largest=0;
+			for(int i:sportsObjects.keySet()) {
+				if(i>largest) largest=i;
+			} 
+			s.setId(Integer.toString(largest++));
 		}
 
 		private void loadSportsObjects() {
@@ -169,19 +170,28 @@ public class SportsObjectDAO {
 					catch (Exception e) { }
 				}}
 			}
-
-private void test() {
-
-//			SportsObject s1 = new SportsObject("1","aa1100ddcc", ObjectType.GYM, null, true, "Adresa 1", (float) 4.8, "", "07:00 - 19:00");
-//			addSportsObject(s1);
-//			addSportsObject(s1);
-//			addSportsObject(s1);
+		
+		private void saveObjects() {
+			try {
+				String str="";
+			    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath+"/sportsObjects.csv", true));
+			    writer.write("");
+			    for (SportsObject s : getSportsObjectsCollection()) {
+					str=s.toString();
+					writer.append(str);
+					writer.append("\n");
+			    }
+			    writer.close();
+			    
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-public Collection<String> getTypes() {
-	// TODO Auto-generated method stub
-	List<String> ret=new ArrayList<>();
-	for(ObjectType ot:ObjectType.values()) {
-		ret.add(ot.toString());
-	} return ret;
-}
+
+	public Collection<String> getTypes() {
+		List<String> ret=new ArrayList<>();
+		for(ObjectType ot:ObjectType.values()) {
+			ret.add(ot.toString());
+		} return ret;
+	}
 }

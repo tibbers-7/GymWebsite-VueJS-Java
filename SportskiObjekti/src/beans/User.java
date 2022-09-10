@@ -3,6 +3,8 @@ package beans;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,7 +24,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 6008893841218394652L;
 	
 	public User(String username, String password, String name, String last_name, Gender gender, String birthDate,
-			UserType userType, String membershipID, String sportsObjectID, String visitedObjects,
+			UserType userType, String sportsObjectID, String visitedObjects,
 			int points, CustomerType customerType) {
 		super();
 		this.username = username;
@@ -32,7 +34,6 @@ public class User implements Serializable{
 		this.gender = gender;
 		this.birthDate = birthDate;
 		this.userType = userType;
-		this.membershipID = membershipID;
 		this.sportsObjectID = sportsObjectID;
 		this.visitedObjectsID = visitedObjects;
 		this.points = points;
@@ -48,7 +49,6 @@ public class User implements Serializable{
 		this.gender = builder.gender;
 		this.birthDate = builder.birthDate;
 		this.userType = builder.userType;
-		this.membershipID = builder.membershipID;
 		this.sportsObjectID = builder.sportsObjectID;
 		this.visitedObjectsID = builder.visitedObjectsID;
 		this.points = builder.points;
@@ -97,12 +97,6 @@ public class User implements Serializable{
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
-	public String getMembershipID() {
-		return membershipID;
-	}
-	public void setMembershipID(String membershipID) {
-		this.membershipID = membershipID;
-	}
 	public String getSportsObjectID() {
 		return sportsObjectID;
 	}
@@ -132,8 +126,9 @@ public class User implements Serializable{
 	}
 	@Override
 	public String toString() {
+		
 		return username + ", " + password + ", " + name + ", " + last_name + ", " + gender + ", " + birthDate + ", "
-				+ active + ", " + userType + ", " + membershipID + ", " + sportsObjectID + ", " + visitedObjectsID
+				+ active + ", " + userType  + ", " + sportsObjectID + ", " + visitedObjectsID
 				+ ", " + points + ", " + customerType;
 	}
 	private String username;
@@ -150,7 +145,6 @@ public class User implements Serializable{
 	}
 	private Boolean active;
 	private UserType userType;
-	private String membershipID;
 	private String sportsObjectID;
 	private String visitedObjectsID;
 	private int points;
@@ -167,7 +161,6 @@ public class User implements Serializable{
 		private String birthDate;
 		private UserType userType;
 		private Boolean active;
-		private String membershipID;
 		private String sportsObjectID;
 		private String visitedObjectsID;
 		private int points;
@@ -192,11 +185,6 @@ public class User implements Serializable{
 		public void setActive(Boolean active) {
 			this.active = active;
 		}
-		public UserBuilder membership(String membershipID)
-		{
-			this.membershipID=membershipID;
-			return this;
-		}
 		public UserBuilder sportsObject(String sportsObjectID)
 		{
 			this.sportsObjectID=sportsObjectID;
@@ -207,7 +195,7 @@ public class User implements Serializable{
 			this.visitedObjectsID=visitedObjects;
 			return this;
 		}	
-		public UserBuilder sportsObject(int points)
+		public UserBuilder points(int points)
 		{
 			this.points=points;
 			return this;

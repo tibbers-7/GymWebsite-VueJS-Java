@@ -8,7 +8,7 @@ Vue.component("add-object", {
 		error: '',
 		newManager:false,
 		name:"",
-		mName,
+		mName:"",
 		last_name:"",
 		birthDate:"",
 		type:"",

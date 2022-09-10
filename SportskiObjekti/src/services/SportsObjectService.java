@@ -23,8 +23,6 @@ public class SportsObjectService {
 	
 	@Context
 	ServletContext context;
-	@Context
-	HttpServletRequest request;
 	
 	public SportsObjectService() {
 	}
@@ -38,6 +36,15 @@ public class SportsObjectService {
 			context.setAttribute("sportsObjectDAO", new SportsObjectDAO(contextPath));
 		}
 	}
+	@POST
+	@Path("/getByManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getByManager(User manager) {
+		SportsObjectDAO dao = (SportsObjectDAO)context.getAttribute("sportsObjectDAO");
+		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
+		return Response.status(200).entity(s).build();
+	}
 	@GET
 	@Path("/getAll")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -45,25 +52,6 @@ public class SportsObjectService {
 		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
 		return dao.getSportsObjectsCollection();
 	}
-	@GET
-	@Path("/getByManager")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByManager() {
-		SportsObjectDAO dao = (SportsObjectDAO)context.getAttribute("sportsObjectDAO");
-		User manager=(User) context.getAttribute("activeUser");
-		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
-		return Response.status(200).entity(s).build();
-	}
-	@POST
-	@Path("/setActiveManager")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response setActiveManager(User manager) {
-		context.setAttribute("activeUser", manager);
-		return Response.status(200).build();
-	}
-	
-	
-	
 	@POST
 	@Path("/getContent")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -74,8 +62,6 @@ public class SportsObjectService {
 	@Path("/setSelectedObject")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response setSelectedObject(SportsObject s) {
-//		SportsObjectDAO dao = (SportsObjectDAO)context.getAttribute("productDAO");
-//		SportsObject sp=dao.getSportsObject(s.getId());
 		context.setAttribute("selectedObject", s);
 		return Response.status(200).build();
 	}
@@ -126,10 +112,10 @@ public class SportsObjectService {
 	@Path("/addNew")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public SportsObject addNew(SportsObject object) {
+	public Response addNew(SportsObject object) {
 		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
 		dao.addSportsObject(object);
-		return object;
+		return Response.status(200).entity(object).build();
 	}
 	
 	

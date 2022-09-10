@@ -10,7 +10,8 @@ Vue.component("add-training", {
 		chosenObject:null,
 		chosenTrainer:null,
 		chosenTraining:null,
-		datetime:null
+		datetime:null,
+		cont:null
 		
 		}
 	},
@@ -57,6 +58,9 @@ Vue.component("add-training", {
                 </td>
             </tr>
             <tr>
+                <td class="credential_labels" align="center">Objekat</td>
+            </tr>
+            <tr>
                 <td align="center">
                     <select class="selectBox" v-model="chosenObject"  v-on:change="onChange($event)" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
@@ -64,17 +68,16 @@ Vue.component("add-training", {
 					 </select> 
                 </td>
             </tr>
-            <tr>
-                <td class="credential_labels" align="center">Objekat</td>
-            </tr>
+            
             
             <tr>
                 <td class="credential_labels" align="center">Tip</td>
             </tr>
             <tr>
                 <td align="center">
-                    <select class="selectBox" disabled v-model="chosenTraining" style="width:60%;">
+                    <select class="selectBox" v-model="chosenTraining" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
+					    <option v-for="content in contents" :value="content">{{content}}</option>
 					 </select>  
                 </td>
             </tr>
@@ -120,8 +123,8 @@ Vue.component("add-training", {
 		onChange:function(event){
 			if (chosenTrainer!=null && chosenObject!=null){
 			axios
-					.post('rest/trainings/postInfo',this.chosenObject,this.chosenTrainer)
-					.then(response => (router.push(`/atu`))); 
+					.post('rest/sportsobjects/getContent',this.chosenObject)
+					.then(response => this.cont=response.data); 
 		 }
 			
     	},
@@ -131,5 +134,10 @@ Vue.component("add-training", {
 					
 		}
 		
+	},
+	computed:{
+		contents(){
+			return this.cont;
+		}
 	}
 });

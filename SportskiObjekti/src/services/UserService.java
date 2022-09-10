@@ -15,7 +15,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
+import beans.Membership;
 import beans.User;
 import data.MembershipDAO;
 import data.UserDAO;
@@ -147,7 +147,51 @@ public class UserService {
 		if (userDAO.searchUser(userToRegister.getUsername()) != null) {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
-			userDAO.addUser(userToRegister);
+			userDAO.registerCustomer(userToRegister);
+			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
+		}
+	}
+	
+	@POST
+	@Path("/registerManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registerManager(User userToRegister) {
+
+		if (userToRegister.getUsername() == null || userToRegister.getPassword() == null
+				 || userToRegister.getUsername().equals("")
+				|| userToRegister.getPassword().equals("")) {
+			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
+		}
+		
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+
+		if (userDAO.searchUser(userToRegister.getUsername()) != null) {
+			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
+		} else {
+			userDAO.registerManager(userToRegister);
+			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
+		}
+	}
+	
+	@POST
+	@Path("/registerTrainer")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registerTrainer(User userToRegister) {
+
+		if (userToRegister.getUsername() == null || userToRegister.getPassword() == null
+				 || userToRegister.getUsername().equals("")
+				|| userToRegister.getPassword().equals("")) {
+			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
+		}
+		
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+
+		if (userDAO.searchUser(userToRegister.getUsername()) != null) {
+			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
+		} else {
+			userDAO.registerTrainer(userToRegister);
 			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
 		}
 	}
@@ -169,38 +213,48 @@ public class UserService {
 			return Response.status(200).entity("Uspe�no promenjen nalog!").build();
 	}
 	
+	@POST
+	@Path("/rememberMembership")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response rememberMembership(Membership mem) {
+		
+		context.setAttribute("currentMembership", mem);
+		return Response.status(200).build();
+	}
+	
+	@POST
+	@Path("/checkMembership")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response checkMembership(Membership ogMem) {
+
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		Membership mem=(Membership)context.getAttribute("currentMembership");
+		String isValid=userDAO.checkMembership((User)context.getAttribute("activeCustomer"),mem,ogMem);
+		return Response.status(200).entity(isValid).build();
+	}
+	
 
 	
 	@GET
 	@Path("/activeUser")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveUser() {
+	public User getActiveUser() {
 		
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("activeUser");
-		return Response.status(200).entity(user).build();
+		return user;
 		
 	}
 	
 	@GET
 	@Path("/getTrainers")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<User> getTrainers() {
 		UserDAO dao = (UserDAO) context.getAttribute("userDAO");
 		return dao.getTrainers();
 		
-	}
-	
-	@POST
-	@Path("/cancelMembership")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response cancelMembership(User customer) {
-		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
-		userDAO.cancelMembership(customer);
-		return Response.status(200).entity("Uspešno poništena članarina!").build();
-
 	}
 	
 	@PostConstruct
@@ -213,6 +267,7 @@ public class UserService {
 		}
 	
 	}
+	
 	
 	
 	

@@ -10,7 +10,7 @@ Vue.component("manager-object", {
 		}
 	},
 	 template: ` 
-    	<div style="style">
+    	<div class="bodyStyle">
     	
 		    	<div class="header_container">
 			        <div class="Img">

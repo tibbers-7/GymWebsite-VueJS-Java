@@ -87,6 +87,13 @@ public class Membership implements Serializable{
 		this.validUntilString = validUntilString;
 	}
 
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	int ID;
 	String name;
 	MembershipType membershipType;

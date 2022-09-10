@@ -27,6 +27,7 @@ Vue.component("admin-SP", {
 	        <tr>
 	            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
 	            <th align="left"  class="header_item"><button class="barButton" v-on:click="showUsers()"><p class="inactive">Korisnici</p></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" v-on:click="addUser()"><p class="active">Dodaj korisnika</p></button></th>
 	            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 	        </tr>
 	    </table>
@@ -121,10 +122,13 @@ Vue.component("admin-SP", {
 		},
 		
 		showUsers: function(){
-			router.push(`/au`);
+			router.push(`/ua`);
 		},
 		profile: function(){
 			router.push(`/pro`);
+		},
+		addUser:function(){
+			router.push(`/au`);
 		},
 		
 		

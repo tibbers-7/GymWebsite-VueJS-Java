@@ -64,6 +64,8 @@ MembershipDAO membershipDAO;
 	public Response getMembership(User customer) {
 		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
 		Membership mem=membershipDAO.getByUser(customer.getUsername());
+		Membership memOriginal=membershipDAO.getOriginal(mem);
+		context.setAttribute("ogMem", memOriginal);
 		return Response.status(200).entity(mem).build();
 
 	}
@@ -74,7 +76,35 @@ MembershipDAO membershipDAO;
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response cancelMembership(User customer) {
 		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
-		membershipDAO.cancelMembership(customer.getUsername());
+		membershipDAO.cancelMembership(customer);
+		return Response.status(200).build();
+
+	}
+	
+	@GET
+	@Path("/getOriginal")	
+	@Produces(MediaType.APPLICATION_JSON)
+	public Membership getOriginal() {
+	    return (Membership)context.getAttribute("ogMem");
+	}
+	
+	@POST
+	@Path("/postUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response postUser(User customer) {
+		context.setAttribute("currentUser", customer);
+		return Response.status(200).build();
+	}
+	
+	@POST
+	@Path("/addMembership")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addMembership(Membership mem) {
+		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
+		User customer=(User)context.getAttribute("currentUser");
+		membershipDAO.addMembership(customer,mem);
 		return Response.status(200).build();
 
 	}
