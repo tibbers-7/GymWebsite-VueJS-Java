@@ -3,7 +3,6 @@ Vue.component("select-membership", {
 	data: function() {
 		return{
 		memberships: null,
-		mem: null,
 		customer: null,
 		notSelected:true,
 		title: "Odabir Članarine",
@@ -33,7 +32,7 @@ Vue.component("select-membership", {
 		    </table>
     	</div>
 
-	<div v-if="notSelected" class="mems_grid">
+	<div class="mems_grid">
 	    <div class="memTable_grid">
 	    <table class="table">
 	        <tr class="table-header" >
@@ -42,7 +41,7 @@ Vue.component("select-membership", {
 	            <th class="header__item">Cena</th>
 	        </tr>
 	        <div class="table-content">  
-	        <tr class="table-row"  v-for="(m, index) in memberships">
+	        <tr class="table-row"  v-for="(m, index) in memberships" v-on:click="selectMem(m)">
 	            <td class="table-data">{{m.membershipType}}</td>
 	             <td class="table-data">{{m.price}}</td>
 	             <td class="table-data">{{m.allowedNumber}}</td>
@@ -56,15 +55,8 @@ Vue.component("select-membership", {
 	    </div>
 	</div>
 
-
-	<div v-else="notSelected" class="selectedMem_grid" >
-    
-    <div class="chooseMem_Btn">
-        <button class="button2" v-on:click="chooseMembership()">Odaberi</button>
-    </div>
 </div>
 
-    </div>
     	`,
     mounted() {
 		axios 
@@ -77,25 +69,16 @@ Vue.component("select-membership", {
 	},
     	
     methods: {
-		showMembership : function(membership) {
-		 this.mem = membership;
-		 this.selected = true;
+		
+		showMembership:function(mem){
+			axios
+	         .post('rest/memberships/setSelected',mem)
+	         .then(response => (toast(response.data)));
+	        router.push(`/shm`);
+			
 		},
 		
-		chooseMembership : function() {
-			axios
-	         .post('rest/memberships/postUser',this.customer)
-	         .then(response => (toast(response.data)));
-			
-			axios
-	         .post('rest/memberships/addMembership',this.mem)
-	         .then(response => (toast(response.data)));
-			
-		},
-		goBack:function(){
-			router.push(`/cm`);
-		}
-	
+		
 	}	
 	
 });

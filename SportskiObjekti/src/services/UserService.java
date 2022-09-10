@@ -118,7 +118,7 @@ public class UserService {
 			}
 		}
 
-		if (session.getAttribute("user") != null) {
+		if (session.getAttribute("activeUser") != null) {
 			return Response.status(400).entity("Vec ste ulogovani!").build();
 		} else {
 			return Response.status(400).entity("Logovanje nije uspesno!").build();

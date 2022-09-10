@@ -17,6 +17,7 @@ public class Membership implements Serializable{
 			String customerID, Status status, int allowedNumber) {
 		super();
 		ID = iD;
+		this.name=name;
 		this.membershipType = membershipType;
 		this.payDate = payDate;
 		this.validUntil = validUntil;
@@ -113,7 +114,7 @@ public class Membership implements Serializable{
 			String allowedNumber) {
 		this.status=Status.INACTIVE;
 		if(status=="A") this.status=Status.ACTIVE;
-		
+		this.name=name;
 		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 		this.payDate=LocalDate.parse(createdDate,formatter);
 		this.payDateString = payDate.format(formatter);
@@ -142,6 +143,7 @@ public class Membership implements Serializable{
 	}
 	public Membership(String iD2,String name, String type, String cena, String allowedUntil) {
 		this.ID=Integer.parseInt(iD2);
+		this.name=name;
 		switch(type) {
 			case "Y": this.membershipType=MembershipType.YEARLY;break;
 			case "M": this.membershipType=MembershipType.MONTHLY;break;
