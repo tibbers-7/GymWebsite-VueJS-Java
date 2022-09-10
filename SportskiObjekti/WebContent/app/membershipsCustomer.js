@@ -118,7 +118,6 @@ Vue.component("memberships-customer", {
 			this.customer = response.data;
 			});
 						
-		if(this.membership===null) show=false;
 	},
 	
 	methods: {
@@ -137,7 +136,11 @@ Vue.component("memberships-customer", {
 			axios
 			.post('rest/memberships/cancelMembership', this.customer)
 			.then(response => toast(response.data)); 
-			this.membership=null;
+			this.membership.membershipType="";
+			this.membership.payDateString="";
+			this.membership.validUntilString="";
+			this.membership.price="";
+			this.membership.allowedNumber="";
 		},
 		newMem: function(){
 			router.push(`/sm`);

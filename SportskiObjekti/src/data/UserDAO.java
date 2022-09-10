@@ -196,7 +196,7 @@ public class UserDAO {
 		List<User> ret=new ArrayList<>();
 		for(User u:getUserCollection()) {
 			if(u.getUserType()==UserType.MANAGER) {
-				//if(u.getSportsObjectID()==null)
+				if(u.getSportsObjectID()==null | u.getSportsObjectID().equals("0"))
 					ret.add(u);
 			}
 		}

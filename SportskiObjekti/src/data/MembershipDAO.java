@@ -81,7 +81,7 @@ public class MembershipDAO {
 	private void saveMemberships() {
 		try {
 			String str="";
-		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/memberships.csv", true));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/memberships.csv"));
 		    writer.write("");
 		    for (Membership m : getMembershipCollection()) {
 				str=m.getMembershipString();
@@ -112,7 +112,7 @@ public class MembershipDAO {
 			File file = new File(memberFilepath + "/memberships.csv");
 			System.out.println(file.getCanonicalPath());
 			in = new BufferedReader(new FileReader(file));
-			String ID="",name="", payDate = "", validUntil = "", cena = "", customerID="", line="",status="",allowedUntil="",type="";
+			String ID="",name="", payDate = "",object="", validUntil = "", cena = "", customerID="", line="",status="",allowedUntil="",type="";
 			StringTokenizer st;
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
@@ -123,6 +123,7 @@ public class MembershipDAO {
 					ID = st.nextToken().trim();
 					name=st.nextToken().trim();
 					type=st.nextToken().trim();
+					object=st.nextToken().trim();
 					payDate = st.nextToken().trim();
 					validUntil = st.nextToken().trim();
 					cena = st.nextToken().trim();
@@ -132,9 +133,9 @@ public class MembershipDAO {
 				}
 				Membership member=null;
 				if(customerID.equals("/")) {
-					member=new Membership(ID,name,type,cena,allowedUntil);
+					member=new Membership(ID,name,type,object,cena,allowedUntil);
 				}
-				else member=new Membership(ID,name,type,payDate,validUntil,cena,customerID,status,allowedUntil);
+				else member=new Membership(ID,name,type,object,payDate,validUntil,cena,customerID,status,allowedUntil);
 				members.put(member.getID(), member);
 			}
 		} catch (Exception e) {

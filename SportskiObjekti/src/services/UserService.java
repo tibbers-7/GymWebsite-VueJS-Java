@@ -118,7 +118,7 @@ public class UserService {
 			}
 		}
 
-		if (session.getAttribute("user") != null) {
+		if (session.getAttribute("activeUser") != null) {
 			return Response.status(400).entity("Vec ste ulogovani!").build();
 		} else {
 			return Response.status(400).entity("Logovanje nije uspesno!").build();
@@ -170,7 +170,7 @@ public class UserService {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
 			userDAO.registerManager(userToRegister);
-			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
+			return Response.status(200).entity(userToRegister).build();
 		}
 	}
 	

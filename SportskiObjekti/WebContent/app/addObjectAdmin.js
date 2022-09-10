@@ -4,15 +4,19 @@ Vue.component("add-object", {
 		title: "Dodavanje objekta",
 		object:null,
 		admin:null,
-		manager:null,
+		managers:{},
 		error: '',
 		newManager:false,
+		username:"",
+		password:"",
 		name:"",
 		mName:"",
 		last_name:"",
 		birthDate:"",
-		type:"",
-		logo:""
+		logo:"",
+		selectedOld:null,
+		addedManager:null,
+		types:{}
 		}
 	},
 	 template: ` 
@@ -55,16 +59,21 @@ Vue.component("add-object", {
 	                </div>
 	                <div class="values">
 	                    <ul style="list-style:none">
-	                        <li><input type="text" v-model="type"/></li>
+	                        <li><select class="selectBox"> 
+					                <option disabled value="">Odaberite</option>
+									<option v-for="type in types" :value="type">{{type}}</option>
+					            </select>  
+					        </li>
 	                        <li ><input type="image" v-model="logo" /></li>
 	                        <li>
+	                        	<input type="text" disabled v-model="chosenManager"/>
 	                            <p style="font-size: 15px;">Postojeći</label>
-	                            <input type="radio" style="margin-top: -8% ;" id="e" name="managerRG" value="Existing" >
+	                            <input type="radio" style="margin-top: -8% ;" id="e" name="managerRG" value="Existing" v-on:click="oldManagerBttn()">
 	                            
 	                        </li>
 	                        <li>
 	                            <p style="font-size: 15px;">Novi</label>
-	                            <input type="radio" style="margin-top: -8% ;"  id="n" name="managerRG" value="New" v-model="newManager" v-on:click="plsDoSmth()">
+	                            <input type="radio" style="margin-top: -8% ;"  id="n" name="managerRG" value="New" v-on:click="newManagerBttn()">
 	                            
 	                            
 	                        </li>
@@ -74,14 +83,14 @@ Vue.component("add-object", {
 	        </div>
 
 
-         <div class="oldManager_grid" v-show="!newManager">
-            <select class="selectBox" style="margin-top:-65%;margin-left:10%;width:40%"> 
+         <div class="oldManager_grid" v-show="!newManager" style="margin-top:3%;">
+            <select class="selectBox" style="margin-top:-65%;margin-left:-20%;width:300px" @change="selectManager($event)"> 
                 <option disabled value="">Odaberite</option>
 				<option v-for="manager in managers" :value="manager.fullName">{{manager.fullName}}</option>
             </select>  
          </div>
 
-        <div class="manager_grid" name="addNewManager" v-show="newManager===true">
+        <div class="manager_grid" name="addNewManager" v-show="newManager">
             <table class="register_container">
                 <tr>
                     <td class="credential_labels" align="center">Korisničko ime</td>
@@ -89,6 +98,12 @@ Vue.component("add-object", {
                 <tr>
                     <td align="center"><input class="credential_inputs"  type="text" v-model = "username" ></td>
                 </tr>
+                <tr>
+                <td class="credential_labels" align="center">Šifra</td>
+            </tr>
+            <tr>
+                <td align="center"><input class="credential_inputs"  type="password" name="password" v-model = "password"></td>
+            </tr>
                 
                 <tr>
                     <td class="credential_labels" align="center">Ime</td>
@@ -125,7 +140,7 @@ Vue.component("add-object", {
             </table>
         </div>
         
-        <div class="addObjBtn_grid">
+        <div class="addObjBtn_grid" style="margin-top:5%;">
             <button class="button2" style="margin-top:-30%;margin-left:48%; width:35%;" v-on:click="addObj()">Dodaj objekat</button>
         </div>
     </div>  
@@ -139,6 +154,10 @@ Vue.component("add-object", {
 		axios
 		     .get('rest/user/getFreeManagers')
 		     .then(response => this.managers = response.data);
+		     
+		axios
+		     .get('rest/sportsobjects/getTypes')
+		     .then(response => this.types = response.data);
 			
 				},
 	methods: {
@@ -158,21 +177,42 @@ Vue.component("add-object", {
 			
 			
 		},
+		addManager: function(){
+			axios.post('rest/user/registerManager', {
+				 username: this.username,
+			 	 password: this.password,
+			 	 name: this.name,
+			 	 last_name: this.last_name,
+			 	 gender: this.gender,
+			 	 birthDate: this.birthDate,}).then(response => {
+						if(response.status===400) toast(response.data);
+						else {
+							this.addedManager=response.data;
+							this.chosenManager=this.addedManager;
+						}
+					});
+			
+		},
+		
 		goBack: function(){
 			router.push(`/asp`);
 			
 		},
 		
-		addManager: function(){
-			
-			
+		newManagerBttn: function(){
+			this.newManager=true;
+		},
+		oldManagerBttn: function(){
+			this.newManager=false;
 		},
 		
-		plsDoSmth:function(){
-			this.newManager=true;
-			toast(this.newManager);
-		}
+		selectManager(event) {
+	      this.selectedOld=event.target.value;
+	      this.chosenManager=this.selectedOld;
+	     }
+			
 		
 		
-	}
+	},
+	
 });
