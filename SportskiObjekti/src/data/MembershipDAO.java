@@ -168,7 +168,7 @@ public class MembershipDAO {
 	public Membership getOriginal(Membership mem) {
 		for(Membership m:getMembershipCollection()) {
 			if(m.getCustomerID()==null) {
-				if(m.getName().equals(mem)) return m;
+				if(m.getName().equals(mem.getName())) return m;
 			}
 		}
 		return null;

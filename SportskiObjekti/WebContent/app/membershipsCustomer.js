@@ -85,30 +85,32 @@ Vue.component("memberships-customer", {
 			.then(response => {
 						this.membership = response.data;
 						axios
-				         .get('rest/memberships/getOriginal')  //dobavi original da bi mogla provera
-				         .then(response => { 
-							this.ogMem=response.data;
-						});
-						
-						axios
-							.post('rest/user/rememberMembership',this.membership) //sacuvaj korisnikovu clanarinu u kontekst
-							.then(response => {});
-						
-						
-						axios
-							.post('rest/user/checkMembership',this.ogMem) //posalji original na proveru jel validna
-							.then(response => {
-								this.valid=Boolean.parse(response.data);
-								
-								if(!this.valid){
-									axios
-										.post('rest/memberships/cancelMembership', this.customer) //ako nije obrisi je
-										.then(response => {toast(response.status) }
-										)};
-									this.membership=null;
-							});
-				}); 
+							.post('rest/user/rememberMembership',response.data) //sacuvaj korisnikovu clanarinu u kontekst
+							.then(response => {toast(response)});	
+						}); 
 			});
+			
+			axios
+	         .get('rest/memberships/getOriginal')  //dobavi original da bi mogla provera
+	         .then(response => { 
+				this.ogMem=response.data;
+				axios
+				.post('rest/user/checkMembership',response.data) //posalji original na proveru jel validna
+				.then(response => {
+					this.valid=Boolean.parse(response.data);
+					
+					if(!this.valid){
+						axios
+							.post('rest/memberships/cancelMembership', this.customer) //ako nije obrisi je
+							.then(response => {toast(response.status) }
+							)};
+						this.membership=null;
+				});
+			});
+			
+			
+			
+			
 			
 		axios
          .get('rest/user/activeUser')  //dobavi korisnika opet za refresh poena

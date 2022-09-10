@@ -26,8 +26,9 @@ Vue.component("trainings-trainer", {
     <div class="barBase">
 	    <table style="width: 20%;">
 	        <tr>
-	             <th align="left"  class="header_item"><button class="barButton" ><p class="inactive">Naši Objekti</p></button></th>
+	             <th align="left"  class="header_item"><button class="barButton" v-on:click="goHome()" ><p class="inactive">Naši Objekti</p></button></th>
 		            <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="active" >Moji Treninzi</p></button></th>
+		            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 	        </tr>
 	    </table>
 	</div>
@@ -100,7 +101,13 @@ Vue.component("trainings-trainer", {
 				.then(response => this.trainings = response.data); 
 			
 			} else toast("Niste odabrali trening!");
-		}
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
+		goHome: function(){
+			router.push(`/tsp`);
+		},
 	}
 		
 		

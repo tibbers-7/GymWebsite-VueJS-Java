@@ -5,7 +5,7 @@ Vue.component("select-membership", {
 		memberships: null,
 		mem: null,
 		customer: null,
-		selected:false,
+		notSelected:true,
 		title: "Odabir Članarine",
 		text: "",
 		error: '',
@@ -33,7 +33,7 @@ Vue.component("select-membership", {
 		    </table>
     	</div>
 
-	<div v-if="!selected" class="mems_grid">
+	<div v-if="notSelected" class="mems_grid">
 	    <div class="memTable_grid">
 	    <table class="table">
 	        <tr class="table-header" >
@@ -43,9 +43,9 @@ Vue.component("select-membership", {
 	        </tr>
 	        <div class="table-content">  
 	        <tr class="table-row"  v-for="(m, index) in memberships">
-	            <td class="table-data">{{m.type}}</td>
+	            <td class="table-data">{{m.membershipType}}</td>
 	             <td class="table-data">{{m.price}}</td>
-	             <td class="table-data">{{m.termNumber}}</td>
+	             <td class="table-data">{{m.allowedNumber}}</td>
 	        </tr>
 	        </div>  
 	    </table>
@@ -57,32 +57,10 @@ Vue.component("select-membership", {
 	</div>
 
 
-	<div v-if="selected" class="selectedMem_grid" >
-    <div class="back_Btn_grid">
-        <button v-on:click="return" style="background: transparent; border: none;"><img src="back.png" class="back_img0"></img></button>
-    </div>
-    <div class="selectedMem_info">
-        <div class="objectView_container" style="width:60%;" >
-            
-            <div class="grid_name" style="width:100%">Članarina</div>
-            <div class="headers">
-                <ul style="list-style:none">
-                    <li>Tip:</li>
-                    <li>Cena:</li>
-                    <li>Broj termina:</li>
-                </ul>
-            </div>
-            <div class="values">
-                <ul style="list-style:none">
-                    <li>{{mem.type}}</li>
-                    <li>{{mem.price}}</li>
-                    <li>{{mem.termNumber}}</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+	<div v-else="notSelected" class="selectedMem_grid" >
+    
     <div class="chooseMem_Btn">
-        <button class="mem_button" v-on:click="chooseMembership()">Odaberi</button>
+        <button class="button2" v-on:click="chooseMembership()">Odaberi</button>
     </div>
 </div>
 
@@ -90,7 +68,7 @@ Vue.component("select-membership", {
     	`,
     mounted() {
 		axios 
-		.get('rest/memberships/getAll')
+		.get('rest/memberships/getAvailable')
 		.then(response => (this.memberships = response.data));
 		
 		axios
@@ -114,6 +92,9 @@ Vue.component("select-membership", {
 	         .then(response => (toast(response.data)));
 			
 		},
+		goBack:function(){
+			router.push(`/cm`);
+		}
 	
 	}	
 	
