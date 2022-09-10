@@ -104,7 +104,7 @@ Vue.component("start-page", {
                 <th class="header__item" >Radno vreme</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row" v-for="o in filteredObjects" v-on:click="(o)" >
+            <tr class="table-row" v-for="o in sortedObjects" v-on:click="(o)" >
                  <td class="table-data">{{o.name}}</td>
                  <td class="table-data">{{o.type}}</td>
                  <td class="table-data">{{o.services}}</td>
@@ -207,7 +207,7 @@ Vue.component("start-page", {
     filteredObjects(){
       return this.searchObjects.filter((el) => el.isOpen === this.showingOpen&& el.type.includes(this.showingType));
     },
-    sortedObjects() {
+    sortedObjects:function() {
       return this.filteredObjects.sort((a,b) => {
         let modifier = 1;
         if(this.currentSortDir === 'desc') modifier = -1;
