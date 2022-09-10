@@ -60,7 +60,7 @@ public class SportsObjectDAO {
 			for(int i:sportsObjects.keySet()) {
 				if(i>largest) largest=i;
 			} 
-			s.setId(Integer.toString(largest++));
+			s.setId(Integer.toString(++largest));
 		}
 
 		private void loadSportsObjects() {

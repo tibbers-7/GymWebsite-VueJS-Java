@@ -84,10 +84,10 @@ public class SportsObject  implements Serializable{
 	public String toString() {
 		String logoStr=" ",openHrsStr=" ";
 		if (isOpen==null) isOpen=false;
-		if (logoPath!=null) logoStr=logoPath;
+		if (logoPath!=null) logoStr=logoPath.substring(7);
 		if (openHours!=null) openHrsStr=openHours;
-		return id + ", "+ name + ", " + type + ", " + servicesString + ", " + isOpen + ", " + location + ", " + avgScore + ", "
-				+ logoStr + ", " + openHrsStr;
+		return id + ", "+ name + ", " + type + ", " + getServicesString() + ", " + isOpen + ", " + location + ", " + avgScore + ","
+				+ openHrsStr+","+logoStr;
 	}
 	
 	private String id;
@@ -102,12 +102,13 @@ public class SportsObject  implements Serializable{
 		super();
 	}
 	public String getServicesString() {
-		servicesString="";
+		
 		if(services==null) servicesString=" ";
 		else {
-		for(String s:services) {
-			servicesString=servicesString+s+"-";
-		}
+			servicesString="";
+			for(String s:services) {
+				servicesString=servicesString+s+"-";
+			}
 		}
 		return servicesString;
 	}
