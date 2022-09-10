@@ -13,19 +13,6 @@ public class Membership implements Serializable{
 	 */
 	private static final long serialVersionUID = -9199905222200022220L;
 	
-	public Membership(int iD,String name, MembershipType membershipType, LocalDate payDate, LocalDate validUntil, int price,
-			String customerID, Status status, int allowedNumber) {
-		super();
-		ID = iD;
-		this.name=name;
-		this.membershipType = membershipType;
-		this.payDate = payDate;
-		this.validUntil = validUntil;
-		this.price = price;
-		this.customerID = customerID;
-		this.status = status;
-		this.allowedNumber = allowedNumber;
-	}
 	public int getID() {
 		return ID;
 	}
@@ -37,12 +24,6 @@ public class Membership implements Serializable{
 	}
 	public void setMembershipType(MembershipType membershipType) {
 		this.membershipType = membershipType;
-	}
-	public LocalDate getPayDate() {
-		return payDate;
-	}
-	public void setPayDate(LocalDate payDate) {
-		this.payDate = payDate;
 	}
 	public LocalDate getValidUntil() {
 		return validUntil;
@@ -95,22 +76,57 @@ public class Membership implements Serializable{
 		this.name = name;
 	}
 
-	int ID;
-	String name;
-	MembershipType membershipType;
-	LocalDate payDate;
-	String payDateString;
-	LocalDate validUntil;
-	String validUntilString;
-	int price;
-	String customerID;
-	Status status;
-	int allowedNumber;
+	public LocalDate getPayDate() {
+		return payDate;
+	}
+	public void setPayDate(LocalDate payDate) {
+		this.payDate = payDate;
+	}
+
+	private int ID;
+	private String name;
+	public Membership() {
+		super();
+	}
+
+	private MembershipType membershipType;
+	private LocalDate payDate;
+	private String payDateString;
+	private LocalDate validUntil;
+	private String validUntilString;
+	private int price;
+	private String customerID;
+	private Status status;
+	private int allowedNumber;
+	private String sportsObject;
 	
 	
 	//yearly & monthly membership -> validUntil=null
 	
-	public Membership(String id,String name,String type, String createdDate,String validUntil, String price, String customerID, String status,
+	public String getSportsObject() {
+		return sportsObject;
+	}
+	public void setSportsObject(String sportsObject) {
+		this.sportsObject = sportsObject;
+	}
+	public Membership(int iD, String name, MembershipType membershipType, LocalDate payDate, String payDateString,
+			LocalDate validUntil, String validUntilString, int price, String customerID, Status status,
+			int allowedNumber, String sportsObject) {
+		super();
+		ID = iD;
+		this.name = name;
+		this.membershipType = membershipType;
+		this.payDate = payDate;
+		this.payDateString = payDateString;
+		this.validUntil = validUntil;
+		this.validUntilString = validUntilString;
+		this.price = price;
+		this.customerID = customerID;
+		this.status = status;
+		this.allowedNumber = allowedNumber;
+		this.sportsObject = sportsObject;
+	}
+	public Membership(String id,String name,String type, String sportsObject, String createdDate,String validUntil, String price, String customerID, String status,
 			String allowedNumber) {
 		this.status=Status.INACTIVE;
 		if(status=="A") this.status=Status.ACTIVE;
@@ -137,11 +153,12 @@ public class Membership implements Serializable{
 		this.customerID=customerID;
 		this.price=Integer.parseInt(price);
 		this.allowedNumber=Integer.parseInt(allowedNumber);
+		this.sportsObject=sportsObject;
 				
 		
 		
 	}
-	public Membership(String iD2,String name, String type, String cena, String allowedUntil) {
+	public Membership(String iD2,String name, String type,String sportsObject, String cena, String allowedUntil) {
 		this.ID=Integer.parseInt(iD2);
 		this.name=name;
 		switch(type) {
@@ -151,10 +168,17 @@ public class Membership implements Serializable{
 		this.price=Integer.parseInt(cena);
 		this.status=Status.INACTIVE;
 		this.allowedNumber=Integer.parseInt(allowedUntil);
+		this.customerID="/";this.status=Status.INACTIVE;
+		this.sportsObject=sportsObject;
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+		this.payDate=LocalDate.parse("01.01.0001.",formatter);
+		this.validUntil=LocalDate.parse("01.01.0001.",formatter);
+		this.payDateString=this.payDate.format(formatter);
+		this.validUntilString=this.validUntil.format(formatter);
 		
 	}
 	public String getMembershipString() {
-		String s= ID+","+name+","+membershipType+","+payDate+","+validUntil+","+Integer.toString(price)+","+customerID+","+status.toString()+","+Integer.toString(allowedNumber);
+		String s= ID+","+name+","+membershipType+","+sportsObject+","+payDate+","+validUntil+","+Integer.toString(price)+","+customerID+","+status.toString()+","+Integer.toString(allowedNumber);
 		return s;
 	}
 	

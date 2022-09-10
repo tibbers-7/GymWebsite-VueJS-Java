@@ -37,11 +37,11 @@ Vue.component("select-membership", {
 	    <table class="table">
 	        <tr class="table-header" >
 	            <th class="header__item">Tip</th>
-	            <th class="header__item">Broj termina</th>
 	            <th class="header__item">Cena</th>
+	            <th class="header__item">Broj termina</th>
 	        </tr>
 	        <div class="table-content">  
-	        <tr class="table-row"  v-for="(m, index) in memberships" v-on:click="selectMem(m)">
+	        <tr class="table-row"  v-for="(m, index) in memberships" v-on:click="showMembership(m)">
 	            <td class="table-data">{{m.membershipType}}</td>
 	             <td class="table-data">{{m.price}}</td>
 	             <td class="table-data">{{m.allowedNumber}}</td>
@@ -50,9 +50,6 @@ Vue.component("select-membership", {
 	    </table>
 	    </div>  
 	
-	    <div class="selectMem_Btn">
-	    <button class="mem_button" v-on:click="showMembership(m)">Odaberi</button>
-	    </div>
 	</div>
 
 </div>
