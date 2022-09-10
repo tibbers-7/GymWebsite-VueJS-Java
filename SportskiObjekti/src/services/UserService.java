@@ -170,7 +170,7 @@ public class UserService {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
 			userDAO.registerManager(userToRegister);
-			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
+			return Response.status(200).entity(userToRegister).build();
 		}
 	}
 	
