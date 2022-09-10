@@ -81,7 +81,7 @@ public class MembershipDAO {
 	private void saveMemberships() {
 		try {
 			String str="";
-		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/memberships.csv", true));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(memberFilepath + "/memberships.csv"));
 		    writer.write("");
 		    for (Membership m : getMembershipCollection()) {
 				str=m.getMembershipString();
