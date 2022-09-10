@@ -27,6 +27,7 @@ Vue.component("memberships-customer", {
 		            <th align="left"  class="header_item"><button class="barButton"  v-on:click="homePage()"><p class="inactive">Naši Objekti</p></button></th>
 		            <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="inactive">Moji Treninzi</p></button></th>
 		            <th align="left" class="header_item"><button class="barButton"><p class="active">Moje članarine</p></button></th>
+		            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 		        </tr>
 		    </table>
     	</div>
@@ -144,7 +145,10 @@ Vue.component("memberships-customer", {
 		},
 		newMem: function(){
 			router.push(`/sm`);
-		}
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
 	}
 		
 		

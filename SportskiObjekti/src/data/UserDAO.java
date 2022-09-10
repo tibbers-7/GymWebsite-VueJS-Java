@@ -232,4 +232,8 @@ public class UserDAO {
 		editUser(manager);
 	}
 
+	public String getUserType(User user) {
+		return user.getUserType().toString();
+	}
+
 }

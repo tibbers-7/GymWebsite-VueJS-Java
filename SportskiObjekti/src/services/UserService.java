@@ -249,6 +249,17 @@ public class UserService {
 		return user;
 		
 	}
+	@GET
+	@Path("/getUserType")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getUserType() {
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		HttpSession session = request.getSession();
+		User user=(User) session.getAttribute("activeUser");
+		if (user==null) return "";
+		return userDAO.getUserType(user);
+		
+	}
 	
 	@GET
 	@Path("/getTrainers")
@@ -280,6 +291,7 @@ public class UserService {
 		dao.assignManager(manager,s);
 		return Response.status(200).build();
 	}
+	
 	
 	
 	

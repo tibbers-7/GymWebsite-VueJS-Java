@@ -28,6 +28,7 @@ Vue.component("trainings-customer", {
 		            <th align="left"  class="header_item"><button class="barButton"  v-on:click="homePage()"><p class="inactive">Naši Objekti</p></button></th>
 			        <th align="left"  class="header_item"><button class="barButton"><p class="active">Moji Treninzi</p></button></th>
 			        <th align="left" class="header_item"><button class="barButton" v-on:click="memberships()"><p class="inactive">Moje članarine</p></button></th>
+			        <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 		        </tr>
 		    </table>
 		</div>
@@ -78,7 +79,10 @@ Vue.component("trainings-customer", {
 		},
 		addTraining: function(){
 			router.push(`/at`);
-		}
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
 	}
 		
 		

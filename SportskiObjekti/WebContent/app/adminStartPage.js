@@ -27,7 +27,7 @@ Vue.component("admin-SP", {
 	        <tr>
 	            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
 	            <th align="left"  class="header_item"><button class="barButton" v-on:click="showUsers()"><p class="inactive">Korisnici</p></button></th>
-	            <th align="left"  class="header_item"><button class="barButton" v-on:click="addUser()"><p class="active">Dodaj korisnika</p></button></th>
+	            <th align="left"  class="header_item"><button class="barButton" v-on:click="addUser()"><p class="inactive">Dodaj korisnika</p></button></th>
 	            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 	        </tr>
 	    </table>
@@ -35,7 +35,7 @@ Vue.component("admin-SP", {
     
     
 	<div>
-		<button class="button2" v-on:click="addObject()">Dodaj objekat</button>
+		<button class="button2" v-on:click="addObject()" style="margin-top:2%;margin-left:10%;">Dodaj objekat</button>
 	</div>
 		
         
