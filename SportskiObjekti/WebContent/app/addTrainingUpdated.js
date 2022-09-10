@@ -49,7 +49,7 @@ Vue.component("add-trainingUpdated", {
             </tr>
             <tr>
                 <td align="center">
-                    <select class="selectBox" v-model="chosenObject"  v-on:change="onChange()" style="width:60%;">
+                    <select class="selectBox" v-model="chosenObject"  v-on:click="onChange()" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
 					    <option v-for="object in objects" :value="object.name">{{object.name}}</option>
 					 </select> 

@@ -62,9 +62,9 @@ Vue.component("add-training", {
             </tr>
             <tr>
                 <td align="center">
-                    <select class="selectBox" v-model="chosenObject"  v-on:change="onChange()" style="width:60%;">
+                    <select class="selectBox" v-model="chosenObject"  style="width:60%;">
 					    <option disabled value="">Odaberite</option>
-					    <option v-for="object in objects" :value="object.name">{{object.name}}</option>
+					    <option v-for="object in objects" :value="object.name" v-on:click="onChange(object)">{{object.name}}</option>
 					 </select> 
                 </td>
             </tr>
@@ -120,24 +120,24 @@ Vue.component("add-training", {
 			router.push(`/pro`);
 		},
 		
-		onChange:function(){
+		onChange:function(chosenObject){
 			axios
-					.post('rest/trainings/getByObject',{
-					id: this.chosenObject.id
-				  })
+					.post('rest/trainings/getByObject',chosenObject)
 					.then(response => this.cont=response.data); 
 			
     	},
     	
     	addTraining: function(){
-				toast("Niste odabrali sve potrebne podatke!");
+				axios
+					.post('rest/trainings/addTraining',
+							{ "user": this.customer.username,
+							  "sObject": this.chosenObject.id,
+							  "trainer":this.chosenTrainer.username,
+							  "training": this.chosenTraining
+							})
+					.then(response => (toast(response.data))); 
 					
 		}
 		
-	},
-	computed:{
-		contents(){
-			return this.cont;
-		}
 	}
 });

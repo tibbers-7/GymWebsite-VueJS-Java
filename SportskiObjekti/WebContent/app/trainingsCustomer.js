@@ -41,7 +41,7 @@ Vue.component("trainings-customer", {
 		        <tr class="table-header" >
 		            <th class="header__item">Naziv</th>
 		            <th class="header__item">Objekat</th>
-		            <th class="header_item">Datum treniranja</th>
+		            <th class="header__item">Datum treniranja</th>
 		        </tr>
 		        <div class="table-content">  
 		        <tr class="table-row"  v-for="(t, index) in trainings">
