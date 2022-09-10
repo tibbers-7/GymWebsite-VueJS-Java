@@ -74,7 +74,6 @@ public class UserDAO {
 	}
 	
 	public void addUser(User u) {
-		if(u.getCustomerType()==null) u.setUserType(UserType.CUSTOMER);
 		users.put(u.getUsername(), u);
 		saveUser(u);
 	}

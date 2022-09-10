@@ -147,7 +147,51 @@ public class UserService {
 		if (userDAO.searchUser(userToRegister.getUsername()) != null) {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
-			userDAO.addUser(userToRegister);
+			userDAO.registerCustomer(userToRegister);
+			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
+		}
+	}
+	
+	@POST
+	@Path("/registerManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registerManager(User userToRegister) {
+
+		if (userToRegister.getUsername() == null || userToRegister.getPassword() == null
+				 || userToRegister.getUsername().equals("")
+				|| userToRegister.getPassword().equals("")) {
+			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
+		}
+		
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+
+		if (userDAO.searchUser(userToRegister.getUsername()) != null) {
+			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
+		} else {
+			userDAO.registerManager(userToRegister);
+			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
+		}
+	}
+	
+	@POST
+	@Path("/registerTrainer")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registerTrainer(User userToRegister) {
+
+		if (userToRegister.getUsername() == null || userToRegister.getPassword() == null
+				 || userToRegister.getUsername().equals("")
+				|| userToRegister.getPassword().equals("")) {
+			return Response.status(400).entity("Username, password i email su obavezna polja.").build();
+		}
+		
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+
+		if (userDAO.searchUser(userToRegister.getUsername()) != null) {
+			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
+		} else {
+			userDAO.registerTrainer(userToRegister);
 			return Response.status(200).entity("Uspe�no kreiran nalog!").build();
 		}
 	}

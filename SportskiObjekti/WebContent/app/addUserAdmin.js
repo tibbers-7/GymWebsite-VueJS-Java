@@ -137,8 +137,8 @@ Vue.component("add-user", {
 			this.type="TRAINER";
 		},
 		createUser: function () {
-			axios.post('rest/user/register', {
-				userType:this.type,
+			if(this.type==="MANAGER"){
+				axios.post('rest/user/registerManager', {
 				 username: this.username,
 			 	 password: this.password,
 			 	 name: this.name,
@@ -147,6 +147,20 @@ Vue.component("add-user", {
 			 	 birthDate: this.birthDate,}).then(response => {
 						toast(response.data);
 					});
+			} else if(this.type==="TRAINER"){
+				axios.post('rest/user/registerTrainer', {
+				 username: this.username,
+			 	 password: this.password,
+			 	 name: this.name,
+			 	 last_name: this.last_name,
+			 	 gender: this.gender,
+			 	 birthDate: this.birthDate,}).then(response => {
+						toast(response.data);
+					});
+			} else {
+				toast("Niste uneli sve potrebne podatke!");
+			}
+			
 		},
 		
 		profile: function(){
