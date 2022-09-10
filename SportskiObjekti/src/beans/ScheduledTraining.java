@@ -41,7 +41,6 @@ public class ScheduledTraining  implements Serializable{
 	
 	
 	public ScheduledTraining() {
-	super();
 }
 
 

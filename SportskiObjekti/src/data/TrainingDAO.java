@@ -61,10 +61,10 @@ public class TrainingDAO{
 		    writer.append(str);
 		    writer.append("\n");
 		    writer.close();
-		    return "Uspešno dodat trening!";
+		    return "Uspeï¿½no dodat trening!";
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "Neuspešan upis u fajl";
+			return "Neuspeï¿½an upis u fajl";
 		}
 	}
 	
@@ -243,7 +243,7 @@ public class TrainingDAO{
 	public Collection<ScheduledTraining> cancelTraining(ScheduledTraining t) {
 		LocalDateTime cancelUntil=t.getDateTime().minusDays(2);
 		LocalDateTime now=LocalDateTime.now();
-		if(now.isAfter(cancelUntil)) return null;
+		if(now.isAfter(cancelUntil)) return getPersonalTrainingsByTrainer(t.getTrainer());
 		else {
 			scheduledTrainingCollection.remove(t.getId());
 			saveScheduled();

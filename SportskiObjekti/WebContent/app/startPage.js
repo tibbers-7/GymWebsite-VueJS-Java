@@ -104,7 +104,7 @@ Vue.component("start-page", {
                 <th class="header__item" >Radno vreme</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row" v-for="o in sortedObjects" v-on:click="(o)" >
+            <tr class="table-row" v-for="o in sortedObjects" v-on:click="selectedObject(o)" >
                  <td class="table-data">{{o.name}}</td>
                  <td class="table-data">{{o.type}}</td>
                  <td class="table-data">{{o.services}}</td>

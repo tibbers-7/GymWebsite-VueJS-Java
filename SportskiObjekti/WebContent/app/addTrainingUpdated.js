@@ -49,7 +49,7 @@ Vue.component("add-trainingUpdated", {
             </tr>
             <tr>
                 <td align="center">
-                    <select class="selectBox" v-model="chosenObject"  v-on:change="onChange($event)" style="width:60%;">
+                    <select class="selectBox" v-model="chosenObject"  v-on:change="onChange()" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
 					    <option v-for="object in objects" :value="object.name">{{object.name}}</option>
 					 </select> 
@@ -92,7 +92,7 @@ Vue.component("add-trainingUpdated", {
 		axios
 		     .get('rest/user/activeUser')
 		     .then(response => (this.customer = response.data));
-		axios.get('rest/sportsobjects/getInfo')
+		axios.get('rest/sportsobjects/getAll')
 			.then(response => (this.objects = response.data));
 	},
 	methods: {
@@ -114,7 +114,7 @@ Vue.component("add-trainingUpdated", {
 			router.push(`/pro`);
 		},
 		
-		onChange:function(event){
+		onChange:function(){
 			
 			axios
 					.post('rest/trainings/getByObject',this.chosenObject)

@@ -32,7 +32,7 @@ Vue.component("add-training", {
         <table style="width: 20%;">
             <tr>
                 <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
-                <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="inactive">Moji Treninzi</p></button></th>
+                <th align="left"  class="header_item"><button class="barButton" v-on:click="viewTrainings()"><p class="inactive">Moji Treninzi</p></button></th>
                 <th align="left" class="header_item"><button class="barButton" v-on:click="memberships()"><p class="inactive">Moje članarine</p></button></th>
                 <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
             </tr>
@@ -51,7 +51,7 @@ Vue.component("add-training", {
             </tr>
             <tr>
                 <td align="center">
-                    <select class="selectBox" v-model="chosenTrainer" v-on:change="onChange($event)" style="width:60%;">
+                    <select class="selectBox" v-model="chosenTrainer"  style="width:60%;">
                         <option disabled value="">Odaberite</option>
                         <option v-for="trainer in trainers" :value="trainer.fullName">{{trainer.fullName}}</option>
                     </select>  
@@ -62,7 +62,7 @@ Vue.component("add-training", {
             </tr>
             <tr>
                 <td align="center">
-                    <select class="selectBox" v-model="chosenObject"  v-on:change="onChange($event)" style="width:60%;">
+                    <select class="selectBox" v-model="chosenObject"  v-on:change="onChange()" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
 					    <option v-for="object in objects" :value="object.name">{{object.name}}</option>
 					 </select> 
@@ -77,7 +77,7 @@ Vue.component("add-training", {
                 <td align="center">
                     <select class="selectBox" v-model="chosenTraining" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
-					    <option v-for="content in contents" :value="content">{{content}}</option>
+					    <option v-for="content in cont" :value="content">{{content.name}}</option>
 					 </select>  
                 </td>
             </tr>
@@ -110,7 +110,7 @@ Vue.component("add-training", {
 		homePage: function(){
 			router.push(`/csp`);
 		},
-		trainings: function(){
+		viewTrainings: function(){
 			router.push(`/ct`);
 		},
 		memberships: function(){
@@ -120,12 +120,12 @@ Vue.component("add-training", {
 			router.push(`/pro`);
 		},
 		
-		onChange:function(event){
-			if (chosenTrainer!=null && chosenObject!=null){
+		onChange:function(){
 			axios
-					.post('rest/sportsobjects/getContent',this.chosenObject)
+					.post('rest/trainings/getByObject',{
+					id: this.chosenObject.id
+				  })
 					.then(response => this.cont=response.data); 
-		 }
 			
     	},
     	

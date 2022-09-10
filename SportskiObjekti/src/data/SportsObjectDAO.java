@@ -96,11 +96,9 @@ public class SportsObjectDAO {
 			}
 		}
 		
-		private String sportsObjectsPath = "";
 
 		public SportsObjectDAO() {
 			// TODO Auto-generated constructor stub
-			test();
 		}
 
 		/*public SportsObjectsDAO(String contextPath) {
@@ -171,22 +169,7 @@ public class SportsObjectDAO {
 				}}
 			}
 		
-		private void saveObjects() {
-			try {
-				String str="";
-			    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath+"/sportsObjects.csv", true));
-			    writer.write("");
-			    for (SportsObject s : getSportsObjectsCollection()) {
-					str=s.toString();
-					writer.append(str);
-					writer.append("\n");
-			    }
-			    writer.close();
-			    
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+
 
 	public Collection<String> getTypes() {
 		List<String> ret=new ArrayList<>();
