@@ -20,6 +20,7 @@ const AddObjectAdmin = {template: '<add-object></add-object>'}
 const ManagerTrainings = {template: '<trainings-manager></trainings-manager>'}
 const AddTraining ={template: '<add-training></add-training>'}
 const AddTrainingUpdated ={template: '<add-trainingUpdated></add-trainingUpdated>'}
+const AddUser ={template: '<add-user></add-user>'}
 
 
 const router = new VueRouter({
@@ -47,7 +48,7 @@ const router = new VueRouter({
 	    { path: '/ao', component: AddObjectAdmin },
 	    { path: '/pro', component:Profile},
 		{ path: '/at', component: AddTraining},
-		{ path: '/atu', component: AddTrainingUpdated},
+		{ path: '/au', component: AddUser},
 
 	   
 	  ]

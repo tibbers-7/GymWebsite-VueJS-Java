@@ -8,7 +8,7 @@ Vue.component("users-admin", {
 		}
 	},
 	 template: ` 
-    	<div>
+    	<div class="bodyStyle">
     	
     	<div class="header_container">
 			        <div class="Img">

@@ -191,20 +191,6 @@ public class UserService {
 		return Response.status(200).entity(isValid).build();
 	}
 	
-	
-	
-	@POST
-	@Path("/checkMembership")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response checkMembership(Membership ogMem) {
-
-		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
-		Membership mem=(Membership)context.getAttribute("currentMembership");
-		String isValid=userDAO.checkMembership((User)context.getAttribute("activeCustomer"),mem,ogMem);
-		return Response.status(200).entity(isValid).build();
-	}
-	
 
 	
 	@GET

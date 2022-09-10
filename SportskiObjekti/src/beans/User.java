@@ -3,6 +3,8 @@ package beans;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -124,6 +126,7 @@ public class User implements Serializable{
 	}
 	@Override
 	public String toString() {
+		
 		return username + ", " + password + ", " + name + ", " + last_name + ", " + gender + ", " + birthDate + ", "
 				+ active + ", " + userType  + ", " + sportsObjectID + ", " + visitedObjectsID
 				+ ", " + points + ", " + customerType;

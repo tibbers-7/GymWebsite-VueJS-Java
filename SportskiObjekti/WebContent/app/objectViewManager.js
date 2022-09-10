@@ -36,7 +36,7 @@ Vue.component("manager-object", {
             <div class="basicInfo_grid">
                 <div class="objectView_container" >
                     
-                    <div class="grid_name">{{o.name}}</div>
+                    <div class="grid_name">{{object.name}}</div>
                     <div class="headers">
                         <ul style="list-style:none">
                             <li>Tip:</li>

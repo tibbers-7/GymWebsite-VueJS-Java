@@ -57,9 +57,9 @@ Vue.component("register-page", {
             </tr>
             <tr>
                 <td align="center" class="credential_inputs">
-                    <input type="radio" name="gender" id="f" value="FEMALE" v-model="gender">
+                    <input type="radio" name="gender" id="f" value="FEMALE" v-on:click="genderFemale()">
                     <label for="f" style="color:white">Ženski</label>
-                    <input type="radio" name="gender" id="m" value="MALE" v-model="gender">
+                    <input type="radio" name="gender" id="m" value="MALE" v-on:click="genderMale()">
                     <label for="m" style="color: white;">Muški</label>
                 </td>
             </tr>
@@ -88,6 +88,12 @@ Vue.component("register-page", {
 		logIn: function () {
 			router.push('/lp');
 			},
+		genderFemale:function(){
+			this.gender="FEMALE";
+		},
+		genderMale:function(){
+			this.gender="MALE";
+		},
 		createUser: function () {
 			axios.post('rest/user/register', {
 				 username: this.username,

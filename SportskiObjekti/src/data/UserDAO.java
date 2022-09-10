@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -73,7 +74,7 @@ public class UserDAO {
 	}
 	
 	public void addUser(User u) {
-		u.setUserType(UserType.CUSTOMER);
+		if(u.getCustomerType()==null) u.setUserType(UserType.CUSTOMER);
 		users.put(u.getUsername(), u);
 		saveUser(u);
 	}
@@ -86,10 +87,11 @@ public class UserDAO {
 	private void saveUser(User u) {
 		FileOutputStream outputStream;
 		try {
+			
 			String str = u.toString();
 		    BufferedWriter writer = new BufferedWriter(new FileWriter(userFilepath + "/users.csv", true));
-		    writer.append(str);
 		    writer.append("\n");
+		    writer.append(str);
 		    writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -210,7 +212,7 @@ public class UserDAO {
 			int numUsed=ogMem.getAllowedNumber()-mem.getAllowedNumber();
 			int oneThird=ogMem.getAllowedNumber()/3;
 			
-			//broj_izgubljenih_bodova = ukupna_cena_članarine/1000 * 133 * 4
+			//broj_izgubljenih_bodova = ukupna_cena_Ä�lanarine/1000 * 133 * 4
 			if(numUsed<oneThird) {
 				int pointsLost=(mem.getPrice()/1000)*133*4;
 				totalPoints=totalPoints-pointsLost;

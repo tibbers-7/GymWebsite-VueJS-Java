@@ -742,3 +742,25 @@ margin-left: 30%;
   
   .changePassBtn_grid { grid-area: changePassBtn_grid; }
   
+
+  .typeButtons {
+    color:black;
+    background-color: white;
+    margin-left:31%;
+    margin-top:2%;
+    border-radius: 5px;
+    width:500px;
+    height:80px;
+    font-size: larger;
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 0.1fr 0.1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "manager_label trainer_label"
+      "manager_radio trainer_radio"; 
+  }
+  .manager_label { grid-area: manager_label; }
+  .trainer_label { grid-area: trainer_label; }
+  .manager_radio { grid-area: manager_radio; }
+  .trainer_radio { grid-area: trainer_radio; }
