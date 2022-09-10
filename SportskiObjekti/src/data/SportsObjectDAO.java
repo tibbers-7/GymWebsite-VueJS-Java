@@ -113,7 +113,7 @@ public class SportsObjectDAO {
 		private void saveObjects() {
 			try {
 				String str="";
-			    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath+"/sportsObjects.csv", true));
+			    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath+"/sportsObjects.csv"));
 			    writer.write("");
 			    for (SportsObject s : getSportsObjectsCollection()) {
 					str=s.toString();

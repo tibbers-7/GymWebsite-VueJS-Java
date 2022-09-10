@@ -43,16 +43,19 @@ public class UserDAO {
 		return users.values();
 	}
 	public void registerCustomer(User u){
+		u.setActive(true);
 		u.setUserType(UserType.CUSTOMER);
 		users.put(u.getUsername(), u);
 		saveUser(u);
 	}
 	public void registerTrainer(User u){
+		u.setActive(true);
 		u.setUserType(UserType.TRAINER);
 		users.put(u.getUsername(), u);
 		saveUser(u);
 	}
 	public void registerManager(User u){
+		u.setActive(true);
 		u.setUserType(UserType.MANAGER);
 		users.put(u.getUsername(), u);
 		saveUser(u);
@@ -84,7 +87,6 @@ public class UserDAO {
 	}
 	
 	private void saveUser(User u) {
-		FileOutputStream outputStream;
 		try {
 			
 			String str = u.toString();
@@ -223,6 +225,11 @@ public class UserDAO {
 			return "false";
 		}
 		return "true";
+	}
+
+	public void assignManager(User manager, SportsObject s) {
+		manager.setSportsObjectID(s.getId());
+		editUser(manager);
 	}
 
 }

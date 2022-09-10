@@ -14,9 +14,12 @@ Vue.component("add-object", {
 		last_name:"",
 		birthDate:"",
 		logo:"",
+		chosenM:null,
 		selectedOld:null,
 		addedManager:null,
-		types:{}
+		types:{},
+		type:"",
+		location:""
 		}
 	},
 	 template: ` 
@@ -54,25 +57,29 @@ Vue.component("add-object", {
 	                    <ul style="list-style:none">
 	                        <li>Tip:</li>
 	                        <li>Logo:</li>
+	                        <li>Lokacija:</li>
 	                        <li>Menadžer:</li>
 	                    </ul>
 	                </div>
 	                <div class="values">
 	                    <ul style="list-style:none">
-	                        <li><select class="selectBox"> 
+	                        <li><select class="selectBox" v-model="type" > 
 					                <option disabled value="">Odaberite</option>
 									<option v-for="type in types" :value="type">{{type}}</option>
 					            </select>  
 					        </li>
 	                        <li ><input type="image" v-model="logo" /></li>
 	                        <li>
+	                        	<input type="text" v-model="location"/>
+	                        </li>
+	                        <li>
 	                        	<input type="text" disabled v-model="chosenManager"/>
-	                            <p style="font-size: 15px;">Postojeći</label>
+	                            <p style="font-size: 15px;">Postojeći</p>
 	                            <input type="radio" style="margin-top: -8% ;" id="e" name="managerRG" value="Existing" v-on:click="oldManagerBttn()">
 	                            
 	                        </li>
 	                        <li>
-	                            <p style="font-size: 15px;">Novi</label>
+	                            <p style="font-size: 15px;">Novi</p>
 	                            <input type="radio" style="margin-top: -8% ;"  id="n" name="managerRG" value="New" v-on:click="newManagerBttn()">
 	                            
 	                            
@@ -85,7 +92,7 @@ Vue.component("add-object", {
 
          <div class="oldManager_grid" v-show="!newManager" style="margin-top:3%;">
             <select class="selectBox" style="margin-top:-65%;margin-left:-20%;width:300px" @change="selectManager($event)"> 
-                <option disabled value="">Odaberite</option>
+                <option value="">Odaberite</option>
 				<option v-for="manager in managers" :value="manager.fullName">{{manager.fullName}}</option>
             </select>  
          </div>
@@ -122,9 +129,9 @@ Vue.component("add-object", {
                 </tr>
                 <tr>
                     <td class="credential_inputs">
-                        <input type="radio" name="gender" id="m" value="female" v-model = "gender">
+                        <input type="radio" name="gender" id="m" value="FEMALE" v-model = "gender">
                         <label for="f" style="color:white">Ženski</label>
-                        <input type="radio" name="gender" id="f" value="male" v-model = "gender">
+                        <input type="radio" name="gender" id="f" value="MALE" v-model = "gender">
                         <label for="m" style="color: white;">Muški</label>
                     </td>
                 </tr>
@@ -135,7 +142,7 @@ Vue.component("add-object", {
                     <td align="center"><input class="credential_inputs" type="date" v-model = "birthDate"></td>
                 </tr>
                 <tr>
-                    <td  align="center"><button class="Button" style="width: 30%;height:50%" v-on:click="addManager()">Dodeli menadžera</td>
+                    <td  align="center"><button class="Button" style="width: 30%;height:50%" v-on:click="addManager()">Dodeli menadžera</button></td>
                 </tr>
             </table>
         </div>
@@ -174,6 +181,19 @@ Vue.component("add-object", {
 			router.push(`/au`);
 		},
 		addObj: function(){
+			axios.post('rest/sportsobjects/addNew',{
+				"name":this.name,
+				"type":this.type,
+				"location":this.location	
+			}).then(response => {
+				this.object=response.data;
+			});
+			
+			axios
+				.post('rest/user/assignManager',this.object)
+				.then(response => {
+					toast(response.data);
+			});
 			
 			
 		},
@@ -188,7 +208,7 @@ Vue.component("add-object", {
 						if(response.status===400) toast(response.data);
 						else {
 							this.addedManager=response.data;
-							this.chosenManager=this.addedManager;
+							this.chosenM=this.addedManager;
 						}
 					});
 			
@@ -206,13 +226,22 @@ Vue.component("add-object", {
 			this.newManager=false;
 		},
 		
-		selectManager(event) {
+		selectManager:function(event) {
 	      this.selectedOld=event.target.value;
-	      this.chosenManager=this.selectedOld;
-	     }
+	      this.chosenM=this.selectedOld;
+	     },
+	     selectCategory:function(event) {
+	      this.type=event.target.value;
+	    }
 			
 		
 		
 	},
+	computed:{
+		chosenManager(){
+			if (this.chosenM===null) return "";
+			else return this.chosenM.fullName;
+		}
+	}
 	
 });

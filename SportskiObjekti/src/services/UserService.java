@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Membership;
+import beans.SportsObject;
 import beans.User;
 import data.MembershipDAO;
 import data.UserDAO;
@@ -170,6 +171,7 @@ public class UserService {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
 			userDAO.registerManager(userToRegister);
+			context.setAttribute("manager", userToRegister);
 			return Response.status(200).entity(userToRegister).build();
 		}
 	}
@@ -266,6 +268,17 @@ public class UserService {
 			context.setAttribute("userDAO", UserDAO);
 		}
 	
+	}
+	
+	@POST
+	@Path("/assignManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response assignManager(SportsObject s) {
+		UserDAO dao = (UserDAO) context.getAttribute("userDAO");
+		User manager=(User)context.getAttribute("manager");
+		dao.assignManager(manager,s);
+		return Response.status(200).build();
 	}
 	
 	

@@ -90,7 +90,7 @@ Vue.component("add-user", {
                 <td align="center"><input class="credential_inputs" type="date" name="birthDate" v-model = "birthDate"></td>
             </tr>
             <tr>
-                <td  align="center"><button class="Button" v-on:click=createUser() value="Pošalji"></td>
+                <td  align="center"><button class="Button" v-on:click=createUser() value="Pošalji">Dodaj korisnika</td>
             </tr>
         </table>
        </form>
@@ -145,7 +145,8 @@ Vue.component("add-user", {
 			 	 last_name: this.last_name,
 			 	 gender: this.gender,
 			 	 birthDate: this.birthDate,}).then(response => {
-						toast(response.data);
+					if(response.status===400) toast(response.data);
+					else toast("Uspešno kreiran menadžer!")
 					});
 			} else if(this.type==="TRAINER"){
 				axios.post('rest/user/registerTrainer', {
