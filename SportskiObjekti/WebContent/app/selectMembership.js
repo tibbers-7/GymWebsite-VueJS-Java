@@ -69,13 +69,8 @@ Vue.component("select-membership", {
 		
 		showMembership:function(mem){
 			axios
-	         .post('rest/memberships/setSelected',{
-					membershipType:mem.getMembershipType,
-					price:mem.price,
-					allowedNumber:mem.allowedNumber,
-					payDate:null,
-					validUntil:null				
-					
+	         .post('rest/memberships/setSelected',{		
+					"string":mem.id
 		}
 	)
 	         .then(response => (toast(response.data)));
