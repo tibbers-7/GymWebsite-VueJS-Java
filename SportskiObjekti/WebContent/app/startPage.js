@@ -13,7 +13,11 @@ Vue.component("start-page", {
 		id:'',
 		search:"",
 		showingOpen:true,
-		selectedOpen:""
+		selectedOpen:"",
+		showingType:'',
+		searchTerm:'',
+		currentSort:'name',
+    	currentSortDir:'asc'
 		}
 	},
 	 template: ` 
@@ -44,7 +48,7 @@ Vue.component("start-page", {
           <div class="objectFilter_grid">
             <div class="objFilter1_grid">
                     <label style="font-size: large;"> Tip Objekta </label>  
-                    <select class="selectBox">
+                    <select class="selectBox" v-model="showingType">
 					    <option disabled value="">Odaberite</option>
 					    <option v-for="type in types" :value="type">{{type}}</option>
 					 </select>  
@@ -53,8 +57,18 @@ Vue.component("start-page", {
                     <label style="font-size: large;"> Dostupnost </label>  
                     <select v-model="selectedOpen"  @change="filterOpen()">
 					    <option disabled value="">default: Otvoreno</option>
-					    <option>Otvoreno</option>
-					    <option>Zatvoreno</option>
+					    <option value="Otvoreno">Otvoreno</option>
+					    <option value="Zatvoreno">Zatvoreno</option>
+					</select>
+              </div>
+             <div class="objFilter3_grid">
+                    <label style="font-size: large;"> Trazi po: </label>  
+                    <select v-model="searchTerm"  @change="setSearch()">
+					    <option disabled value=""></option>
+					    <option value="name">Naziv</option>
+					    <option value="type">Tip</option>
+					    <option value="location">Lokacija</option>
+					    <option value="avgScore">Prosecna ocena</option>
 					</select>
               </div>
             </div>
@@ -71,7 +85,7 @@ Vue.component("start-page", {
       <div class="objectTable_grid">
         <div class="objectsSort_grid">
 	          
-            <button class="ascButton" v-on:click="sortedNameAsc()" style="margin-left:12%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
+            <button class="ascButton" v-on:click="ascName()" style="margin-left:12%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="descButton" v-on:click="descName()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="ascButton" v-on:click="ascLoc()" style="margin-left:42%"><img src="images/arrowUp.png" style="width: 20px; height: 20px; margin:0px;"/></button>
             <button class="descButton" v-on:click="descLoc()"><img src="images/arrowDown.png" style="width: 20px; height: 20px; margin:0px;"/></button>
@@ -80,17 +94,17 @@ Vue.component("start-page", {
         </div>
         <table class="table">
             <tr class="table-header" >
-                <th class="header__item" v-on:click="sort('name')">Naziv</th>
-                <th class="header__item" v-on:click="sort('type')">Tip</th>
+                <th class="header__item" >Naziv</th>
+                <th class="header__item" >Tip</th>
                 <th class="header__item" >Ponuda</th>
-                <th class="header__item" v-on:click="sort('open')">Otvoreno</th>
-                <th class="header__item" v-on:click="sort('add')">Adresa</th>
-                <th class="header__item" v-on:click="sort('score')">Ocena</th>
+                <th class="header__item" >Otvoreno</th>
+                <th class="header__item" >Adresa</th>
+                <th class="header__item" >Ocena</th>
                 <th class="header__item" >Logo</th>
                 <th class="header__item" >Radno vreme</th>
             </tr>
             <div class="table-content">  
-            <tr class="table-row" v-for="o in filteredObjects" v-on:click="selectedObject(o)" >
+            <tr class="table-row" v-for="o in sortedObjects" v-on:click="selectedObject(o)" >
                  <td class="table-data">{{o.name}}</td>
                  <td class="table-data">{{o.type}}</td>
                  <td class="table-data">{{o.services}}</td>
@@ -146,29 +160,61 @@ Vue.component("start-page", {
     		this.showingOpen=true;
     		else this.showingOpen=false;
     	},
+    	filterType : function() {
+    	},
+    	setSearch : function() {
+    	},
     	logout : function() {
     		
     	},
 		ascName: function(){
-			
+			this.sort('name');
 		},
 		ascLoc: function(){
-			
+			this.sort('location');
 		},
 		descName: function(){
-			
+			this.sort('name');
 		},
 		descLoc: function(){
-			
+			this.sort('location');
 		},
+		ascGrade: function(){
+			this.sort('avgScore');
+		},
+		descGrade: function(){
+			this.sort('avgScore');
+		},
+		sort:function(s) {
+      //if s == current sort, reverse
+      	if(s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+      		}
+      	this.currentSort = s;
+    	}
 	},
   	computed: {
     searchObjects() {
-      return this.sportsObjects.filter((el) => el.name.includes(this.search));
+	if(this.searchTerm==="name")
+      return this.sportsObjects.filter((el) => el.name.toLowerCase().includes(this.search.toLowerCase()));
+    else if(this.searchTerm==="type")
+      return this.sportsObjects.filter((el) => el.type.toLowerCase().includes(this.search.toLowerCase()));
+    else if(this.searchTerm==="location")
+      return this.sportsObjects.filter((el) => el.location.toLowerCase().includes(this.search.toLowerCase()));
+    else
+      return this.sportsObjects.filter((el) => el.avgScore.toString().toLowerCase().includes(this.search.toLowerCase()));
     },
     filteredObjects(){
-      return this.searchObjects.filter((el) => el.isOpen === this.showingOpen);
+      return this.searchObjects.filter((el) => el.isOpen === this.showingOpen&& el.type.includes(this.showingType));
     },
-    
+    sortedObjects:function() {
+      return this.filteredObjects.sort((a,b) => {
+        let modifier = 1;
+        if(this.currentSortDir === 'desc') modifier = -1;
+        if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        else if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
+    }
   },
 });

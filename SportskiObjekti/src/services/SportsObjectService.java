@@ -36,12 +36,12 @@ public class SportsObjectService {
 			context.setAttribute("sportsObjectDAO", new SportsObjectDAO(contextPath));
 		}
 	}
-	@POST
+	@GET
 	@Path("/getByManager")
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByManager(User manager) {
+	public Response getByManager() {
 		SportsObjectDAO dao = (SportsObjectDAO)context.getAttribute("sportsObjectDAO");
+		User manager=(User) context.getAttribute("activeUser");
 		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
 		return Response.status(200).entity(s).build();
 	}
@@ -82,6 +82,33 @@ public class SportsObjectService {
 	}
 	
 	@POST
+	@Path("/addService")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addService(String service) {
+		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
+		User manager=(User) context.getAttribute("activeUser");
+		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
+		service=service.substring(11,service.lastIndexOf('"'));
+		dao.checkService(s.getId(),service);
+		dao.addService(s.getId(), service);
+		return Response.status(200).entity(s).build();
+	}
+	
+	@POST
+	@Path("/removeService")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response removeService(String service) {
+		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
+		User manager=(User) context.getAttribute("activeUser");
+		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
+		service=service.substring(11,service.lastIndexOf('"'));
+		dao.removeService(s.getId(), service);
+		return Response.status(200).entity(s).build();
+	}
+	
+	@POST
 	@Path("/addNew")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -91,6 +118,13 @@ public class SportsObjectService {
 		return Response.status(200).entity(object).build();
 	}
 	
+	@POST
+	@Path("/setActiveManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response setActiveManager(User manager) {
+		context.setAttribute("activeUser", manager);
+		return Response.status(200).build();
+	}
 	
 	
 }

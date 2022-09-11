@@ -1,5 +1,7 @@
 package services;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import beans.ScheduledTraining;
 import beans.SportsObject;
@@ -41,9 +44,9 @@ public class TrainingService {
 	@GET
 	@Path("/getAllTypes")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Training> getAllTypes() {
+	public Collection<String> getAllTypes() {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
-		return dao.getTrainingCollection();
+		return dao.getTypes();
 	}
 	
 	@GET
@@ -54,12 +57,12 @@ public class TrainingService {
 		return dao.getScheduledTrainingCollection();
 	}
 	
-	@POST
+	@GET
 	@Path("/getByManager")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Collection<Training> getByManager(User manager) {
+	public Collection<Training> getByManager() {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		User manager=(User)ctx.getAttribute("manager");
 		return dao.getTrainingsByObject(manager.getSportsObjectID());
 	}
 	
@@ -114,8 +117,20 @@ public class TrainingService {
 	@Path("/cancelTraining")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Collection<ScheduledTraining> cancelTraining(ScheduledTraining t) {
+	public Response cancelTraining(ScheduledTraining t) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
-		return dao.cancelTraining(t);
+		Collection<ScheduledTraining> trainings;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm;dd.MM.yyyy.");
+		t.setDateTime(LocalDateTime.parse(t.getDateTimeString(), formatter));
+		trainings= dao.cancelTraining(t);
+		return Response.status(200).entity(trainings).build();
+	}
+	
+	@POST
+	@Path("/setActiveManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response setActiveManager(User manager) {
+		ctx.setAttribute("manager", manager);
+		return Response.status(200).build();
 	}
 }

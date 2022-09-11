@@ -57,7 +57,7 @@ Vue.component("trainings-trainer", {
             <tr class="table-header" >
                 <th class="header__item">Naziv</th>
                 <th class="header__item">Objekat</th>
-                <th class="header_item">Datum</th>
+                <th class="header__item">Datum</th>
             </tr>
             <div class="table-content">  
             <tr class="table-row"  v-for="(t, index) in groupTrainings">
@@ -97,8 +97,14 @@ Vue.component("trainings-trainer", {
 		cancelTraining: function(){
 			if (this.selectedTraining!=null){
 				axios
-				.post('rest/trainings/cancelTraining',this.selectedTraining)
-				.then(response => this.trainings = response.data); 
+				.post('rest/trainings/cancelTraining',{
+					id: this.selectedTraining.id,
+    				trainer: this.selectedTraining.trainer,
+    				dateTimeString: this.selectedTraining.dateTimeString
+
+				  }
+				)
+				.then(response => this.personalTrainings = response.data); 
 			
 			} else toast("Niste odabrali trening!");
 		},

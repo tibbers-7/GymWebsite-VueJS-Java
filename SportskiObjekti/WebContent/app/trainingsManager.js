@@ -26,10 +26,15 @@ Vue.component("trainings-manager", {
 		    <table style="width: 20%;" style="position:relative;top:-22%;">
 		        <tr >
 		           <th align="left"  class="header_item"><button class="barButton" v-on:click="goHome()><p class="inactive">Naši Objekti</p></button></th>
-			       <th align="left"  class="header_item"><button class="barButton"  v-on:click="objectShow()"><p class="inactive">Moj Sportski Objekat</p></button></th>
-			       <th align="left"  class="header_item"><button class="barButton"  ><p class="active">Treninzi</p></button></th>
+		            <th align="left"  class="header_item"><button class="barButton"  v-on:click="objectShow()"><p class="inactive">Moj Sportski Objekat</p></button></th>
+		            <th align="left"  class="header_item"><button class="barButton"  ><p class="active">Treninzi</p></button></th>
+		            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 		        </tr>
 		    </table>
+		</div>
+		
+		<div>
+			<button class="button2" v-on:click="addNewTraining()">Dodaj novi trening</button>
 		</div>
 		
 		<div class="objectTable_grid" style="margin-top:2%;">
@@ -60,13 +65,12 @@ Vue.component("trainings-manager", {
     	`,
 	mounted() {
 		axios
-         .get('rest/users/activeUser')
-         .then(response => { 
-			this.manager = response.data;
-			axios
-			.post('rest/trainings/getByManager', this.manager)
-			.then(response => this.trainings = response.data); 
-			});
+         .get('rest/user/activeUser')
+         .then(response => this.manager = response.data);
+		axios
+		.get('rest/trainings/getByManager')
+		.then(response => this.trainings = response.data); 
+		
 			
 	},
 	
@@ -79,6 +83,16 @@ Vue.component("trainings-manager", {
 		},
 		showObject: function(){
 			router.push(`/ovm`);
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
+		objectShow: function(){
+			axios.post('rest/sportsobjects/setActiveManager',this.manager);
+			router.push(`/ovm`);
+		},
+		addNewTraining:function(){
+			router.push(`/atm`);
 		}
 	}
 		

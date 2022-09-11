@@ -320,7 +320,7 @@ margin-left: 30%;
     grid-template-rows: 1fr; 
     gap: 0px 0px; 
     grid-template-areas: 
-      "objFilter1_grid objFilter2_grid"; 
+      "objFilter1_grid objFilter2_grid objFilter3_grid"; 
     grid-area: objectFilter_grid; 
 }
 

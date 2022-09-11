@@ -8,9 +8,10 @@ public class Training  implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 String name;
-public Training(String name, String type, String sObject, String duration, String trainerID, String description,
+public Training(String id,String name, String type, String sObject, String duration, String trainerID, String description,
 		String image) {
 	super();
+	this.id=Integer.parseInt(id);
 	this.name = name;
 	this.type = type;
 	this.sObject = sObject;
@@ -19,6 +20,13 @@ public Training(String name, String type, String sObject, String duration, Strin
 	this.description = description;
 	this.image = image;
 }
+
+
+public Training() {
+	super();
+}
+
+
 public String getName() {
 	return name;
 }
@@ -67,5 +75,12 @@ String duration;
 String trainerID;
 String description;
 String image;
+int id;
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
 
 }

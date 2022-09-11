@@ -40,10 +40,16 @@ public class TrainingDAO{
  	}
 	
 	public void addTraining(Training t) {
-		int maxId = 0;
-		maxId=getTrainingCollection().size();
-		maxId++;
-		trainingCollection.put(maxId, t);
+		if(t.getId()==0) setNextKey(t);
+		trainingCollection.put(t.getId(), t);
+	}
+	
+	private void setNextKey(Training t) {
+		int largest=0;
+		for(int i:trainingCollection.keySet()) {
+			if(i>largest) largest=i;
+		} 
+		t.setId(++largest);
 	}
 	
 	public String addScheduledTraining(ScheduledTraining t) {
@@ -139,7 +145,7 @@ public class TrainingDAO{
 			in = new BufferedReader(new FileReader(file));
 			String line="";
 			StringTokenizer st;
-			String name="",type="", object="", duration="",trainerID="",description="",image="";
+			String id="",name="",type="", object="", duration="",trainerID="",description="",image="";
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
 				if (line.equals(""))
@@ -147,6 +153,7 @@ public class TrainingDAO{
 				st = new StringTokenizer(line, ",");
 				
 				while (st.hasMoreTokens()) {
+					id = st.nextToken().trim();
 					name = st.nextToken().trim();
 					type = st.nextToken().trim();
 					object = st.nextToken().trim();
@@ -156,7 +163,7 @@ public class TrainingDAO{
 					image = st.nextToken().trim();
 				}
 				String imgFilepath=trainingFilepath+"/images/"+image;
-				Training t=new Training(name,type,object,duration,trainerID,description,imgFilepath);
+				Training t=new Training(id,name,type,object,duration,trainerID,description,imgFilepath);
 				addTraining(t);
 			}
 		} catch (Exception e) {
@@ -243,11 +250,18 @@ public class TrainingDAO{
 	public Collection<ScheduledTraining> cancelTraining(ScheduledTraining t) {
 		LocalDateTime cancelUntil=t.getDateTime().minusDays(2);
 		LocalDateTime now=LocalDateTime.now();
-		if(now.isAfter(cancelUntil)) return null;
+		if(now.isAfter(cancelUntil)) return getPersonalTrainingsByTrainer(t.getTrainer());
 		else {
 			scheduledTrainingCollection.remove(t.getId());
 			saveScheduled();
 		}
 		return getPersonalTrainingsByTrainer(t.getTrainer());
+	}
+
+	public Collection<String> getTypes() {
+		List<String> ret=new ArrayList<>();
+		for(TrainingType t:TrainingType.values()) {
+			ret.add(t.toString());
+		} return ret;
 	}
 }

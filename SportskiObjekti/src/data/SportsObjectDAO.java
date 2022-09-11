@@ -34,11 +34,40 @@ public class SportsObjectDAO {
 		public void setSportsObjectsPath(String sportsObjectsPath) {
 			this.sportsObjectsPath = sportsObjectsPath;
 		}
+		public void addService(String ID, String service) {
+			for (SportsObject s : getSportsObjectsCollection()) 
+				if (s.getId().equals(ID))
+				{
+					List<String> newServices=s.getServices();
+					newServices.add(service);
+					s.setServices(newServices);
+					saveObjects();
+				}
+		}
+		
+		public void removeService(String ID, String service) {
+			for (SportsObject s : getSportsObjectsCollection()) 
+				if (s.getId().equals(ID))
+				{
+					List<String> newServices=s.getServices();
+					newServices.remove(service);
+					s.setServices(newServices);
+					saveObjects();
+				}
+		}
 
 		public void setSportsObjects(HashMap<Integer, SportsObject> sportsObjects) {
 			this.sportsObjects = sportsObjects;
 		}
-
+		public Boolean checkService(String ID, String service) {
+			for (SportsObject s : getSportsObjectsCollection()) 
+				if (s.getId().equals(ID))
+				{
+					if(s.getServices().contains(service))
+						return true;
+				}
+			return false;
+		}
 		public SportsObjectDAO(String sportsObjectsPath) {
 			super();
 			this.sportsObjectsPath = sportsObjectsPath;
@@ -48,6 +77,18 @@ public class SportsObjectDAO {
 			return sportsObjects.get(Integer.parseInt(sportsObjectID));
 		}
 		
+		
+
+		public SportsObjectDAO() {
+			// TODO Auto-generated constructor stub
+		}
+
+		/*public SportsObjectsDAO(String contextPath) {
+			this.setSportsObjects(new HashMap<Integer, SportsObject>());
+			this.setSportsObjectsPath(contextPath);
+
+		}*/
+	
 
 		public void addSportsObject(SportsObject s) {
 			if(s.getId()==null) setNextKey(s);

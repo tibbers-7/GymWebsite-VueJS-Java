@@ -61,7 +61,7 @@ public class MembershipDAO {
 		int largest=0;
 		for(int i:members.keySet()) {
 			if(i>largest) largest=i;
-		} return largest++;
+		} return ++largest;
 	}
 	
 	private void saveMembership(Membership m) {
