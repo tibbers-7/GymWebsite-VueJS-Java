@@ -174,5 +174,12 @@ public class MembershipDAO {
 		}
 		return null;
 	}
+	public Membership getByID(String s) {
+		for(Membership m:getMembershipCollection()) {
+				if(m.getID()==Integer.parseInt(s)) return m;
+			
+		}
+		return null;
+	}
 	
 }
