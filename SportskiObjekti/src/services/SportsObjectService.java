@@ -36,12 +36,13 @@ public class SportsObjectService {
 			context.setAttribute("sportsObjectDAO", new SportsObjectDAO(contextPath));
 		}
 	}
-	@POST
+	@GET
 	@Path("/getByManager")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByManager(User manager) {
+	public Response getByManager() {
 		SportsObjectDAO dao = (SportsObjectDAO)context.getAttribute("sportsObjectDAO");
+		User manager=(User) context.getAttribute("activeUser");
 		SportsObject s= dao.getSportsObject(manager.getSportsObjectID());
 		return Response.status(200).entity(s).build();
 	}
@@ -116,6 +117,13 @@ public class SportsObjectService {
 		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
 		dao.addSportsObject(object);
 		return Response.status(200).entity(object).build();
+	}
+	@POST
+	@Path("/setActiveManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response setActiveManager(User manager) {
+		context.setAttribute("activeUser", manager);
+		return Response.status(200).build();
 	}
 	
 	

@@ -36,6 +36,13 @@ public Location(double geoWidth, double geoLength, String address) {
 	GeoLength = geoLength;
 	Address = address;
 }
+public Location(String location) {
+	super();
+	String [] strings=location.split(";");
+	GeoWidth = Double.parseDouble(strings[0]);
+	GeoLength = Double.parseDouble(strings[1]);
+	Address = strings[2];
+}
 double GeoLength;
 String Address;
 }
