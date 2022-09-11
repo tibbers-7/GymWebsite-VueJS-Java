@@ -119,19 +119,11 @@ public class SportsObjectService {
 	}
 	@POST
 	@Path("/setActiveManager")
+	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response setActiveManager(User manager) {
 		context.setAttribute("activeUser", manager);
 		return Response.status(200).build();
 	}
-	
-	@POST
-	@Path("/setActiveManager")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response setActiveManager(User manager) {
-		context.setAttribute("activeUser", manager);
-		return Response.status(200).build();
-	}
-	
 	
 }

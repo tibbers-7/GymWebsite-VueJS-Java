@@ -160,13 +160,6 @@ Vue.component("start-page", {
     		this.showingOpen=true;
     		else this.showingOpen=false;
     	},
-    	filterType : function() {
-    	},
-    	setSearch : function() {
-    	},
-    	logout : function() {
-    		
-    	},
 		ascName: function(){
 			this.sort('name');
 		},
