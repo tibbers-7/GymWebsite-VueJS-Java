@@ -33,7 +33,7 @@ Vue.component("start-page", {
 			</div>
 			
 		<div class="barBase">
-	    <table style="width: 20%;">
+	    <table class="barTable">
 	        <tr>
 	            <th align="left"  class="header_item"><button class="barButton">Naši Objekti</button></th>
 	        </tr>
@@ -159,13 +159,6 @@ Vue.component("start-page", {
 			if(this.selectedOpen==="Otvoreno")
     		this.showingOpen=true;
     		else this.showingOpen=false;
-    	},
-    	filterType : function() {
-    	},
-    	setSearch : function() {
-    	},
-    	logout : function() {
-    		
     	},
 		ascName: function(){
 			this.sort('name');

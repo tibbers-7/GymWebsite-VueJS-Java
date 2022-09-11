@@ -40,10 +40,30 @@ public class TrainingDAO{
  	}
 	
 	public void addTraining(Training t) {
-		int maxId = 0;
-		maxId=getTrainingCollection().size();
-		maxId++;
-		trainingCollection.put(maxId, t);
+		if(t.getId()==0) setNextKey(t);
+		trainingCollection.put(t.getId(), t);
+		saveTraining(t);
+	}
+	private String saveTraining(Training t) {
+		try {
+			String str = t.getString();
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(trainingFilepath + "/trainings.csv", true));
+		    writer.append(str);
+		    writer.append("\n");
+		    writer.close();
+		    return "Uspešno dodat trening!";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Neuspešan upis u fajl";
+		}
+	}
+	
+	private void setNextKey(Training t) {
+		int largest=0;
+		for(int i:trainingCollection.keySet()) {
+			if(i>largest) largest=i;
+		} 
+		t.setId(++largest);
 	}
 	
 	public String addScheduledTraining(ScheduledTraining t) {
@@ -52,26 +72,26 @@ public class TrainingDAO{
 			t.setId(idScheduled);
 		}
 		scheduledTrainingCollection.put(t.getId(), t);
-		return saveTraining(t);
+		return saveScheduledTraining(t);
 	}
-	private String saveTraining(ScheduledTraining t) {
+	private String saveScheduledTraining(ScheduledTraining t) {
 		try {
 			String str = t.trainingString();
-		    BufferedWriter writer = new BufferedWriter(new FileWriter(trainingFilepath + "/scheduledTrainings.csv", true));
-		    writer.append(str);
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(trainingFilepath + "/scheduledTrainings.csv",true));
 		    writer.append("\n");
+		    writer.append(str);
 		    writer.close();
-		    return "Uspeï¿½no dodat trening!";
+		    return "Uspešno dodat trening!";
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "Neuspeï¿½an upis u fajl";
+			return "Neuspešan upis u fajl";
 		}
 	}
 	
 	private void saveScheduled() {
 		try {
 			String str="";
-		    BufferedWriter writer = new BufferedWriter(new FileWriter("/scheduledTrainings.csv", true));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter("/scheduledTrainings.csv"));
 		    writer.write("");
 		    for (ScheduledTraining s : getScheduledTrainingCollection()) {
 				str=s.trainingString();
@@ -139,7 +159,7 @@ public class TrainingDAO{
 			in = new BufferedReader(new FileReader(file));
 			String line="";
 			StringTokenizer st;
-			String name="",type="", object="", duration="",trainerID="",description="",image="";
+			String id="",name="",type="", object="", duration="",trainerID="",description="",image="";
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
 				if (line.equals(""))
@@ -147,6 +167,7 @@ public class TrainingDAO{
 				st = new StringTokenizer(line, ",");
 				
 				while (st.hasMoreTokens()) {
+					id = st.nextToken().trim();
 					name = st.nextToken().trim();
 					type = st.nextToken().trim();
 					object = st.nextToken().trim();
@@ -155,8 +176,7 @@ public class TrainingDAO{
 					description = st.nextToken().trim();
 					image = st.nextToken().trim();
 				}
-				String imgFilepath=trainingFilepath+"/images/"+image;
-				Training t=new Training(name,type,object,duration,trainerID,description,imgFilepath);
+				Training t=new Training(id,name,type,object,duration,trainerID,description,image);
 				addTraining(t);
 			}
 		} catch (Exception e) {
@@ -249,5 +269,28 @@ public class TrainingDAO{
 			saveScheduled();
 		}
 		return getPersonalTrainingsByTrainer(t.getTrainer());
+	}
+
+	public Collection<String> getTypes() {
+		List<String> ret=new ArrayList<>();
+		for(TrainingType t:TrainingType.values()) {
+			ret.add(t.toString());
+		} return ret;
+	}
+
+	public Collection<String> getTrainers(String sportsObjectID) {
+		List<String> ret=new ArrayList<>();
+		for(ScheduledTraining t:getScheduledTrainingCollection()) {
+			if(t.getsObject().equals(sportsObjectID)) {
+				boolean alreadyExists=false;
+				for(String trainer:ret) {
+					if (trainer.equals(t.getTrainer())) alreadyExists=true;
+				}
+				
+				if(!alreadyExists) ret.add(t.getTrainer());
+			}
+		}
+		
+		return ret;
 	}
 }

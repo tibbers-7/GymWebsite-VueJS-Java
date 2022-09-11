@@ -38,7 +38,6 @@ public class SportsObjectService {
 	}
 	@GET
 	@Path("/getByManager")
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getByManager() {
 		SportsObjectDAO dao = (SportsObjectDAO)context.getAttribute("sportsObjectDAO");
@@ -120,12 +119,11 @@ public class SportsObjectService {
 	}
 	@POST
 	@Path("/setActiveManager")
+	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response setActiveManager(User manager) {
 		context.setAttribute("activeUser", manager);
 		return Response.status(200).build();
 	}
-	
-	
 	
 }

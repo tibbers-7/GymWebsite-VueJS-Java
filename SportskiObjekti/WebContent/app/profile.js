@@ -5,6 +5,7 @@ Vue.component("profile", {
 		title: "Profil",
 		text: "",
 		error: '',
+		userType:""
 		}
 	},
 	 template: ` 
@@ -24,7 +25,7 @@ Vue.component("profile", {
 <div class="profile_grid">
 
     <div class="profileBack_grid">
-        <button style="margin-top:2%;margin-left:90%;border:none;background:transparent;" v-on:click="goBack()"><img src="images/back.png" class="back_img"></img></button>
+        <button style="margin-top:2%;margin-left:90%;border:none;background:transparent;"><img src="images/back.png"  v-on:click="goBack()" class="back_img"></img></button>
     </div>
     <div class="profileInfo_grid">
                 <div class="objectView_container"  >
@@ -67,6 +68,11 @@ Vue.component("profile", {
          .then(response => { 
 			this.user = response.data;
 			});
+		axios
+		.get('rest/user/getUserType')
+         .then(response => { 
+			this.userType = response.data;
+			});
 	},
 	
 	methods: {
@@ -80,7 +86,7 @@ Vue.component("profile", {
 			router.push(`/ic`);
 		}, 
 		goBack: function(){
-			switch(this.user.userType){
+			switch(this.userType){
 					case "CUSTOMER":
 						 router.push(`/csp`);
 						 break;

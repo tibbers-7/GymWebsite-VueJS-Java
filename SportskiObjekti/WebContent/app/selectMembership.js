@@ -78,6 +78,24 @@ Vue.component("select-membership", {
 			
 		},
 		
+		homePage: function(){
+			router.push(`/csp`);
+		},
+		logOut: function(){
+			router.push(`/`);
+		},
+		
+		trainings: function(){
+			router.push(`/ct`);
+		},
+		memberships: function(){
+			router.push(`/cm`);
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
+		
+		
 		
 	}	
 	

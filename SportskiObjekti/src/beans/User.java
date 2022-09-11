@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import data.utils.CustomerType;
 import data.utils.Gender;
@@ -39,6 +40,15 @@ public class User implements Serializable{
 		this.points = points;
 		this.customerType = customerType;
 		this.fullName=name+" "+last_name;
+		if(!visitedObjectsID.equals(" ")|visitedObjectsID!=null)
+			{
+			String[] v=visitedObjectsID.split(";");
+			this.visitedObjects=new ArrayList<>();
+			for(String visited:v) {
+				this.visitedObjects.add(visited);
+			}
+		}
+		
 	}
 	public User(UserBuilder builder) {
 		super();
@@ -54,6 +64,7 @@ public class User implements Serializable{
 		this.points = builder.points;
 		this.customerType = builder.customerType;
 		this.fullName=name+" "+last_name;
+		this.visitedObjects=builder.visitedObjects;
 	}
 	public String getUsername() {
 		return username;
@@ -103,11 +114,11 @@ public class User implements Serializable{
 	public void setSportsObjectID(String sportsObjectID) {
 		this.sportsObjectID = sportsObjectID;
 	}
-	public String getVisitedObjects() {
-		return visitedObjectsID;
+	public List<String> getVisitedObjects() {
+		return visitedObjects;
 	}
-	public void setVisitedObjects(String visitedObjects) {
-		this.visitedObjectsID = visitedObjects;
+	public void setVisitedObjects(List<String> visitedObjects) {
+		this.visitedObjects = visitedObjects;
 	}
 	public int getPoints() {
 		return points;
@@ -124,6 +135,21 @@ public class User implements Serializable{
 	public String getFullName() {
 		return fullName;
 	}
+	public String getVisitedObjectsID() {
+		return visitedObjectsID;
+	}
+	public void setVisitedObjectsID(String visitedObjectsID) {
+		this.visitedObjectsID = visitedObjectsID;
+	}
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	public Boolean getActive() {
+		return active;
+	}
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 	@Override
 	public String toString() {
 		
@@ -137,12 +163,6 @@ public class User implements Serializable{
 	private String last_name;
 	private data.utils.Gender gender;
 	private String birthDate;
-	public Boolean getActive() {
-		return active;
-	}
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
 	private Boolean active;
 	private UserType userType;
 	private String sportsObjectID;
@@ -150,6 +170,7 @@ public class User implements Serializable{
 	private int points;
 	private CustomerType customerType;
 	private String fullName;
+	private List<String> visitedObjects;
 	
 	public static class UserBuilder{
 		
@@ -166,9 +187,11 @@ public class User implements Serializable{
 		private int points;
 		private CustomerType customerType;
 		private String fullName;
+		private List<String> visitedObjects;
+		
 		
 		public UserBuilder(String username, String password, String name, String last_name, Gender gender, String birthDate,
-				UserType userType, Boolean active) {
+				UserType userType, Boolean active, String visitedObjectsID) {
 			this.username = username;
 			this.password = password;
 			this.name = name;
@@ -178,6 +201,15 @@ public class User implements Serializable{
 			this.userType = userType;
 			this.active=active;
 			this.fullName=name+" "+last_name;
+			this.visitedObjectsID=visitedObjectsID;
+			if(visitedObjectsID!=null)
+			{
+				String[] v=visitedObjectsID.split(";");
+				this.visitedObjects=new ArrayList<>();
+				for(String visited:v) {
+					this.visitedObjects.add(visited);
+				}
+			}
 		}
 		public Boolean getActive() {
 			return active;
@@ -190,7 +222,7 @@ public class User implements Serializable{
 			this.sportsObjectID=sportsObjectID;
 			return this;
 		}	
-		public UserBuilder visitedObjects(String visitedObjects)
+		public UserBuilder visitedObjectsID(String visitedObjects)
 		{
 			this.visitedObjectsID=visitedObjects;
 			return this;

@@ -43,16 +43,19 @@ public class UserDAO {
 		return users.values();
 	}
 	public void registerCustomer(User u){
+		u.setActive(true);
 		u.setUserType(UserType.CUSTOMER);
 		users.put(u.getUsername(), u);
 		saveUser(u);
 	}
 	public void registerTrainer(User u){
+		u.setActive(true);
 		u.setUserType(UserType.TRAINER);
 		users.put(u.getUsername(), u);
 		saveUser(u);
 	}
 	public void registerManager(User u){
+		u.setActive(true);
 		u.setUserType(UserType.MANAGER);
 		users.put(u.getUsername(), u);
 		saveUser(u);
@@ -84,7 +87,6 @@ public class UserDAO {
 	}
 	
 	private void saveUser(User u) {
-		FileOutputStream outputStream;
 		try {
 			
 			String str = u.toString();
@@ -167,9 +169,9 @@ public class UserDAO {
 				SimpleDateFormat parser = new SimpleDateFormat("dd.MM.yyyy.");
 		        Date date = parser.parse(birth_date);
 				User user= new User.UserBuilder(username,password,name,last_name,genderEnum,
-						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active))
+						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active),visitedObjects)
 						.customerType(CustomerType.valueOf(customerType)).points(Integer.parseInt(points))
-						.sportsObject(sportsObjectID).visitedObjects(visitedObjects).build();
+						.sportsObject(sportsObjectID).build();
 				users.put(user.getUsername(), user);
 			}
 		} catch (Exception e) {
@@ -223,6 +225,27 @@ public class UserDAO {
 			return "false";
 		}
 		return "true";
+	}
+
+	public void assignManager(User manager, SportsObject s) {
+		manager.setSportsObjectID(s.getId());
+		editUser(manager);
+	}
+
+	public String getUserType(User user) {
+		return user.getUserType().toString();
+	}
+
+	public Collection<User> getVisitors(String sportsObjectID) {
+		List<User> ret=new ArrayList<>();
+		for(User u:getUserCollection()) {
+			if(u.getUserType()!=UserType.CUSTOMER) continue;
+			if(u.getVisitedObjects()==null) continue;
+			for(String obj:u.getVisitedObjects()) {
+				if(obj.equals(sportsObjectID)) ret.add(u);
+			}
+		}
+		return ret;
 	}
 
 }

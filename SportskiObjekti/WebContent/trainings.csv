@@ -1,2 +1,5 @@
-trening1,tip1,0,15,1, ,x
-trening2,tip2,1,20,1, , x
+1,trening1,GROUP,0,15,tibbers, ,x
+2,trening2,PERSONAL,1,20,tibbers, , x
+3,trening3,PERSONAL,1,20,tibbers, , x
+4,trening4,GROUP,1,15,tibbers, ,x
+5,trening5,GROUP,1,15,tibbers, ,x

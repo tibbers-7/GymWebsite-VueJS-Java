@@ -77,24 +77,6 @@ public class SportsObjectDAO {
 			return sportsObjects.get(Integer.parseInt(sportsObjectID));
 		}
 		
-		private void saveObjects() {
-			try {
-				String str="";
-			    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath+"/sportsObjects.csv", true));
-			    writer.write("");
-			    for (SportsObject o : getSportsObjectsCollection()) {
-					str=o.toString();
-					writer.append(str);
-					writer.append("\n");
-			    }
-			    writer.close();
-			    
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-			
-				e.printStackTrace();
-			}
-		}
 		
 
 		public SportsObjectDAO() {
@@ -119,7 +101,7 @@ public class SportsObjectDAO {
 			for(int i:sportsObjects.keySet()) {
 				if(i>largest) largest=i;
 			} 
-			s.setId(Integer.toString(largest++));
+			s.setId(Integer.toString(++largest));
 		}
 
 		private void loadSportsObjects() {
@@ -169,7 +151,22 @@ public class SportsObjectDAO {
 				}}
 			}
 		
-
+		private void saveObjects() {
+			try {
+				String str="";
+			    BufferedWriter writer = new BufferedWriter(new FileWriter(sportsObjectsPath+"/sportsObjects.csv"));
+			    writer.write("");
+			    for (SportsObject s : getSportsObjectsCollection()) {
+					str=s.toString();
+					writer.append(str);
+					writer.append("\n");
+			    }
+			    writer.close();
+			    
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	public Collection<String> getTypes() {
 		List<String> ret=new ArrayList<>();

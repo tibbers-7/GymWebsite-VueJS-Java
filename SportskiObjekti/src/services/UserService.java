@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Membership;
+import beans.SportsObject;
 import beans.User;
 import data.MembershipDAO;
 import data.UserDAO;
@@ -85,6 +86,16 @@ public class UserService {
 		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 		return userDAO.getFreeManagers();
 		
+	}
+	
+	@GET
+	@Path("/getVisitors")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getVisitors() {
+		HttpSession session = request.getSession();
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		User manager=(User) session.getAttribute("activeUser");
+		return userDAO.getVisitors(manager.getSportsObjectID());
 	}
 
 	@POST
@@ -170,6 +181,7 @@ public class UserService {
 			return Response.status(400).entity("Username koji ste uneli vec je zauzet.").build();
 		} else {
 			userDAO.registerManager(userToRegister);
+			context.setAttribute("manager", userToRegister);
 			return Response.status(200).entity(userToRegister).build();
 		}
 	}
@@ -247,6 +259,17 @@ public class UserService {
 		return user;
 		
 	}
+	@GET
+	@Path("/getUserType")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getUserType() {
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		HttpSession session = request.getSession();
+		User user=(User) session.getAttribute("activeUser");
+		if (user==null) return "";
+		return userDAO.getUserType(user);
+		
+	}
 	
 	@GET
 	@Path("/getTrainers")
@@ -267,6 +290,18 @@ public class UserService {
 		}
 	
 	}
+	
+	@POST
+	@Path("/assignManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response assignManager(SportsObject s) {
+		UserDAO dao = (UserDAO) context.getAttribute("userDAO");
+		User manager=(User)context.getAttribute("manager");
+		dao.assignManager(manager,s);
+		return Response.status(200).build();
+	}
+	
 	
 	
 	

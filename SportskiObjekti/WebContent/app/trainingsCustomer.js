@@ -23,11 +23,12 @@ Vue.component("trainings-customer", {
 			
 			
     	<div class="barBase">
-		    <table style="width: 20%;" style="position:relative;top:-22%;">
+		    <table class="barTable" >
 		        <tr >
 		            <th align="left"  class="header_item"><button class="barButton"  v-on:click="homePage()"><p class="inactive">Naši Objekti</p></button></th>
 			        <th align="left"  class="header_item"><button class="barButton"><p class="active">Moji Treninzi</p></button></th>
 			        <th align="left" class="header_item"><button class="barButton" v-on:click="memberships()"><p class="inactive">Moje članarine</p></button></th>
+			        <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 		        </tr>
 		    </table>
 		</div>
@@ -56,14 +57,10 @@ Vue.component("trainings-customer", {
     </div>
     	`,
 	mounted() {
-		axios
-         .get('rest/user/activeUser')
-         .then(response => { 
-			this.customer = response.data;
 			axios
-			.post('rest/trainings/getByCustomer', this.customer)
+			.get('rest/trainings/getByCustomer')
 			.then(response => this.trainings = response.data); 
-			});
+			
 	},
 	
 	methods: {
@@ -71,6 +68,8 @@ Vue.component("trainings-customer", {
 			router.push(`/`);
 		},
 		memberships: function(){
+			axios
+				.post('rest/memberships/postUser',this.customer);
 			router.push(`/cm`);
 		},
 		homePage: function(){
@@ -78,7 +77,10 @@ Vue.component("trainings-customer", {
 		},
 		addTraining: function(){
 			router.push(`/at`);
-		}
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
 	}
 		
 		

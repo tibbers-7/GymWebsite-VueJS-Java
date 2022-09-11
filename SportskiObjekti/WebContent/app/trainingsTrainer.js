@@ -79,15 +79,14 @@ Vue.component("trainings-trainer", {
 	mounted() {
 		axios
          .get('rest/user/activeUser')
-         .then(response => { 
-			this.trainer = response.data;
-			axios
-			.post('rest/trainings/getByTrainerPersonal', this.trainer)
-			.then(response => this.personalTrainings = response.data); 
-			axios
-			.post('rest/trainings/getByTrainerGroup', this.trainer)
-			.then(response => this.groupTrainings = response.data); 
-			});
+         .then(response =>  this.trainer = response.data);
+		axios
+		.get('rest/trainings/getByTrainerPersonal')
+		.then(response => this.personalTrainings = response.data); 
+		axios
+		.get('rest/trainings/getByTrainerGroup')
+		.then(response => this.groupTrainings = response.data); 
+		
 	},
 	
 	methods: {
