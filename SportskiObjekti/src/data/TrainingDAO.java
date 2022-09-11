@@ -277,4 +277,20 @@ public class TrainingDAO{
 			ret.add(t.toString());
 		} return ret;
 	}
+
+	public Collection<String> getTrainers(String sportsObjectID) {
+		List<String> ret=new ArrayList<>();
+		for(ScheduledTraining t:getScheduledTrainingCollection()) {
+			if(t.getsObject().equals(sportsObjectID)) {
+				boolean alreadyExists=false;
+				for(String trainer:ret) {
+					if (trainer.equals(t.getTrainer())) alreadyExists=true;
+				}
+				
+				if(!alreadyExists) ret.add(t.getTrainer());
+			}
+		}
+		
+		return ret;
+	}
 }

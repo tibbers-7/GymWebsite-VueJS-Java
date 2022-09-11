@@ -77,6 +77,15 @@ public class TrainingService {
 		return dao.getScheduledTrainingsByCustomer(customer.getUsername());
 	}
 	
+	@GET
+	@Path("/getTrainers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<String> getTrainers() {
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		User manager=(User)ctx.getAttribute("activeUser");
+		return dao.getTrainers(manager.getSportsObjectID());
+	}
+	
 	@POST
 	@Path("/getByTrainerPersonal")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -139,6 +148,7 @@ public class TrainingService {
 	@POST
 	@Path("/setActiveUser")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response setActiveUser(User user) {
 		ctx.setAttribute("activeUser", user);
 		return Response.status(200).build();

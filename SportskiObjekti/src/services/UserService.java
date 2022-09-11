@@ -87,6 +87,16 @@ public class UserService {
 		return userDAO.getFreeManagers();
 		
 	}
+	
+	@GET
+	@Path("/getVisitors")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getVisitors() {
+		HttpSession session = request.getSession();
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		User manager=(User) session.getAttribute("activeUser");
+		return userDAO.getVisitors(manager.getSportsObjectID());
+	}
 
 	@POST
 	@Path("/login")

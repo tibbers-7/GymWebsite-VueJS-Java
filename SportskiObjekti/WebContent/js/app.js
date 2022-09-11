@@ -22,6 +22,7 @@ const AddTraining ={template: '<add-training></add-training>'}
 const AddTrainingManager ={template: '<add-training-manager></add-training-manager>'}
 const AddUser ={template: '<add-user></add-user>'}
 const ShowMembership = {template: '<show-membership></show-membership>'}
+const VisitorsObject = {template: '<visitors-object></visitors-object>'}
 
 
 const router = new VueRouter({
@@ -52,6 +53,7 @@ const router = new VueRouter({
 		{ path: '/atm', component: AddTrainingManager},
 		{ path: '/au', component: AddUser},
 	    { path: '/shm', component: ShowMembership },
+	    { path: '/vo', component: VisitorsObject },
 
 	   
 	  ]

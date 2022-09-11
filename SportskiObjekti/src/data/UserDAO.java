@@ -169,9 +169,9 @@ public class UserDAO {
 				SimpleDateFormat parser = new SimpleDateFormat("dd.MM.yyyy.");
 		        Date date = parser.parse(birth_date);
 				User user= new User.UserBuilder(username,password,name,last_name,genderEnum,
-						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active))
+						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active),visitedObjects)
 						.customerType(CustomerType.valueOf(customerType)).points(Integer.parseInt(points))
-						.sportsObject(sportsObjectID).visitedObjects(visitedObjects).build();
+						.sportsObject(sportsObjectID).build();
 				users.put(user.getUsername(), user);
 			}
 		} catch (Exception e) {
@@ -234,6 +234,18 @@ public class UserDAO {
 
 	public String getUserType(User user) {
 		return user.getUserType().toString();
+	}
+
+	public Collection<User> getVisitors(String sportsObjectID) {
+		List<User> ret=new ArrayList<>();
+		for(User u:getUserCollection()) {
+			if(u.getUserType()!=UserType.CUSTOMER) continue;
+			if(u.getVisitedObjects()==null) continue;
+			for(String obj:u.getVisitedObjects()) {
+				if(obj.equals(sportsObjectID)) ret.add(u);
+			}
+		}
+		return ret;
 	}
 
 }
