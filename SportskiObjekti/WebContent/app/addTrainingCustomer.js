@@ -24,7 +24,6 @@ Vue.component("add-training", {
                     </div>
                     <div class="Name"><h1> Fitness </h1></div>
                     <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
-
         </div>
             
             
@@ -44,7 +43,6 @@ Vue.component("add-training", {
         <div class="backBtn3_grid">
             <button style="position:relative;left:200px;border:none;background: transparent;" v-on:click="goBack()"><img src="images/back.png" class="back_img"></img></button>
         </div>
-
         <table class="register_container" style="margin-left:70%;line-height:5px;">
             <tr>
                 <td class="credential_labels" align="center">Trener</td>
@@ -77,7 +75,7 @@ Vue.component("add-training", {
                 <td align="center">
                     <select class="selectBox" v-model="chosenTraining" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
-					    <option v-for="training in trainings" :value="training" >{{training.name}}</option>
+					    <option v-for="content in cont" :value="content">{{content.name}}</option>
 					 </select>  
                 </td>
             </tr>
@@ -89,7 +87,6 @@ Vue.component("add-training", {
            
         </table>
 	</div>
-
 </div>    
     	`,
 	mounted() {
@@ -120,30 +117,23 @@ Vue.component("add-training", {
 			router.push(`/pro`);
 		},
 		
-		onChange:function(object){
+		onChange:function(chosenObject){
+			axios
+					.post('rest/trainings/getByObject',chosenObject)
+					.then(response => this.cont=response.data); 
 			
-	        axios
-	                .post('rest/trainings/getByObject',object)
-	                .then(response => (this.trainings=response.data)); 
-	        
-	    },
+    	},
+    	
     	addTraining: function(){
 				axios
-					.post('rest/memberships/checkByObject',this.chosenObject)
-					.then(response => {
-						toast(response.data);
-						if(response.status!=400){
-							axios
-							.post('rest/trainings/addTraining',
-									{ "user": this.customer.username,
-									  "sObject": this.chosenObject.id,
-									  "trainer":this.chosenTrainer.username,
-									  "training": this.chosenTraining
-									})
-							.then(response => (toast(response.data))); 
-							}
-						});
-				
+					.post('rest/trainings/addTraining',
+							{ "user": this.customer.username,
+							  "sObject": this.chosenObject.id,
+							  "trainer":this.chosenTrainer.username,
+							  "training": this.chosenTraining
+							})
+					.then(response => (toast(response.data))); 
+					
 		}
 		
 	}
