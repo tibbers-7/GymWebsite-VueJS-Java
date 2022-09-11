@@ -132,7 +132,7 @@ margin-left: 30%;
     background: -webkit-linear-gradient(90deg, hsla(359, 68%, 22%, 1) 0%, hsla(0, 50%, 2%, 1) 100%);
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#5D1213", endColorstr="#090303", GradientType=1 );
     color: #E0FBFC;
-    height: 10%;
+    height: 70px;
   }
 
 .barButton {

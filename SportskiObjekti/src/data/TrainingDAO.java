@@ -78,8 +78,8 @@ public class TrainingDAO{
 		try {
 			String str = t.trainingString();
 		    BufferedWriter writer = new BufferedWriter(new FileWriter(trainingFilepath + "/scheduledTrainings.csv",true));
-		    writer.append(str);
 		    writer.append("\n");
+		    writer.append(str);
 		    writer.close();
 		    return "Uspešno dodat trening!";
 		} catch (IOException e) {

@@ -176,6 +176,8 @@ Vue.component("customer-SP", {
 		},
 		
 		trainings: function(){
+			axios.
+				post('rest/trainings/setActiveUser',this.customer);
 			router.push(`/ct`);
 		},
 		memberships: function(){

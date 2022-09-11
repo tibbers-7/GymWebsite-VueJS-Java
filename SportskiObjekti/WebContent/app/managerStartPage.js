@@ -120,7 +120,7 @@ Vue.component("manager-SP", {
 		},
 		
 		trainingsShow: function(){
-			axios.post('rest/trainings/setActiveManager',this.manager);
+			axios.post('rest/trainings/setActiveUser',this.manager);
 			router.push(`/mt`);
 		},
 		objectShow: function(){

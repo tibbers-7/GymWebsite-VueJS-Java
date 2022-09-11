@@ -108,7 +108,7 @@ Vue.component("manager-object", {
 		},
 		
 		trainingsShow: function(){
-			axios.post('rest/trainings/setActiveManager',this.manager);
+			axios.post('rest/trainings/setActiveUser',this.manager);
 			router.push(`/mt`);
 		},
 		selectContent: function(selectedService){

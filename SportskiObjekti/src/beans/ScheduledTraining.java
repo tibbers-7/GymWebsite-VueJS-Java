@@ -27,21 +27,14 @@ public class ScheduledTraining  implements Serializable{
 		this.user = user;
 		this.trainer = trainer;
 		this.sObject=sObject;
-		switch(type) {
-		case "P":
-			this.type=TrainingType.PERSONAL;
-			break;
-		case "G":
-			this.type=TrainingType.GROUP;
-			break;
-		default:
-			this.type=TrainingType.OTHER;
+		this.type=TrainingType.valueOf(type);
 		}
-	}
+	
 	
 	
 	public ScheduledTraining() {
-}
+		super();
+	}
 
 
 	public ScheduledTraining(int id,LocalDateTime dateTime, String training, String user, String trainer, String sObject, TrainingType type) {

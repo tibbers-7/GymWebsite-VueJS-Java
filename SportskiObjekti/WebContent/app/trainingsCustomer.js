@@ -57,14 +57,10 @@ Vue.component("trainings-customer", {
     </div>
     	`,
 	mounted() {
-		axios
-         .get('rest/user/activeUser')
-         .then(response => { 
-			this.customer = response.data;
 			axios
-			.post('rest/trainings/getByCustomer', this.customer)
+			.get('rest/trainings/getByCustomer')
 			.then(response => this.trainings = response.data); 
-			});
+			
 	},
 	
 	methods: {

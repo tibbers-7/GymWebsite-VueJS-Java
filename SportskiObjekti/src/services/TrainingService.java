@@ -62,18 +62,18 @@ public class TrainingService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Training> getByManager() {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
-		User manager=(User)ctx.getAttribute("manager");
+		User manager=(User)ctx.getAttribute("activeUser");
 		return dao.getTrainingsByObject(manager.getSportsObjectID());
 	}
 	
 	
 	
-	@POST
+	@GET
 	@Path("/getByCustomer")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Collection<ScheduledTraining> getByCustomer(User customer) {
+	public Collection<ScheduledTraining> getByCustomer() {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		User customer=(User)ctx.getAttribute("activeUser");
 		return dao.getScheduledTrainingsByCustomer(customer.getUsername());
 	}
 	
@@ -137,10 +137,10 @@ public class TrainingService {
 	}
 	
 	@POST
-	@Path("/setActiveManager")
+	@Path("/setActiveUser")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response setActiveManager(User manager) {
-		ctx.setAttribute("manager", manager);
+	public Response setActiveUser(User user) {
+		ctx.setAttribute("activeUser", user);
 		return Response.status(200).build();
 	}
 }

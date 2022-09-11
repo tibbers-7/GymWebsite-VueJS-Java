@@ -21,15 +21,14 @@ Vue.component("add-training-manager", {
             <img src="images/logo.png"style="height: 115px; width: 115px;"/>
         </div>
         <div class="Name"><h1> Fitness </h1></div>
-        <div class="Login"><button class="Button"   v-on:click="goHome()" >Početna strana</button></div>
-        <div class="Register"><button class="Button" v-on:click="logIn()">Ulogujte se</button></div>
+        <div class="Register"><button class="Button"  v-on:click="logOut()">Odjavite se</button></div>
         
         </div>
 
         <div class="barBase">
         <table style="width: 20%;">
             <tr>
-                <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
+                <th align="left"  class="header_item"><button class="barButton" v-on:click="homePage()"><p class="inactive">Naši Objekti</p></button></th>
                 <th align="left"  class="header_item"><button class="barButton"  v-on:click="objectShow()"><p class="inactive">Moj Sportski Objekat</p></button></th>
                 <th align="left"  class="header_item"><button class="barButton"  v-on:click="trainingsShow()"><p class="inactive">Treninzi</p></button></th>
                 <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
@@ -117,11 +116,16 @@ Vue.component("add-training-manager", {
 		homePage: function(){
 			router.push(`/tsp`);
 		},
-		trainings: function(){
-			router.push(`/tt`);
+		trainingsShow: function(){
+			axios.post('rest/trainings/setActiveManager',this.manager);
+			router.push(`/mt`);
 		},
 		profile: function(){
 			router.push(`/pro`);
+		},
+		objectShow:function(){
+			axios.post('rest/sportsobjects/setActiveManager',this.manager);
+			router.push(`/ovm`);
 		},
     	
     	addTraining: function(){
