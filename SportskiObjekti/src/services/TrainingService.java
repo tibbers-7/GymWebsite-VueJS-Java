@@ -86,12 +86,12 @@ public class TrainingService {
 		return dao.getTrainers(manager.getSportsObjectID());
 	}
 	
-	@POST
+	@GET
 	@Path("/getByTrainerPersonal")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Collection<ScheduledTraining> getByTrainerPersonal(User trainer) {
+	public Collection<ScheduledTraining> getByTrainerPersonal() {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		User trainer=(User)ctx.getAttribute("activeUser");
 		return dao.getPersonalTrainingsByTrainer(trainer.getUsername());
 	}
 	
@@ -114,12 +114,12 @@ public class TrainingService {
 		return Response.status(200).build();
 	}
 	
-	@POST
+	@GET
 	@Path("/getByTrainerGroup")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Collection<ScheduledTraining> getByTrainerGroup(User trainer) {
+	public Collection<ScheduledTraining> getByTrainerGroup() {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		User trainer=(User)ctx.getAttribute("activeUser");
 		return dao.getGroupTrainingsByTrainer(trainer.getUsername());
 	}
 	

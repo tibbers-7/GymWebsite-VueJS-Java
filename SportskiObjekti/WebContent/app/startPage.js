@@ -33,7 +33,7 @@ Vue.component("start-page", {
 			</div>
 			
 		<div class="barBase">
-	    <table style="width: 20%;">
+	    <table class="barTable">
 	        <tr>
 	            <th align="left"  class="header_item"><button class="barButton">Naši Objekti</button></th>
 	        </tr>

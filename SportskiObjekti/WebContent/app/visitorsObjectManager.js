@@ -22,12 +22,13 @@ Vue.component("visitors-object", {
 
 
 <div class="barBase">
-    <table style="width: 20%;">
+    <table class="barTable">
         <tr>
             <th align="left"  class="header_item"><button class="barButton" v-on:click="goHome()"><p class="inactive">Naši Objekti</p></button></th>
             <th align="left"  class="header_item"><button class="barButton" v-on:click="showObject()"><p class="inactive">Moj Sportski Objekat</p></button></th>
             <th align="left"  class="header_item"><button class="barButton"  v-on:click="trainingsShow()"><p class="inactive">Treninzi</p></button></th>
             <th align="left"  class="header_item"><button class="barButton"><p class="active">Posetioci</p></button></th>
+            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
         </tr>
     </table>
 </div>
@@ -35,7 +36,7 @@ Vue.component("visitors-object", {
 <div class="visitorsObject">
     <div class="trainingsObject_grid">
         <div class="commentsM_grid">
-            <table class="table" style="width:500px;margin-left:170px;margin-top:-50px">
+            <table class="table" style="width:500px">
                 <tr class="table-header" >
                     <th class="header__item">Treneri</th>
                 </tr>
@@ -48,8 +49,8 @@ Vue.component("visitors-object", {
         </div>
     </div>
     <div class="customersObject_grid">
-        <div class="commentsM_grid" style="margin-top:-35px;margin-left:700px">
-            <table class="table" style="width:500px;">
+        <div class="commentsM_grid">
+            <table class="table" style="width:500px;margin-top:-40px;margin-left:-300px;">
                 <tr class="table-header" >
                     <th class="header__item">Kupci</th>
                 </tr>
@@ -89,6 +90,13 @@ Vue.component("visitors-object", {
 		},
 		goHome: function(){
 			router.push(`/msp`);
-		}
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
+		showObject: function(){
+			axios.post('rest/sportsobjects/setActiveManager',this.manager);
+			router.push(`/ovm`);
+		},
 	}
 });

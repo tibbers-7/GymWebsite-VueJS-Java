@@ -23,7 +23,7 @@ Vue.component("trainings-customer", {
 			
 			
     	<div class="barBase">
-		    <table style="width: 20%;position:relative;top:-22%;">
+		    <table class="barTable" >
 		        <tr >
 		            <th align="left"  class="header_item"><button class="barButton"  v-on:click="homePage()"><p class="inactive">Naši Objekti</p></button></th>
 			        <th align="left"  class="header_item"><button class="barButton"><p class="active">Moji Treninzi</p></button></th>
@@ -68,6 +68,8 @@ Vue.component("trainings-customer", {
 			router.push(`/`);
 		},
 		memberships: function(){
+			axios
+				.post('rest/memberships/postUser',this.customer);
 			router.push(`/cm`);
 		},
 		homePage: function(){

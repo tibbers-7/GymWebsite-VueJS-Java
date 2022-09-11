@@ -34,7 +34,7 @@ Vue.component("customer-SP", {
 			
 			
     <div class="barBase">
-	    <table style="width: 20%;">
+	    <table class="barTable" >
 	        <tr>
 	            <th align="left"  class="header_item"><button class="barButton"><p class="active">Naši Objekti</p></button></th>
 	            <th align="left"  class="header_item"><button class="barButton" v-on:click="trainings()"><p class="inactive">Moji Treninzi</p></button></th>

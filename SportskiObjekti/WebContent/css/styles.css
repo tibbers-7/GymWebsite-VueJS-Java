@@ -134,6 +134,12 @@ margin-left: 30%;
     color: #E0FBFC;
     height: 70px;
   }
+  
+.barTable{
+	width: 20%;
+	position:relative;
+	top:-20px;
+}
 
 .barButton {
     background: transparent;
@@ -764,3 +770,14 @@ margin-left: 30%;
   .trainer_label { grid-area: trainer_label; }
   .manager_radio { grid-area: manager_radio; }
   .trainer_radio { grid-area: trainer_radio; }
+  
+  .customersObject_grid {
+  display: grid; 
+  grid-template-columns: 0.5fr 0.5fr; 
+  grid-template-rows: 1fr; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "trainingsObject_grid customersObject_grid"; 
+}
+.trainingsObject_grid { grid-area: trainingsObject_grid; }
+.customersObject_grid { grid-area: customersObject_grid; }

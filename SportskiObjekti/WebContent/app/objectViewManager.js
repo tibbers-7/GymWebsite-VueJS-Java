@@ -23,11 +23,13 @@ Vue.component("manager-object", {
 		
 		
 		<div class="barBase">
-		    <table style="width: 20%;">
+		    <table class="barTable">
 		        <tr>
 		            <th align="left"  class="header_item"><button class="barButton" v-on:click="goHome()"><p class="inactive">Naši Objekti</p></button></th>
 					<th align="left"  class="header_item"><button class="barButton" ><p class="active">Moj Sportski Objekat</p></button></th>
 					<th align="left"  class="header_item"><button class="barButton"  v-on:click="trainingsShow()"><p class="inactive">Treninzi</p></button></th>
+					<th align="left"  class="header_item"><button class="barButton" v-on:click="visitorsShow()"><p class="inactive">Posetioci</p></button></th>
+			            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 		        </tr>
 		    </table>
 		</div>
@@ -126,6 +128,13 @@ Vue.component("manager-object", {
 		},
 		goHome: function(){
 			router.push(`/msp`);
+		},
+		profile: function(){
+			router.push(`/pro`);
+		},
+		visitorsShow:function(){
+			axios.post('rest/trainings/setActiveUser',this.manager);
+			router.push(`/vo`);
 		}
 	}
 });
