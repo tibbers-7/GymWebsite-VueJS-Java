@@ -105,15 +105,12 @@ MembershipDAO membershipDAO;
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response setSelected(Membership mem) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-		mem.setPayDate(LocalDate.parse(mem.getPayDateString(),formatter));
-		mem.setValidUntil(LocalDate.parse(mem.getValidUntilString(),formatter));
 		context.setAttribute("selectedMem", mem);
 		return Response.status(200).build();
 	}
 	
 	@GET
-	@Path("getSelected")
+	@Path("/getSelected")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Membership getSelected() {
 		return (Membership)context.getAttribute("selectedMem");

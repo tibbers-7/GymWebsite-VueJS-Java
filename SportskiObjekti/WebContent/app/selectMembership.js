@@ -69,7 +69,15 @@ Vue.component("select-membership", {
 		
 		showMembership:function(mem){
 			axios
-	         .post('rest/memberships/setSelected',mem)
+	         .post('rest/memberships/setSelected',{
+					membershipType:mem.getMembershipType,
+					price:mem.price,
+					allowedNumber:mem.allowedNumber,
+					payDate:null,
+					validUntil:null				
+					
+		}
+	)
 	         .then(response => (toast(response.data)));
 	        router.push(`/shm`);
 			

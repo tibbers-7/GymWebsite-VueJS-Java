@@ -117,6 +117,13 @@ public class SportsObjectService {
 		dao.addSportsObject(object);
 		return Response.status(200).entity(object).build();
 	}
+	@POST
+	@Path("/setActiveManager")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response setActiveManager(User manager) {
+		context.setAttribute("activeUser", manager);
+		return Response.status(200).build();
+	}
 	
 	@POST
 	@Path("/setActiveManager")

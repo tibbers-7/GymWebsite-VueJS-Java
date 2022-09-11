@@ -86,7 +86,16 @@ Vue.component("memberships-customer", {
 			.then(response => {
 						this.membership = response.data;
 						axios
-							.post('rest/user/rememberMembership',response.data) //sacuvaj korisnikovu clanarinu u kontekst
+							.post('rest/user/rememberMembership',{
+								"membershipType": response.data.membershipType,
+								"payDateString": response.data.payDateString,
+								"validUntilString": response.data.validUntilString,
+								"price": response.data.price,
+								"customerID": response.data.customerID,
+								"status": response.data.status,
+								"allowedNumber": response.data.allowedNumber,
+								"sportsObject": response.data.sportsObject
+							}) //sacuvaj korisnikovu clanarinu u kontekst
 							.then(response => {toast(response)});	
 						}); 
 			});
