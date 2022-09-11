@@ -51,10 +51,10 @@ public class TrainingDAO{
 		    writer.append(str);
 		    writer.append("\n");
 		    writer.close();
-		    return "Uspešno dodat trening!";
+		    return "Uspeï¿½no dodat trening!";
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "Neuspešan upis u fajl";
+			return "Neuspeï¿½an upis u fajl";
 		}
 	}
 	
@@ -81,10 +81,10 @@ public class TrainingDAO{
 		    writer.append("\n");
 		    writer.append(str);
 		    writer.close();
-		    return "Uspešno dodat trening!";
+		    return "Uspeï¿½no dodat trening!";
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "Neuspešan upis u fajl";
+			return "Neuspeï¿½an upis u fajl";
 		}
 	}
 	
@@ -190,6 +190,7 @@ public class TrainingDAO{
 			}}
 		}
 	
+
 	private void loadScheduledTrainings() {
 		BufferedReader in = null;
 		try {
@@ -214,7 +215,10 @@ public class TrainingDAO{
 					sObject = st.nextToken().trim();
 					type = st.nextToken().trim();
 				}
+				if(scheduledTrainingCollection.containsKey(Integer.parseInt(id)))
+					continue;
 				ScheduledTraining t=new ScheduledTraining(id,dateTime,training,user,trainer,sObject,type);
+				System.out.println(t.toString());
 				addScheduledTraining(t);
 			}
 		} catch (Exception e) {
