@@ -129,17 +129,21 @@ Vue.component("add-training", {
 	    },
     	addTraining: function(){
 				axios
-					.post('rest/memberships/checkByObject',this.chosenObject.id)
-					.then(response => toast(response.data));
-				axios
-					.post('rest/trainings/addTraining',
-							{ "user": this.customer.username,
-							  "sObject": this.chosenObject.id,
-							  "trainer":this.chosenTrainer.username,
-							  "training": this.chosenTraining
-							})
-					.then(response => (toast(response.data))); 
-					
+					.post('rest/memberships/checkByObject',this.chosenObject)
+					.then(response => {
+						toast(response.data);
+						if(response.status!=400){
+							axios
+							.post('rest/trainings/addTraining',
+									{ "user": this.customer.username,
+									  "sObject": this.chosenObject.id,
+									  "trainer":this.chosenTrainer.username,
+									  "training": this.chosenTraining
+									})
+							.then(response => (toast(response.data))); 
+							}
+						});
+				
 		}
 		
 	}

@@ -181,5 +181,18 @@ public class MembershipDAO {
 		}
 		return null;
 	}
+
+	public int checkMembership(String objId, User user) {
+		Membership mem=null;
+		for(Membership m:getMembershipCollection()) {
+			if(m.getCustomerID().equals(user.getUsername())) mem=m;
+		}
+		if (mem==null) return 1;
+		if(mem.getSportsObject().equals(objId)) {
+			mem.removePoint();
+			return 0;
+		} 
+		return 2; //nema u tom obj
+	}
 	
 }

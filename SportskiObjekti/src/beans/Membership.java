@@ -55,7 +55,9 @@ public class Membership implements Serializable{
 	public void setAllowedNumber(int allowedNumber) {
 		this.allowedNumber = allowedNumber;
 	}
-	
+	public void removePoint() {
+		this.allowedNumber--;
+	}
 	public String getPayDateString() {
 		return payDateString;
 	}

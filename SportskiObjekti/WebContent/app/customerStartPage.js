@@ -191,11 +191,15 @@ Vue.component("customer-SP", {
 		},
 		
 		trainings: function(){
-			axios.
-				post('rest/trainings/setActiveUser',this.customer);
-			router.push(`/ct`);
+			axios
+				.post('rest/memberships/postUser',this.customer);
+			axios
+				.post('rest/trainings/setActiveUser',this.customer);
+				router.push(`/ct`);
 		},
 		memberships: function(){
+			axios
+				.post('rest/memberships/postUser',this.customer);
 			router.push(`/cm`);
 		},
 		profile: function(){
