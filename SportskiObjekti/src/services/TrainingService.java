@@ -111,7 +111,7 @@ public class TrainingService {
 	public Response addNewTraining(Training training) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
 		dao.addTraining(training);
-		return Response.status(200).build();
+		return Response.status(200).entity(training.getName()).build();
 	}
 	
 	@GET
