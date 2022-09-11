@@ -79,7 +79,7 @@ Vue.component("show-membership", {
 	         .then(response => (toast(response.data)));
 			
 			axios
-	         .post('rest/memberships/addMembership',this.mem)
+	         .post('rest/memberships/addMembership')
 	         .then(response => (toast(response.data)));
 			
 		},

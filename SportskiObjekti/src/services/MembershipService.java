@@ -22,6 +22,7 @@ import beans.User;
 import data.MembershipDAO;
 import data.SportsObjectDAO;
 import data.UserDAO;
+import data.utils.MembershipType;
 
 
 @Path("/memberships")
@@ -125,10 +126,15 @@ MembershipDAO membershipDAO;
 	@Path("/addMembership")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addMembership(Membership mem) {
+	public Response addMembership() {
 		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
 		User customer=(User)context.getAttribute("currentUser");
-		membershipDAO.addMembership(customer,mem);
+		Membership membership=(Membership)context.getAttribute("selectedMem");
+		membership.setPayDate(LocalDate.now());
+		if(membership.getMembershipType()==MembershipType.YEARLY)
+			membership.setValidUntil(LocalDate.now().plusYears(1));
+		else membership.setValidUntil(LocalDate.now().plusMonths(1));
+		membershipDAO.addMembership(customer,membership);
 		return Response.status(200).build();
 
 	}
