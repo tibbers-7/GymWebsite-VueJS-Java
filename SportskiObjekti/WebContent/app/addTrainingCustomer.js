@@ -77,7 +77,7 @@ Vue.component("add-training", {
                 <td align="center">
                     <select class="selectBox" v-model="chosenTraining" style="width:60%;">
 					    <option disabled value="">Odaberite</option>
-					    <option v-for="content in cont" :value="content">{{content.name}}</option>
+					    <option v-for="training in trainings" :value="training" >{{training.name}}</option>
 					 </select>  
                 </td>
             </tr>
@@ -120,14 +120,17 @@ Vue.component("add-training", {
 			router.push(`/pro`);
 		},
 		
-		onChange:function(chosenObject){
-			axios
-					.post('rest/trainings/getByObject',chosenObject)
-					.then(response => this.cont=response.data); 
+		onChange:function(object){
 			
-    	},
-    	
+	        axios
+	                .post('rest/trainings/getByObject',object)
+	                .then(response => (this.trainings=response.data)); 
+	        
+	    },
     	addTraining: function(){
+				axios
+					.post('rest/memberships/checkByObject',this.chosenObject.id)
+					.then(response => toast(response.data));
 				axios
 					.post('rest/trainings/addTraining',
 							{ "user": this.customer.username,

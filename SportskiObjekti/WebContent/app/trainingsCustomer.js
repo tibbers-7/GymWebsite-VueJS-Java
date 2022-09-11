@@ -23,7 +23,7 @@ Vue.component("trainings-customer", {
 			
 			
     	<div class="barBase">
-		    <table style="width: 20%;" style="position:relative;top:-22%;">
+		    <table style="width: 20%;position:relative;top:-22%;">
 		        <tr >
 		            <th align="left"  class="header_item"><button class="barButton"  v-on:click="homePage()"><p class="inactive">Naši Objekti</p></button></th>
 			        <th align="left"  class="header_item"><button class="barButton"><p class="active">Moji Treninzi</p></button></th>

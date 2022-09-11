@@ -125,6 +125,7 @@ public class TrainingService {
 	
 	@POST
 	@Path("/getByObject")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Training> getByObject(SportsObject s) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
