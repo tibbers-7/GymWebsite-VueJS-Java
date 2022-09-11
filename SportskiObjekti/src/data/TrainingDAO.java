@@ -42,6 +42,20 @@ public class TrainingDAO{
 	public void addTraining(Training t) {
 		if(t.getId()==0) setNextKey(t);
 		trainingCollection.put(t.getId(), t);
+		saveTraining(t);
+	}
+	private String saveTraining(Training t) {
+		try {
+			String str = t.getString();
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(trainingFilepath + "/trainings.csv", true));
+		    writer.append(str);
+		    writer.append("\n");
+		    writer.close();
+		    return "Uspešno dodat trening!";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Neuspešan upis u fajl";
+		}
 	}
 	
 	private void setNextKey(Training t) {
@@ -58,12 +72,12 @@ public class TrainingDAO{
 			t.setId(idScheduled);
 		}
 		scheduledTrainingCollection.put(t.getId(), t);
-		return saveTraining(t);
+		return saveScheduledTraining(t);
 	}
-	private String saveTraining(ScheduledTraining t) {
+	private String saveScheduledTraining(ScheduledTraining t) {
 		try {
 			String str = t.trainingString();
-		    BufferedWriter writer = new BufferedWriter(new FileWriter(trainingFilepath + "/scheduledTrainings.csv", true));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(trainingFilepath + "/scheduledTrainings.csv",true));
 		    writer.append(str);
 		    writer.append("\n");
 		    writer.close();
@@ -77,7 +91,7 @@ public class TrainingDAO{
 	private void saveScheduled() {
 		try {
 			String str="";
-		    BufferedWriter writer = new BufferedWriter(new FileWriter("/scheduledTrainings.csv", true));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter("/scheduledTrainings.csv"));
 		    writer.write("");
 		    for (ScheduledTraining s : getScheduledTrainingCollection()) {
 				str=s.trainingString();
@@ -162,8 +176,7 @@ public class TrainingDAO{
 					description = st.nextToken().trim();
 					image = st.nextToken().trim();
 				}
-				String imgFilepath=trainingFilepath+"/images/"+image;
-				Training t=new Training(id,name,type,object,duration,trainerID,description,imgFilepath);
+				Training t=new Training(id,name,type,object,duration,trainerID,description,image);
 				addTraining(t);
 			}
 		} catch (Exception e) {

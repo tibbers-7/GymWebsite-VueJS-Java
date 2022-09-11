@@ -96,6 +96,16 @@ public class TrainingService {
 	}
 	
 	@POST
+	@Path("/addNewTraining")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addNewTraining(Training training) {
+		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
+		dao.addTraining(training);
+		return Response.status(200).build();
+	}
+	
+	@POST
 	@Path("/getByTrainerGroup")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)

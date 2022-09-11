@@ -21,6 +21,15 @@ public Training(String id,String name, String type, String sObject, String durat
 	this.image = image;
 }
 
+public String getString() {
+	//1,trening1,GROUP,0,15,tibbers, ,x
+	if(description==null) description=" ";
+	if(image==null) image="x";
+	String ret=Integer.toString(id)+","+name+","+type+","+sObject+","+duration+","+trainerID+","+description+","+image;
+	return ret;
+	
+}
+
 
 public Training() {
 	super();
