@@ -1,5 +1,6 @@
 package services;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -58,15 +59,17 @@ MembershipDAO membershipDAO;
 	    return membershipDAO.getAvailable();
 	}
 	
-	@POST
+	@GET
 	@Path("/getMembership")
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMembership(User customer) {
+	public Response getMembership() {
+		User customer=(User)context.getAttribute("currentUser");
 		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
 		Membership mem=membershipDAO.getByUser(customer.getUsername());
-		Membership memOriginal=membershipDAO.getOriginal(mem);
-		context.setAttribute("ogMem", memOriginal);
+		if(mem!=null) {
+			Membership memOriginal=membershipDAO.getOriginal(mem);
+			context.setAttribute("ogMem", memOriginal);
+		}
 		return Response.status(200).entity(mem).build();
 
 	}
