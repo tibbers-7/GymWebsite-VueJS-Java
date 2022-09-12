@@ -82,7 +82,7 @@ Vue.component("memberships-customer", {
          .then(response => { 
 			this.customer = response.data;
 			axios
-			.post('rest/memberships/getMembership', this.customer) //dobavi njegovu clanarinu
+			.get('rest/memberships/getMembership') //dobavi njegovu clanarinu
 			.then(response => {
 						this.membership = response.data;
 						axios

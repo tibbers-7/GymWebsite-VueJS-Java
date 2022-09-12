@@ -1,6 +1,7 @@
 package services;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -59,13 +60,14 @@ MembershipDAO membershipDAO;
 	    return membershipDAO.getAvailable();
 	}
 	
-	@POST
+	@GET
 	@Path("/getMembership")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMembership(User customer) {
+	public Response getMembership() {
 		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
-		Membership mem=membershipDAO.getByUser(customer.getUsername());
+		User user=(User)context.getAttribute("currentUser");
+		Membership mem=membershipDAO.getByUser(user.getUsername());
 		return Response.status(200).entity(mem).build();
 
 	}
@@ -148,9 +150,12 @@ MembershipDAO membershipDAO;
 		User customer=(User)context.getAttribute("currentUser");
 		Membership membership=(Membership)context.getAttribute("selectedMem");
 		membership.setPayDate(LocalDate.now());
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 		if(membership.getMembershipType()==MembershipType.YEARLY)
 			membership.setValidUntil(LocalDate.now().plusYears(1));
 		else membership.setValidUntil(LocalDate.now().plusMonths(1));
+		membership.setValidUntilString(membership.getValidUntil().format(formatter));
+		membership.setPayDateString(membership.getPayDate().format(formatter));
 		membershipDAO.addMembership(customer,membership);
 		return Response.status(200).build();
 
