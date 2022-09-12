@@ -116,6 +116,7 @@ MembershipDAO membershipDAO;
 				return Response.status(200).entity(res).build();
 			case 1:res="Nemate nijednu aktivnu članarinu!";break;
 			case 2:res="Nemate važeću članarinu u odabranom objektu!";break;
+			case 3:res="Nemate više termina!";break;
 		}
 		return Response.status(400).entity(res).build();
 	}

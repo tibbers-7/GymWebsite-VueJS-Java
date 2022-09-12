@@ -198,7 +198,7 @@ public class MembershipDAO {
 		}
 		if (mem==null) return 1;
 		if(mem.getSportsObject().equals(objId)) {
-			if(mem.getAllowedNumber())
+			if(mem.getAllowedNumber()==0) return 3;
 			mem.removePoint();
 			return 0;
 		} 
