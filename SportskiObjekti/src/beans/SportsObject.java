@@ -44,6 +44,7 @@ public class SportsObject  implements Serializable{
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	public void setLocation(String location) {
 		this.location = location;
 	}
@@ -74,7 +75,8 @@ public class SportsObject  implements Serializable{
 		this.type = type;
 		this.services = services;
 		this.isOpen = isOpen;
-		this.location = location;
+		this.fullLocation=new Location(location);
+		this.location=this.fullLocation.Address;
 		this.avgScore = avgScore;
 		this.logoPath = logoPath;
 		this.openHours = openHours;
@@ -86,7 +88,7 @@ public class SportsObject  implements Serializable{
 		if (isOpen==null) isOpen=false;
 		if (logoPath!=null) logoStr=logoPath.substring(7);
 		if (openHours!=null) openHrsStr=openHours;
-		return id + ", "+ name + ", " + type + ", " + getServicesString() + ", " + isOpen + ", " + location + ", " + avgScore + ","
+		return id + ", "+ name + ", " + type + ", " + getServicesString() + ", " + isOpen + ", " + fullLocation.toString() + ", " + avgScore + ","
 				+ openHrsStr+","+logoStr;
 	}
 	
@@ -94,10 +96,12 @@ public class SportsObject  implements Serializable{
 	private String name;
 	private List<String> services;
 	private Boolean isOpen;
-	private String location;
+	private Location fullLocation;
 	private float avgScore;
 	private String logoPath;
 	private String openHours;
+	private String location;
+	
 	public SportsObject() {
 		super();
 	}

@@ -115,7 +115,7 @@ public class Membership implements Serializable{
 			LocalDate validUntil, String validUntilString, int price, String customerID, Status status,
 			int allowedNumber, String sportsObject) {
 		super();
-		ID = iD;
+		this.ID = iD;
 		this.name = name;
 		this.membershipType = membershipType;
 		this.payDate = payDate;
@@ -130,6 +130,7 @@ public class Membership implements Serializable{
 	}
 	public Membership(String id,String name,String type, String sportsObject, String createdDate,String validUntil, String price, String customerID, String status,
 			String allowedNumber) {
+		this.ID=Integer.parseInt(id);
 		this.status=Status.INACTIVE;
 		if(status=="ACTIVE") this.status=Status.ACTIVE;
 		this.name=name;
@@ -168,7 +169,7 @@ public class Membership implements Serializable{
 			case "M": this.membershipType=MembershipType.MONTHLY;break;
 			default: this.membershipType=MembershipType.OTHER; }
 		this.price=Integer.parseInt(cena);
-		this.status=Status.INACTIVE;
+		this.status=Status.ACTIVE;
 		this.allowedNumber=Integer.parseInt(allowedUntil);
 		this.customerID="/";this.status=Status.INACTIVE;
 		this.sportsObject=sportsObject;
@@ -180,6 +181,7 @@ public class Membership implements Serializable{
 		
 	}
 	public String getMembershipString() {
+		
 		String s= ID+","+name+","+membershipType+","+sportsObject+","+payDateString+","+validUntilString+","+Integer.toString(price)+","+customerID+","+status.toString()+","+Integer.toString(allowedNumber);
 		return s;
 	}
