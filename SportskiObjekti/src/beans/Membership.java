@@ -181,6 +181,7 @@ public class Membership implements Serializable{
 		
 	}
 	public String getMembershipString() {
+		
 		String s= ID+","+name+","+membershipType+","+sportsObject+","+payDateString+","+validUntilString+","+Integer.toString(price)+","+customerID+","+status.toString()+","+Integer.toString(allowedNumber);
 		return s;
 	}

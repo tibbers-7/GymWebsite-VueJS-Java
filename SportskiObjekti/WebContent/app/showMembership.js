@@ -32,14 +32,13 @@ Vue.component("show-membership", {
     	</div>
 
 
-	<div class="selectedMem_grid" >
+	<div>
     	<div class="back_Btn_grid">
-	        <button v-on:click="goBack()" style="background: transparent; border: none;"><img src="back.png" class="back_img0"></img></button>
+	        <button v-on:click="goBack()" style="background: transparent; border: none;"><img src="images/back.png" class="back_img0"></img></button>
 	    </div>
-    <div class="selectedMem_info">
-        <div class="objectView_container" style="width:60%;" >
+        <div class="objectView_container" style="width:300px;" >
             
-            <div class="grid_name" style="width:100%">Članarina</div>
+            <div class="grid_name" style="width:300px">Članarina</div>
             <div class="headers">
                 <ul style="list-style:none">
                     <li>Tip:</li>
@@ -56,10 +55,9 @@ Vue.component("show-membership", {
             </div>
         </div>
     </div>
-    <div class="chooseMem_Btn">
-        <button class="button2" v-on:click="chooseMembership()">Odaberi</button>
+    <div>
+        <button class="button2" style="margin-left:100px" v-on:click="chooseMembership()">Odaberi</button>
     </div>
-</div>
 
     </div>
     	`,
