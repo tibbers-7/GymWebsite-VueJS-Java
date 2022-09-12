@@ -1,6 +1,8 @@
 package data;
 import beans.Membership;
 import beans.User;
+import data.utils.MembershipType;
+import data.utils.Status;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -42,7 +44,7 @@ public class MembershipDAO {
 		this.memberFilepath = memberFilePath;
 	}
 	
-	public void addMembership(User customer, Membership newMem) {
+	public Membership addMembership(User customer, Membership newMem) {
 		Membership memToDelete=null;
 		for(Membership m: getMembershipCollection()) {
 			if(m.getCustomerID().equals(customer.getUsername())){
@@ -50,10 +52,16 @@ public class MembershipDAO {
 			}
 		}
 		if(memToDelete!=null) members.remove(memToDelete.getID());
+		newMem.setPayDate(LocalDate.now());
+		if(newMem.getMembershipType()==MembershipType.YEARLY)
+			newMem.setValidUntil(LocalDate.now().plusYears(1));
+		else newMem.setValidUntil(LocalDate.now().plusMonths(1));
 		newMem.setCustomerID(customer.getUsername());
+		newMem.setStatus(Status.ACTIVE);
 		newMem.setID(getNextKey());
 		members.put(newMem.getID(), newMem);
 		saveMemberships();
+		return newMem;
 		
 	}
 	
@@ -96,6 +104,7 @@ public class MembershipDAO {
 	}
 	public Membership getByUser(String username) {
 		for(Membership m : getMembershipCollection()) {
+			if(m.getStatus()==Status.INACTIVE) continue;
 			if(m.getCustomerID().equals(username)) return m;
 		}
 		return null;

@@ -149,12 +149,10 @@ MembershipDAO membershipDAO;
 		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
 		User customer=(User)context.getAttribute("currentUser");
 		Membership membership=(Membership)context.getAttribute("selectedMem");
-		membership.setPayDate(LocalDate.now());
-		if(membership.getMembershipType()==MembershipType.YEARLY)
-			membership.setValidUntil(LocalDate.now().plusYears(1));
-		else membership.setValidUntil(LocalDate.now().plusMonths(1));
-		membershipDAO.addMembership(customer,membership);
-		return Response.status(200).build();
+		
+		
+		membership=membershipDAO.addMembership(customer,membership);
+		return Response.status(200).entity(membership).build();
 
 	}
 	
