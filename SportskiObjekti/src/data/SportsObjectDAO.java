@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.StringTokenizer;
 
 import beans.SportsObject;
@@ -129,7 +130,8 @@ public class SportsObjectDAO {
 						imgName = st.nextToken().trim();
 					}
 					Boolean isOpen_=false;
-					if(isOpen.equals("true")) isOpen_=true;
+					String [] hours=openHours.split("-");
+					if(LocalDateTime.now().getHour()>=Integer.parseInt(hours[0])&&LocalDateTime.now().getHour()<=Integer.parseInt(hours[1])) isOpen_=true;
 					
 					String[] servicesStrings=services.split("-");
 					List<String> servicesList=new ArrayList<String>();
