@@ -1,9 +1,8 @@
 package data;
-import beans.CustomerType;
 import beans.Membership;
 import beans.SportsObject;
 import beans.User;
-import data.utils.CustomerTypeEnum;
+import data.utils.CustomerType;
 import data.utils.DateTools;
 import data.utils.Gender;
 import data.utils.UserType;
@@ -30,31 +29,14 @@ import java.util.StringTokenizer;
 public class UserDAO {
 
 	private HashMap<String, User> users=new HashMap<>();
-	private List<CustomerType> customerTypes;
 	private String userFilepath="";
 
 	public UserDAO(String filePath) {
 
 		this.setUsers(new HashMap<String, User>());
 		this.setFilepath(filePath);
-		initTypes();
 		loadUsers();
 		
-	}
-	
-	private void initTypes() {
-		customerTypes=new ArrayList<>();
-		customerTypes.add(new CustomerType(CustomerTypeEnum.NONE,0,0));
-		customerTypes.add(new CustomerType(CustomerTypeEnum.BRONZE,5000,5));
-		customerTypes.add(new CustomerType(CustomerTypeEnum.SILVER,10000,10));
-		customerTypes.add(new CustomerType(CustomerTypeEnum.GOLD,20000,20));
-	}
-	
-	private CustomerTypeEnum getCustomerType(int points) {
-		CustomerTypeEnum ret=CustomerTypeEnum.NONE;
-		for(CustomerType c:customerTypes) {
-			if(points>=c.getRequiredPoints()) ret=c.getName();
-		} return ret;
 	}
 	
 	public Collection<User> getUserCollection() {
@@ -188,7 +170,7 @@ public class UserDAO {
 		        Date date = parser.parse(birth_date);
 				User user= new User.UserBuilder(username,password,name,last_name,genderEnum,
 						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active),visitedObjects)
-						.customerType(getCustomerType(Integer.parseInt(points))).points(Integer.parseInt(points))
+						.customerType(CustomerType.valueOf(customerType)).points(Integer.parseInt(points))
 						.sportsObject(sportsObjectID).build();
 				users.put(user.getUsername(), user);
 			}
@@ -223,7 +205,7 @@ public class UserDAO {
 		return ret;
 	}
 
-	public boolean checkMembership(User customer, Membership mem,Membership ogMem) {
+	public String checkMembership(User customer, Membership mem,Membership ogMem) {
 		LocalDate now=LocalDate.now();
 		
 		if(now.isAfter(mem.getValidUntil())) {
@@ -231,20 +213,18 @@ public class UserDAO {
 			int numUsed=ogMem.getAllowedNumber()-mem.getAllowedNumber();
 			int oneThird=ogMem.getAllowedNumber()/3;
 			
-			int newPoints=0;
 			//broj_izgubljenih_bodova = ukupna_cena_Ä�lanarine/1000 * 133 * 4
 			if(numUsed<oneThird) {
 				int pointsLost=(mem.getPrice()/1000)*133*4;
-				newPoints=customer.getPoints()-pointsLost;
-				if(newPoints<0) newPoints=0;
-			} else newPoints=customer.getPoints()+totalPoints;
-			customer.setPoints(newPoints);
-			customer.setCustomerType(getCustomerType(newPoints));
+				totalPoints=totalPoints-pointsLost;
+			}
 			
+			int newPoints=customer.getPoints()+totalPoints;
+			customer.setPoints(newPoints);
 			editUser(customer);
-			return false;
+			return "false";
 		}
-		return true;
+		return "true";
 	}
 
 	public void assignManager(User manager, SportsObject s) {

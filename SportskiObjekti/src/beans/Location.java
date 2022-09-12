@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Location implements Serializable {
 @Override
 	public String toString() {
-	return Double.toString(GeoWidth)+Double.toString(GeoLength)+Address;
+		return GeoWidth + ", " + GeoLength + ", " + Address;
 	}
 /**
 	 * 
@@ -46,4 +46,3 @@ public Location(String location) {
 double GeoLength;
 String Address;
 }
-

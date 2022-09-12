@@ -37,7 +37,7 @@ Vue.component("show-membership", {
 	        <button v-on:click="goBack()" style="background: transparent; border: none;"><img src="back.png" class="back_img0"></img></button>
 	    </div>
     <div class="selectedMem_info">
-        <div class="objectView_container" style="width:300px;" >
+        <div class="objectView_container" style="width:60%;" >
             
             <div class="grid_name" style="width:100%">Članarina</div>
             <div class="headers">
@@ -81,7 +81,7 @@ Vue.component("show-membership", {
 			axios
 	         .post('rest/memberships/addMembership')
 	         .then(response => (toast(response.data)));
-			router.push(`/cm`);
+			
 		},
 		goBack:function(){
 			router.push(`/sm`);

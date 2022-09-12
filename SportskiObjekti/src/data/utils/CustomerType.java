@@ -1,6 +1,6 @@
 package data.utils;
 
-public enum CustomerTypeEnum {
+public enum CustomerType {
 	BRONZE,
 	SILVER,
 	GOLD,

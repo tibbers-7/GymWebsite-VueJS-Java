@@ -20,7 +20,7 @@ import beans.SportsObject;
 import beans.User;
 import data.MembershipDAO;
 import data.UserDAO;
-import data.utils.CustomerTypeEnum;
+import data.utils.CustomerType;
 import data.utils.UserType;
 
 
@@ -235,23 +235,16 @@ public class UserService {
 		return Response.status(200).build();
 	}
 	
-	@GET
+	@POST
 	@Path("/checkMembership")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Membership checkMembership() {
-		HttpSession session = request.getSession();
-		User user=(User)session.getAttribute("activeUser");
+	public Response checkMembership(Membership ogMem) {
 
 		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
-		MembershipDAO memDAO=(MembershipDAO)context.getAttribute("membershipDAO");
-		Membership mem=memDAO.getByUser(user.getUsername());
-		Membership ogMem=memDAO.getOriginal(mem);
-		
-		if(!userDAO.checkMembership(user,mem,ogMem)) {
-			memDAO.cancelMembership(user);
-			mem=null;
-		}
-		return mem;
+		Membership mem=(Membership)context.getAttribute("currentMembership");
+		String isValid=userDAO.checkMembership((User)context.getAttribute("activeCustomer"),mem,ogMem);
+		return Response.status(200).entity(isValid).build();
 	}
 	
 

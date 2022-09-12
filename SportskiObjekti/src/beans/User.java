@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import data.utils.CustomerTypeEnum;
+import data.utils.CustomerType;
 import data.utils.Gender;
 import data.utils.UserType;
 
@@ -26,7 +26,7 @@ public class User implements Serializable{
 	
 	public User(String username, String password, String name, String last_name, Gender gender, String birthDate,
 			UserType userType, String sportsObjectID, String visitedObjects,
-			int points, CustomerTypeEnum customerType) {
+			int points, CustomerType customerType) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -126,10 +126,10 @@ public class User implements Serializable{
 	public void setPoints(int points) {
 		this.points = points;
 	}
-	public CustomerTypeEnum getCustomerType() {
+	public CustomerType getCustomerType() {
 		return customerType;
 	}
-	public void setCustomerType(CustomerTypeEnum customerType) {
+	public void setCustomerType(CustomerType customerType) {
 		this.customerType = customerType;
 	}
 	public String getFullName() {
@@ -168,7 +168,7 @@ public class User implements Serializable{
 	private String sportsObjectID;
 	private String visitedObjectsID;
 	private int points;
-	private CustomerTypeEnum customerType;
+	private CustomerType customerType;
 	private String fullName;
 	private List<String> visitedObjects;
 	
@@ -185,7 +185,7 @@ public class User implements Serializable{
 		private String sportsObjectID;
 		private String visitedObjectsID;
 		private int points;
-		private CustomerTypeEnum customerType;
+		private CustomerType customerType;
 		private String fullName;
 		private List<String> visitedObjects;
 		
@@ -232,7 +232,7 @@ public class User implements Serializable{
 			this.points=points;
 			return this;
 		}
-		public UserBuilder customerType(CustomerTypeEnum customerType)
+		public UserBuilder customerType(CustomerType customerType)
 		{
 			this.customerType=customerType;
 			return this;
