@@ -127,6 +127,8 @@ MembershipDAO membershipDAO;
 		s=s.substring(s.indexOf(':')+1,s.lastIndexOf('}'));
 		System.out.println(s);
 		Membership mem=membershipDAO.getByID(s);
+		User user=(User)context.getAttribute("currentUser");
+		mem.setCustomerID(user.getName());
 		context.setAttribute("selectedMem", mem);
 		System.out.println(mem.toString());
 		return Response.status(200).build();
