@@ -99,6 +99,7 @@ Vue.component("memberships-customer", {
 			this.customer = response.data;
 			});
 	
+	});
 	},	
 	
 	methods: {
