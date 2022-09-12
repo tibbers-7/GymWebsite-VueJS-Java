@@ -37,7 +37,9 @@ public class UserDAO {
 
 		this.setUsers(new HashMap<String, User>());
 		this.setFilepath(filePath);
+		initTypes();
 		loadUsers();
+		
 		
 	}
 	private void initTypes() {
@@ -119,7 +121,7 @@ public class UserDAO {
 	private void saveUsers() {
 		try {
 			String str="";
-		    BufferedWriter writer = new BufferedWriter(new FileWriter(userFilepath+"/users.csv", true));
+		    BufferedWriter writer = new BufferedWriter(new FileWriter(userFilepath+"/users.csv"));
 		    writer.write("");
 		    for (User u : getUserCollection()) {
 				str=u.toString();
@@ -221,7 +223,7 @@ public class UserDAO {
 		return ret;
 	}
 
-	public String checkMembership(User customer, Membership mem,Membership ogMem) {
+	public boolean checkMembership(User customer, Membership mem,Membership ogMem) {
 		LocalDate now=LocalDate.now();
 		
 		if(now.isAfter(mem.getValidUntil())) {
@@ -229,18 +231,20 @@ public class UserDAO {
 			int numUsed=ogMem.getAllowedNumber()-mem.getAllowedNumber();
 			int oneThird=ogMem.getAllowedNumber()/3;
 			
+			int newPoints=0;
 			//broj_izgubljenih_bodova = ukupna_cena_Ä�lanarine/1000 * 133 * 4
 			if(numUsed<oneThird) {
 				int pointsLost=(mem.getPrice()/1000)*133*4;
-				totalPoints=totalPoints-pointsLost;
-			}
-			
-			int newPoints=customer.getPoints()+totalPoints;
+				newPoints=customer.getPoints()-pointsLost;
+				if(newPoints<0) newPoints=0;
+			} else newPoints=customer.getPoints()+totalPoints;
 			customer.setPoints(newPoints);
+			customer.setCustomerType(getCustomerType(newPoints));
+			
 			editUser(customer);
-			return "false";
+			return false;
 		}
-		return "true";
+		return true;
 	}
 
 	public void assignManager(String username, SportsObject s) {
@@ -263,6 +267,10 @@ public class UserDAO {
 			}
 		}
 		return ret;
+	}
+	public int getPoints(String username) {
+		User u=searchUser(username);
+		return u.getPoints();
 	}
 
 }

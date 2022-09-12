@@ -130,8 +130,9 @@ public class Membership implements Serializable{
 	}
 	public Membership(String id,String name,String type, String sportsObject, String createdDate,String validUntil, String price, String customerID, String status,
 			String allowedNumber) {
+		this.ID=Integer.parseInt(id);
 		this.status=Status.INACTIVE;
-		if(status=="ACTIVE") this.status=Status.ACTIVE;
+		if(status.equals("A")|status.equals("ACTIVE")) this.status=Status.ACTIVE;
 		this.name=name;
 		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 		this.payDate=LocalDate.parse(createdDate,formatter);

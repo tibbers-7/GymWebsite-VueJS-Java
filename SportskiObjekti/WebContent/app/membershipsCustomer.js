@@ -1,12 +1,13 @@
 Vue.component("memberships-customer", {
 	data: function() {
 		return{
-		membership: null,
 		customer: null,
 		title: "Članarine",
 		text: "",
 		error: '',
-		show:true
+		show:true,
+		membership:{membershipType:"",payDateString:"",validUntilString:"",price:0,allowedNumber:0},
+		points:0
 		}
 	},
 	 template: ` 
@@ -30,9 +31,7 @@ Vue.component("memberships-customer", {
 		            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 		        </tr>
 		    </table>
-    	</div>
-		
-		
+    	
 	    <div class="membership_grid">
         <div class="active_membership">
             <div class="objectView_container" style="width:50%;margin-top:3%;margin-left:10%;">
@@ -61,7 +60,7 @@ Vue.component("memberships-customer", {
         <div class="points">
             <div class="points_container">
                 <div class="points_text">
-                Broj poena: {{customer.points}}
+                Broj poena: {{points}}
             </div>
             </div>
         </div>
@@ -76,54 +75,32 @@ Vue.component("memberships-customer", {
 
     </div>
     	`,
-	mounted() {
+    	
+    mounted(){
 		axios
-         .get('rest/user/activeUser')  //dobavi korisnika
-         .then(response => { 
-			this.customer = response.data;
-			axios
+	         .get('rest/user/activeUser')  //dobavi korisnika
+	         .then(response =>  
+				this.customer = response.data);
+		axios
 			.get('rest/memberships/getMembership') //dobavi njegovu clanarinu
 			.then(response => {
-						this.membership = response.data;
-						axios
-							.post('rest/user/rememberMembership',{
-								"membershipType": response.data.membershipType,
-								"payDateString": response.data.payDateString,
-								"validUntilString": response.data.validUntilString,
-								"price": response.data.price,
-								"customerID": response.data.customerID,
-								"status": response.data.status,
-								"allowedNumber": response.data.allowedNumber,
-								"sportsObject": response.data.sportsObject
-							}) //sacuvaj korisnikovu clanarinu u kontekst
-							.then(response => {toast(response)});	
-						}); 
-			});
-			
-				axios
-				.post('rest/user/checkMembership') //posalji original na proveru jel validna
-				.then(response => {
-					this.valid=Boolean.parse(response.data);
-					
-					if(!this.valid){
-						axios
-							.post('rest/memberships/cancelMembership', this.customer) //ako nije obrisi je
-							.then(response => {toast(response.status) }
-							)};
-						this.membership=null;
+				if (response.data!=null) this.membership=response.data;
 				});
-			
-			
-			
-			
-			
 		axios
-         .get('rest/user/activeUser')  //dobavi korisnika opet za refresh poena
+				.get('rest/user/checkMembership') //posalji original na proveru jel validna
+				.then(response => {
+					if(response.data===null){
+						this.membership={membershipType:"NEMA AKTIVNE",payDateString:"",validUntilString:"",price:"",allowedNumber:""}
+					}
+				});
+				
+		axios
+         .get('rest/user/getPoints')  //dobavi korisnika opet za refresh poena
          .then(response => { 
-			this.customer = response.data;
+			this.points = response.data;
 			});
-						
-	},
+	
+},	
 	
 	methods: {
 		logOut: function(){
@@ -152,10 +129,6 @@ Vue.component("memberships-customer", {
 			this.membership.allowedNumber="";
 		},
 		newMem: function(){
-						axios
-	         .post('rest/memberships/postUser',this.customer)
-	         .then(response => (toast(response.data)));
-			0
 			router.push(`/sm`);
 		},
 		profile: function(){

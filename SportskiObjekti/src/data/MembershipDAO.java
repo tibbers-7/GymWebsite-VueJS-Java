@@ -1,6 +1,7 @@
 package data;
 import beans.Membership;
 import beans.User;
+import data.utils.Status;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -43,13 +44,9 @@ public class MembershipDAO {
 	}
 	
 	public void addMembership(User customer, Membership newMem) {
-		Membership memToDelete=null;
-		for(Membership m: getMembershipCollection()) {
-			if(m.getCustomerID().equals(customer.getUsername())){
-				memToDelete=m;
-			}
-		}
-		if(memToDelete!=null) members.remove(memToDelete.getID());
+		Membership memToDelete=getByUser(customer.getUsername());
+		newMem.setStatus(Status.ACTIVE);
+		if(memToDelete!=null) cancelMembership(customer);
 		newMem.setCustomerID(customer.getUsername());
 		newMem.setID(getNextKey());
 		members.put(newMem.getID(), newMem);
@@ -96,7 +93,10 @@ public class MembershipDAO {
 	}
 	public Membership getByUser(String username) {
 		for(Membership m : getMembershipCollection()) {
-			if(m.getCustomerID().equals(username)) return m;
+			if(m.getCustomerID().equals(username)) {
+				if(m.getStatus()!=Status.INACTIVE)
+					return m;
+			}
 		}
 		return null;
 	}
@@ -163,12 +163,14 @@ public class MembershipDAO {
 	public void cancelMembership(User customer) {
 		Membership mem=getByUser(customer.getUsername());
 		members.remove(mem.getID());
+		mem.setStatus(Status.INACTIVE);
+		members.put(mem.getID(), mem);
 		saveMemberships();
 	}
 
 	public Membership getOriginal(Membership mem) {
 		for(Membership m:getMembershipCollection()) {
-			if(m.getCustomerID()==null) {
+			if(m.getCustomerID()==null|m.getCustomerID().equals("/")) {
 				if(m.getName().equals(mem.getName())) return m;
 			}
 		}
@@ -183,15 +185,14 @@ public class MembershipDAO {
 	}
 
 	public int checkMembership(String objId, User user) {
-		Membership mem=null;
-		for(Membership m:getMembershipCollection()) {
-			if(m.getCustomerID().equals(user.getUsername())) mem=m;
-		}
+		Membership mem=getByUser(user.getUsername());
 		if (mem==null) return 1;
 		if(mem.getSportsObject().equals(objId)) {
+			if(user.getPoints()==0) return 3;
 			mem.removePoint();
 			return 0;
 		} 
+		
 		return 2; //nema u tom obj
 	}
 	

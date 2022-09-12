@@ -145,9 +145,11 @@ public class User implements Serializable{
 	}
 	@Override
 	public String toString() {
+		String visited="/";
+		if (visitedObjects!=null | !visitedObjects.isEmpty()) visited=visitedObjectsID;
 		
 		return username + ", " + password + ", " + name + ", " + last_name + ", " + gender + ", " + birthDate + ", "
-				+ active + ", " + userType  + ", " + sportsObjectID + ", " + visitedObjectsID
+				+ active + ", " + userType  + ", " + sportsObjectID + ", " + visited
 				+ ", " + points + ", " + customerTypeEnum;
 	}
 	private String username;
@@ -234,6 +236,11 @@ public class User implements Serializable{
 			User user=new User(this);
 			return user;
 		}
+	}
+
+	public void setCustomerType(CustomerTypeEnum customerType) {
+		this.customerTypeEnum=customerType;
+		
 	}
 
 	

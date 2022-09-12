@@ -45,6 +45,17 @@ public class UserService {
 		return userDAO.getUserCollection();
 	}
 	
+	@GET
+	@Path("/getPoints")
+	@Produces(MediaType.APPLICATION_JSON)
+	public int getPoints() {
+		HttpSession session = request.getSession();
+		User user=(User) session.getAttribute("activeUser");
+
+		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
+		return userDAO.getPoints(user.getUsername());
+	}
+	
 	
 		
 	@GET
@@ -238,13 +249,14 @@ public class UserService {
 	@GET
 	@Path("/checkMembership")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response checkMembership() {
+	public Membership checkMembership() {
 		HttpSession session = request.getSession();
 		User user=(User)session.getAttribute("activeUser");
 
 		UserDAO userDAO = (UserDAO) context.getAttribute("userDAO");
 		MembershipDAO memDAO=(MembershipDAO)context.getAttribute("membershipDAO");
 		Membership mem=memDAO.getByUser(user.getUsername());
+		if (mem==null) return null;
 		Membership ogMem=memDAO.getOriginal(mem);
 		
 		if(!userDAO.checkMembership(user,mem,ogMem)) {
