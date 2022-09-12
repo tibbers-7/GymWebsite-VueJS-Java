@@ -1,12 +1,12 @@
 Vue.component("memberships-customer", {
 	data: function() {
 		return{
+		membership: null,
 		customer: null,
 		title: "Članarine",
 		text: "",
 		error: '',
-		show:true,
-		membership:{membershipType:"",payDateString:"",validUntilString:"",price:0,allowedNumber:0}
+		show:true
 		}
 	},
 	 template: ` 
@@ -30,7 +30,9 @@ Vue.component("memberships-customer", {
 		            <th align="left"  class="header_item"><button class="barButton" v-on:click="profile()"><p class="inactive" >Moj profil</p></button></th>
 		        </tr>
 		    </table>
-    	
+    	</div>
+		
+		
 	    <div class="membership_grid">
         <div class="active_membership">
             <div class="objectView_container" style="width:50%;margin-top:3%;margin-left:10%;">
@@ -74,8 +76,7 @@ Vue.component("memberships-customer", {
 
     </div>
     	`,
-    	
-    mounted(){
+	mounted() {
 		axios
          .get('rest/user/activeUser')  //dobavi korisnika
          .then(response => { 
@@ -83,24 +84,51 @@ Vue.component("memberships-customer", {
 			axios
 			.get('rest/memberships/getMembership') //dobavi njegovu clanarinu
 			.then(response => {
-				if (response.data!=null) this.membership=response.data;
-				});
-		axios
-				.get('rest/user/checkMembership') //posalji original na proveru jel validna
+						this.membership = response.data;
+						axios
+							.post('rest/user/rememberMembership',{
+								"membershipType": response.data.membershipType,
+								"payDateString": response.data.payDateString,
+								"validUntilString": response.data.validUntilString,
+								"price": response.data.price,
+								"customerID": response.data.customerID,
+								"status": response.data.status,
+								"allowedNumber": response.data.allowedNumber,
+								"sportsObject": response.data.sportsObject
+							}) //sacuvaj korisnikovu clanarinu u kontekst
+							.then(response => {toast(response)});	
+						}); 
+			});
+			
+			axios
+	         .get('rest/memberships/getOriginal')  //dobavi original da bi mogla provera
+	         .then(response => { 
+				this.ogMem=response.data;
+				axios
+				.post('rest/user/checkMembership',response.data) //posalji original na proveru jel validna
 				.then(response => {
-					if(response.data===null){
-						this.membership={membershipType:"NEMA AKTIVNE",payDateString:"",validUntilString:"",price:"",allowedNumber:""}
-					}
+					this.valid=Boolean.parse(response.data);
+					
+					if(!this.valid){
+						axios
+							.post('rest/memberships/cancelMembership', this.customer) //ako nije obrisi je
+							.then(response => {toast(response.status) }
+							)};
+						this.membership=null;
 				});
-				
+			});
+			
+			
+			
+			
+			
 		axios
          .get('rest/user/activeUser')  //dobavi korisnika opet za refresh poena
          .then(response => { 
 			this.customer = response.data;
 			});
-	
-	});
-	},	
+						
+	},
 	
 	methods: {
 		logOut: function(){
@@ -139,6 +167,7 @@ Vue.component("memberships-customer", {
 			router.push(`/pro`);
 		},
 	}
+		
+		
 	
 });
-

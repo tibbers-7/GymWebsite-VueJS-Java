@@ -26,7 +26,7 @@ public class User implements Serializable{
 	
 	public User(String username, String password, String name, String last_name, Gender gender, String birthDate,
 			UserType userType, String sportsObjectID, String visitedObjects,
-			int points, CustomerType customerType) {
+			int points) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -38,7 +38,6 @@ public class User implements Serializable{
 		this.sportsObjectID = sportsObjectID;
 		this.visitedObjectsID = visitedObjects;
 		this.points = points;
-		this.customerType = customerType;
 		this.fullName=name+" "+last_name;
 		if(!visitedObjectsID.equals(" ")|visitedObjectsID!=null)
 			{
@@ -62,7 +61,6 @@ public class User implements Serializable{
 		this.sportsObjectID = builder.sportsObjectID;
 		this.visitedObjectsID = builder.visitedObjectsID;
 		this.points = builder.points;
-		this.customerType = builder.customerType;
 		this.fullName=name+" "+last_name;
 		this.visitedObjects=builder.visitedObjects;
 	}
@@ -126,12 +124,7 @@ public class User implements Serializable{
 	public void setPoints(int points) {
 		this.points = points;
 	}
-	public CustomerType getCustomerType() {
-		return customerType;
-	}
-	public void setCustomerType(CustomerType customerType) {
-		this.customerType = customerType;
-	}
+
 	public String getFullName() {
 		return fullName;
 	}

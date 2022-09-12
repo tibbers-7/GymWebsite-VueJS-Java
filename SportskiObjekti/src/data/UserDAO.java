@@ -170,7 +170,7 @@ public class UserDAO {
 		        Date date = parser.parse(birth_date);
 				User user= new User.UserBuilder(username,password,name,last_name,genderEnum,
 						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active),visitedObjects)
-						.customerType(CustomerType.valueOf(customerType)).points(Integer.parseInt(points))
+						.points(Integer.parseInt(points))
 						.sportsObject(sportsObjectID).build();
 				users.put(user.getUsername(), user);
 			}
