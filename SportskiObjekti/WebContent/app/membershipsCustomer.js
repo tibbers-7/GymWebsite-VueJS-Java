@@ -157,6 +157,10 @@ Vue.component("memberships-customer", {
 			this.membership.allowedNumber="";
 		},
 		newMem: function(){
+						axios
+	         .post('rest/memberships/postUser',this.customer)
+	         .then(response => (toast(response.data)));
+			0
 			router.push(`/sm`);
 		},
 		profile: function(){

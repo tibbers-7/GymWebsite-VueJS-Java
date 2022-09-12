@@ -66,8 +66,6 @@ MembershipDAO membershipDAO;
 	public Response getMembership(User customer) {
 		MembershipDAO membershipDAO = (MembershipDAO) context.getAttribute("membershipDAO");
 		Membership mem=membershipDAO.getByUser(customer.getUsername());
-		Membership memOriginal=membershipDAO.getOriginal(mem);
-		context.setAttribute("ogMem", memOriginal);
 		return Response.status(200).entity(mem).build();
 
 	}

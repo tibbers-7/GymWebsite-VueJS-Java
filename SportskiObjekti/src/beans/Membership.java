@@ -30,6 +30,8 @@ public class Membership implements Serializable{
 	}
 	public void setValidUntil(LocalDate validUntil) {
 		this.validUntil = validUntil;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+		validUntilString=validUntil.format(formatter);
 	}
 	public int getPrice() {
 		return price;
@@ -83,6 +85,8 @@ public class Membership implements Serializable{
 	}
 	public void setPayDate(LocalDate payDate) {
 		this.payDate = payDate;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+		payDateString=payDate.format(formatter);
 	}
 
 	private int ID;
@@ -148,7 +152,7 @@ public class Membership implements Serializable{
 			break;
 		default:
 			this.membershipType=MembershipType.OTHER;
-			this.validUntil=LocalDate.parse(validUntil,formatter);
+			
 		}
 		
 		this.validUntilString = this.validUntil.format(formatter);
