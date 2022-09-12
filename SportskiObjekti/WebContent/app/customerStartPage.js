@@ -192,10 +192,8 @@ Vue.component("customer-SP", {
 		
 		trainings: function(){
 			axios
-				.post('rest/memberships/postUser',this.customer);
-			axios
-				.post('rest/trainings/setActiveUser',this.customer);
-				router.push(`/ct`);
+				.post('rest/trainings/setActiveUser',this.customer).then(
+				router.push(`/ct`));
 		},
 		memberships: function(){
 			axios

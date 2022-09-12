@@ -21,6 +21,7 @@ import beans.ScheduledTraining;
 import beans.SportsObject;
 import beans.Training;
 import beans.User;
+import data.MembershipDAO;
 import data.TrainingDAO;
 
 @Path("/trainings")
@@ -101,7 +102,11 @@ public class TrainingService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String addTraining(ScheduledTraining training) {
 		TrainingDAO dao = (TrainingDAO) ctx.getAttribute("trainingsDAO");
-		return dao.addScheduledTraining(training);
+		MembershipDAO memDAO= (MembershipDAO)ctx.getAttribute("membershipDAO");
+		if(memDAO.getByUser(training.getUser())!=null)
+			if(memDAO.getByUser(training.getUser()).getAllowedNumber()>0)
+				return dao.addScheduledTraining(training);
+		return "Nema dovoljno preostalih poseta ili nemate članarinu!";
 	}
 	
 	@POST

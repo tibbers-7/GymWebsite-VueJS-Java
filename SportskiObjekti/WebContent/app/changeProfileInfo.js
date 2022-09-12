@@ -61,7 +61,7 @@ Vue.component("info-change", {
 			</form>
     </div>
     <div class="passBackBtn_grid">
-        <button style="position:relative;margin-top:10%;left:500px;border:none;background: transparent;" v-on:click="goBack()"><img src="back.png" class="back_img"></img></button>
+        <button style="position:relative;margin-top:10%;left:500px;border:none;background: transparent;" v-on:click="goBack()"><img src="back.png" class="back_img" v-on:click="goBack()"></img></button>
     </div>
   </div>
     </div>

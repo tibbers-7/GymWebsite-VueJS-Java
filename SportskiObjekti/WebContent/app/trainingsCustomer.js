@@ -7,6 +7,12 @@ Vue.component("trainings-customer", {
 		title: "Treninzi",
 		text: "",
 		error: '',
+		search:"",
+		showingOpen:true,
+		selectedOpen:"",
+		showingType:'',
+		currentSort:'name',
+    	currentSortDir:'asc'
 		}
 	},
 	 template: ` 
@@ -56,7 +62,7 @@ Vue.component("trainings-customer", {
 
     </div>
     	`,
-	mounted() {
+	created() {
 			axios
 			.get('rest/trainings/getByCustomer')
 			.then(response => this.trainings = response.data); 
@@ -81,7 +87,29 @@ Vue.component("trainings-customer", {
 		profile: function(){
 			router.push(`/pro`);
 		},
-	}
+		sort:function(s) {
+      //if s == current sort, reverse
+      	if(s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+      		}
+      	this.currentSort = s;
+    	}
+		},
+		computed: {
+ //   filteredTrainings(){
+ //     return this.trainings.filter((el) => el.isOpen === this.showingOpen&& el.type.includes(this.showingType));
+//    },
+    sortedTrainings:function() {
+      return this.trainings.sort((a,b) => {
+        let modifier = 1;
+        if(this.currentSortDir === 'desc') modifier = -1;
+        if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        else if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
+    }
+  }
+	
 		
 		
 	
