@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import data.utils.CustomerType;
+import data.utils.CustomerTypeEnum;
 import data.utils.Gender;
 import data.utils.UserType;
 
@@ -148,7 +148,7 @@ public class User implements Serializable{
 		
 		return username + ", " + password + ", " + name + ", " + last_name + ", " + gender + ", " + birthDate + ", "
 				+ active + ", " + userType  + ", " + sportsObjectID + ", " + visitedObjectsID
-				+ ", " + points + ", " + customerType;
+				+ ", " + points + ", " + customerTypeEnum;
 	}
 	private String username;
 	private String password;
@@ -161,7 +161,7 @@ public class User implements Serializable{
 	private String sportsObjectID;
 	private String visitedObjectsID;
 	private int points;
-	private CustomerType customerType;
+	private CustomerTypeEnum customerTypeEnum;
 	private String fullName;
 	private List<String> visitedObjects;
 	
@@ -178,7 +178,7 @@ public class User implements Serializable{
 		private String sportsObjectID;
 		private String visitedObjectsID;
 		private int points;
-		private CustomerType customerType;
+		private CustomerTypeEnum customerTypeEnum;
 		private String fullName;
 		private List<String> visitedObjects;
 		
@@ -225,9 +225,9 @@ public class User implements Serializable{
 			this.points=points;
 			return this;
 		}
-		public UserBuilder customerType(CustomerType customerType)
+		public UserBuilder customerTypeEnum(CustomerTypeEnum customerTypeEnum)
 		{
-			this.customerType=customerType;
+			this.customerTypeEnum=customerTypeEnum;
 			return this;
 		}
 		public User build(){

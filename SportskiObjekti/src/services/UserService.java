@@ -20,7 +20,7 @@ import beans.SportsObject;
 import beans.User;
 import data.MembershipDAO;
 import data.UserDAO;
-import data.utils.CustomerType;
+import data.utils.CustomerTypeEnum;
 import data.utils.UserType;
 
 

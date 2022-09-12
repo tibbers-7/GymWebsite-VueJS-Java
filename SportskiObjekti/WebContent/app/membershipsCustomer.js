@@ -100,12 +100,8 @@ Vue.component("memberships-customer", {
 						}); 
 			});
 			
-			axios
-	         .get('rest/memberships/getOriginal')  //dobavi original da bi mogla provera
-	         .then(response => { 
-				this.ogMem=response.data;
 				axios
-				.post('rest/user/checkMembership',response.data) //posalji original na proveru jel validna
+				.post('rest/user/checkMembership') //posalji original na proveru jel validna
 				.then(response => {
 					this.valid=Boolean.parse(response.data);
 					
@@ -116,7 +112,6 @@ Vue.component("memberships-customer", {
 							)};
 						this.membership=null;
 				});
-			});
 			
 			
 			

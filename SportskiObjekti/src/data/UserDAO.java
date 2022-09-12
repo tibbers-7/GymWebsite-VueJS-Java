@@ -1,8 +1,9 @@
 package data;
+import beans.CustomerType;
 import beans.Membership;
 import beans.SportsObject;
 import beans.User;
-import data.utils.CustomerType;
+import data.utils.CustomerTypeEnum;
 import data.utils.DateTools;
 import data.utils.Gender;
 import data.utils.UserType;
@@ -30,6 +31,7 @@ public class UserDAO {
 
 	private HashMap<String, User> users=new HashMap<>();
 	private String userFilepath="";
+	private List<CustomerType> customerTypes;
 
 	public UserDAO(String filePath) {
 
@@ -37,6 +39,20 @@ public class UserDAO {
 		this.setFilepath(filePath);
 		loadUsers();
 		
+	}
+	private void initTypes() {
+		customerTypes=new ArrayList<>();
+		customerTypes.add(new CustomerType(CustomerTypeEnum.NONE,0,0));
+		customerTypes.add(new CustomerType(CustomerTypeEnum.BRONZE,5000,5));
+		customerTypes.add(new CustomerType(CustomerTypeEnum.SILVER,10000,10));
+		customerTypes.add(new CustomerType(CustomerTypeEnum.GOLD,20000,20));
+	}
+	
+	private CustomerTypeEnum getCustomerType(int points) {
+		CustomerTypeEnum ret=CustomerTypeEnum.NONE;
+		for(CustomerType c:customerTypes) {
+			if(points>=c.getRequiredPoints()) ret=c.getName();
+		} return ret;
 	}
 	
 	public Collection<User> getUserCollection() {
@@ -170,7 +186,7 @@ public class UserDAO {
 		        Date date = parser.parse(birth_date);
 				User user= new User.UserBuilder(username,password,name,last_name,genderEnum,
 						birth_date,UserType.valueOf(userType),Boolean.parseBoolean(active),visitedObjects)
-						.points(Integer.parseInt(points))
+						.points(Integer.parseInt(points)).customerTypeEnum(getCustomerType(Integer.parseInt(points)))
 						.sportsObject(sportsObjectID).build();
 				users.put(user.getUsername(), user);
 			}
