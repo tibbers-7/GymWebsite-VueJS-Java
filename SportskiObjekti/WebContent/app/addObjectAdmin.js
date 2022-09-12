@@ -93,7 +93,7 @@ Vue.component("add-object", {
          <div class="oldManager_grid" v-show="!newManager" style="margin-top:3%;">
             <select class="selectBox" style="margin-top:-65%;margin-left:-20%;width:300px" @change="selectManager($event)"> 
                 <option value="">Odaberite</option>
-				<option v-for="manager in managers" :value="manager.fullName">{{manager.fullName}}</option>
+				<option v-for="manager in managers" :value="manager.fullName" v-on:click="oldManagerChosen(manager)">{{manager.fullName}}</option>
             </select>  
          </div>
 
@@ -189,8 +189,10 @@ Vue.component("add-object", {
 				this.object=response.data;
 			});
 			
+			
+			
 			axios
-				.post('rest/user/assignManager',this.object)
+				.post('rest/sportsobjects/assignManager',this.chosenM.username)
 				.then(response => {
 					toast(response.data);
 			});
@@ -212,6 +214,10 @@ Vue.component("add-object", {
 						}
 					});
 			
+		},
+		
+		oldManagerChosen:function(manager){
+			this.addedManager=manager;
 		},
 		
 		goBack: function(){

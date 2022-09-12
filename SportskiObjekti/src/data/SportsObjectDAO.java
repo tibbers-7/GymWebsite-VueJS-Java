@@ -90,10 +90,11 @@ public class SportsObjectDAO {
 		}*/
 	
 
-		public void addSportsObject(SportsObject s) {
+		public SportsObject addSportsObject(SportsObject s) {
 			if(s.getId()==null) setNextKey(s);
 			sportsObjects.put(Integer.parseInt(s.getId()),s);
 			saveObjects();
+			return s;
 		}
 		
 		private void setNextKey(SportsObject s) {

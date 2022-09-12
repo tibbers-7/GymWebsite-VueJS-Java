@@ -305,7 +305,7 @@ public class UserService {
 	public Response assignManager(SportsObject s) {
 		UserDAO dao = (UserDAO) context.getAttribute("userDAO");
 		User manager=(User)context.getAttribute("manager");
-		dao.assignManager(manager,s);
+		dao.assignManager(manager.getUsername(),s);
 		return Response.status(200).build();
 	}
 	
