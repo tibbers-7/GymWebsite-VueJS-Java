@@ -227,7 +227,8 @@ public class UserDAO {
 		return "true";
 	}
 
-	public void assignManager(User manager, SportsObject s) {
+	public void assignManager(String username, SportsObject s) {
+		User manager=searchUser(username);
 		manager.setSportsObjectID(s.getId());
 		editUser(manager);
 	}

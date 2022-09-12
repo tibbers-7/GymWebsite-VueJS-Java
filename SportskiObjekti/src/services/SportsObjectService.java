@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import beans.SportsObject;
 import beans.User;
 import data.SportsObjectDAO;
+import data.UserDAO;
 
 @Path("/sportsobjects")
 public class SportsObjectService {
@@ -114,7 +115,19 @@ public class SportsObjectService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addNew(SportsObject object) {
 		SportsObjectDAO dao = (SportsObjectDAO) context.getAttribute("sportsObjectDAO");
-		dao.addSportsObject(object);
+		SportsObject fullObj=dao.addSportsObject(object);
+		context.setAttribute("newObject", fullObj);
+		return Response.status(200).entity(object).build();
+	}
+	
+	@POST
+	@Path("/assignManager")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response assignManager(String username) {
+		SportsObject object=(SportsObject)context.getAttribute("newObject");
+		UserDAO dao = (UserDAO) context.getAttribute("userDAO");
+		dao.assignManager(username, object);
 		return Response.status(200).entity(object).build();
 	}
 	@POST
