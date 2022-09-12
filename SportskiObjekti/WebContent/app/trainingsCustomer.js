@@ -2,7 +2,7 @@
 Vue.component("trainings-customer", {
 	data: function() {
 		return{
-		trainings: null,
+		trainings: [],
 		customer: null,
 		title: "Treninzi",
 		text: "",
@@ -46,12 +46,12 @@ Vue.component("trainings-customer", {
 		<div class="objectTable_grid" style="margin-top:2%;">
 		    <table class="table">
 		        <tr class="table-header" >
-		            <th class="header__item">Naziv</th>
-		            <th class="header__item">Objekat</th>
-		            <th class="header__item">Datum treniranja</th>
+		            <th class="header__item" v-on:click="sort(name)">Naziv</th>
+		            <th class="header__item" v-on:click="sort(sObject)">Objekat</th>
+		            <th class="header__item" v-on:click="sort(dateTimeString)">Datum treniranja</th>
 		        </tr>
 		        <div class="table-content">  
-		        <tr class="table-row"  v-for="(t, index) in trainings">
+		        <tr class="table-row"  v-for="(t, index) in sortedTrainings">
 		            <td class="table-data">{{t.training}}</td>
 		             <td class="table-data">{{t.sObject}}</td>
 		             <td class="table-data">{{t.dateTimeString}}</td>
@@ -62,7 +62,7 @@ Vue.component("trainings-customer", {
 
     </div>
     	`,
-	created() {
+	mounted() {
 			axios
 			.get('rest/trainings/getByCustomer')
 			.then(response => this.trainings = response.data); 

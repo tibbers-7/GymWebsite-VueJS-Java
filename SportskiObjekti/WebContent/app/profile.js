@@ -51,9 +51,7 @@ Vue.component("profile", {
     </div>
 
 
-    <div class="changePassBttn_grid">
-        <button class="button2" style="margin-left:10%;margin-top:2%;"  v-on:click="changePass()">Promeni lozinku</button>
-    </div>
+
     <div class="changeInfoBttn_grid">
         <button class="button2" style="margin-left:10%;margin-top:2%;"  v-on:click="changeInfo()">Promeni informacije</button>
     </div>
